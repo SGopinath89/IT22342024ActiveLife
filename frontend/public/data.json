@@ -1,0 +1,81 @@
+{
+    "couses": [
+        {
+            "name": "Progressive Power Flow",
+            "image": "https://i.ibb.co/1q6TT6j/women-on-yoga-2021-08-26-15-44-27-utc.jpg",
+            "availableSeats": 120,
+            "price": "70",
+            "videoLink": "https://youtu.be/UCgvZ4VkLMQ",
+            "description": "Aliq is notm hendr erit a augue insu image pellen tes.",
+            "instructorName": "Watson T.",
+            "instructorEmail": "watson@taylor.com",
+            "status": "approved",
+            "submitted": "2024-02-28T20:01:12.168Z",
+            "totalEnrolled": 0,
+            "reason": null
+          },
+        {
+            "name": "Make a Peaceful Living",
+            "image": "https://i.ibb.co/xqCFZZS/yoga-relax-2021-09-24-03-25-39-utc.jpg",
+            "availableSeats": 100,
+            "price": "50",
+            "videoLink": "https://youtu.be/UCgvZ4VkLMQ",
+            "description": "Aliq is notm hendr erit a augue insu image pellen tes.",
+            "instructorName": "Marry Hun",
+            "instructorEmail": "mary@hun.com",
+            "status": "approved",
+            "submitted": "2024-02-28T20:01:40.168Z",
+            "totalEnrolled": 0,
+            "reason": null
+          },
+        {
+            "name": "Exercise Hacks for Women",
+            "image": "https://i.ibb.co/864425K/yoga-practice-indoors-2021-08-30-02-28-57-utc.jpg",
+            "availableSeats": 50,
+            "price": "50",
+            "videoLink": "https://youtu.be/UCgvZ4VkLMQ",
+            "description": "Aliq is notm hendr erit a augue insu image pellen tes.",
+            "instructorName": "Marry Hun",
+            "instructorEmail": "mary@hun.com",
+            "status": "approved",
+            "submitted": "2024-02-28T20:01:40.168Z",
+            "totalEnrolled": 0,
+            "reason": null
+          },
+        {
+            "name": "Exercise Hacks for Women",
+            "image": "https://i.ibb.co/ygY8LvM/pretty-yoga-instructor-helping-her-student-in-a-yo-2021-08-26-20-17-29-utc.jpg",
+            "availableSeats": 50,
+            "price": "50",
+            "videoLink": "https://youtu.be/UCgvZ4VkLMQ",
+            "description": "Aliq is notm hendr erit a augue insu image pellen tes.",
+            "instructorName": "Teylor Len",
+            "instructorEmail": "teylor@len.com",
+            "status": "approved",
+            "submitted": "2024-02-28T20:01:40.168Z",
+            "totalEnrolled": 0,
+            "reason": null
+          },
+        {
+            "name": "Exercise Hacks for Women",
+            "image": "https://i.ibb.co/L89HLkw/group-of-young-people-doing-yoga-on-a-yoga-mat-2021-09-02-14-56-30-utc.jpg",
+            "availableSeats": 50,
+            "price": "50",
+            "videoLink": "https://youtu.be/UCgvZ4VkLMQ",
+            "description": "Aliq is notm hendr erit a augue insu image pellen tes.",
+            "instructorName": "Ema Aliq",
+            "instructorEmail": "ema@aliq.com",
+            "status": "approved",
+            "submitted": "2024-02-28T20:01:40.168Z",
+            "totalEnrolled": 0,
+            "reason": null
+          }
+    ],
+    "comments": [
+      { "id": "1", "text": "a comment about post 1", "postId": "1" },
+      { "id": "2", "text": "another comment about post 1", "postId": "1" }
+    ],
+    "profile": {
+      "name": "typicode"
+    }
+  }
