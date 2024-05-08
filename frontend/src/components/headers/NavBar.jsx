@@ -6,6 +6,7 @@ import { Switch } from '@mui/material';
 import { useEffect } from 'react';
 import photoURL from "../../assets/home/user.png"
 import {FaBars} from "react-icons/fa"
+import {motion} from "framer-motion"
 const navLinks=[
     {name:'Home', route:'/'},
     {name:'Wourkout', route:"/workouts"},//section id
@@ -15,7 +16,7 @@ const navLinks=[
 const theme = createTheme({
     palette:{
         primary:{
-            main:"#ff00000",
+            main:"#ff0000",
 
         },
         secondary:{
@@ -33,7 +34,7 @@ export const NavBar = () => {
     const [scrollPosition,setScrollPosition]=useState(0);
     const [isFixed, setIsFixed]=useState(false);
     const [isDarkMode, setIsDarkMode]=useState(false);
-    const user=true;
+    const user=false;
 
     const toggleMobileMenu=()=>{
         setisMobileMenuOpen(!isMobileMenuOpen)
@@ -81,19 +82,23 @@ export const NavBar = () => {
     }
 
     return (
-        <nav className="">
+        <motion.nav 
+        initial={{opacity:0}}
+        animate={{opacity:1}}
+        transition={{duration:0.5}}
+        className={`${isHome ?navBg:"bg-white dark:bg-black backdrop-blur-2xl"}${isFixed ? 'static':'fixed'}top-0 transition-colors duration-500 ease-in-out w-full z-10`}>
             <div className='lg:w-[95%] mx-auto sm:px-6 lg:px-6'>
                 <div className='px-4 py-4 flex item-center justify-between'>
                     {/* logo */}
                     <div>
                         <h1 className='text-2x1 inline-flex gap-3 items-center font-bold text-black dark:text-white'><img src="/logo.png" alt="" className='w-8 h-8'/>ACTIVE-LIFE</h1>
                     </div>
-                    {/*mobile menu icons */}
+                    {/*mobile menu icons 
                     <div className="md:hidden flex items-center">
                         <button type="button" onClick={toggleMobileMenu} className="text-gray-300 hover:text-white">
                             <FaBars className="h-6 w-6 "/>
                         </button>
-                    </div>
+                    </div>*/}
                     {/*nav links */}
                     <div className='hidden md:block text-black dark:text-white'>
                         <div className='flex'>
@@ -155,6 +160,6 @@ export const NavBar = () => {
                     </div>
                 </div>
             </div>
-        </nav>
+        </motion.nav>
     )
 }

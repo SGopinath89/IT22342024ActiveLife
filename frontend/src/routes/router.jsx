@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
-import Home from "../pages/Home";
+import Home from "../pages/Home/Home";
 import { Instructors } from "../pages/instructors/instructors";
 import { Workouts } from "../pages/Workouts/Workouts";
 import { Diets } from "../pages/Diets/Diets";
