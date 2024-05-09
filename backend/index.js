@@ -123,13 +123,20 @@ async function connectAndStartServer() {
       res.send(result);
     });
 
+    app.post('/new-instructor', async (req, res) => {
+      const newInstructor = req.body;
+
+      const result = await instructorCollection.insertOne(newInstructor);
+      res.send(result);
+    });
+
     app.post('/new-userWorkout', async (req, res) => {
       const newUserWorkout = req.body;
 
       const result = await userWorkoutsCollection.insertOne(newUserWorkout);
       res.send(result);
     });
-    
+
     app.post('/new-userDiet', async (req, res) => {
       const newUserDiet = req.body;
 
@@ -157,6 +164,11 @@ async function connectAndStartServer() {
     //display all workdouts
     app.get('/workouts', async(req,res)=>{
       const result=await workoutCollection.find().toArray();
+      res.send(result);
+    })
+
+    app.get('/instructors', async(req,res)=>{
+      const result=await instructorCollection.find().toArray();
       res.send(result);
     })
     
