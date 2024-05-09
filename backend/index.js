@@ -116,17 +116,31 @@ async function connectAndStartServer() {
       res.send(result);
     });
 
+    app.post('/new-workout', async (req, res) => {
+      const newWorkout = req.body;
+
+      const result = await workoutCollection.insertOne(newWorkout);
+      res.send(result);
+    });
+
     app.post('/new-userWorkout', async (req, res) => {
       const newUserWorkout = req.body;
 
       const result = await userWorkoutsCollection.insertOne(newUserWorkout);
       res.send(result);
     });
+    
+    app.post('/new-userDiet', async (req, res) => {
+      const newUserDiet = req.body;
 
+      const result = await userDietsCollection.insertOne(newUserDiet);
+      res.send(result);
+    });
+    /*
     app.get('/',(req,res)=>{
       res.send('Hello Developers 2024')
-    })
-    
+    })*/
+
     //display all the users
     app.get('/users', async(req,res)=>{
       //const query ={name:"ABC"}
@@ -134,16 +148,31 @@ async function connectAndStartServer() {
       res.send(result);
     })
 
+    //display all diets
     app.get('/diets', async(req,res)=>{
       const result=await dietCollection.find().toArray();
       res.send(result);
     })
 
+    //display all workdouts
+    app.get('/workouts', async(req,res)=>{
+      const result=await workoutCollection.find().toArray();
+      res.send(result);
+    })
+    
+    //display workouts that each user has added to profile
     app.get('/userWorkouts', async(req,res)=>{
       const result=await userWorkoutsCollection.find().toArray();
       res.send(result);
     })
 
+    //display diets that each user has added to profile
+    app.get('/userDiets', async(req,res)=>{
+      const result=await userDietsCollection.find().toArray();
+      res.send(result);
+    })
+    
+    //update number of days finished in workouts
     app.patch('/update-userWorkouts/:id',async(req,res)=>{
       const id=req.params.id;
       const days=req.body.finishedDays;
@@ -157,6 +186,9 @@ async function connectAndStartServer() {
       const result = await userWorkoutsCollection.updateOne(filter,updateDoc,options);
       res.send(result);
     })
+
+
+    //DB Connect
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
     
