@@ -104,26 +104,27 @@ export const NavBar = () => {
 
     return (
         <motion.nav 
-        initial={{opacity:0}}
-        animate={{opacity:1}}
-        transition={{duration:0.5}}
-        className={`navbar ${isScrolled ? 'scrolled' : ''}` `${isHome ?navBg:"bg-white dark:bg-black backdrop-blur-2xl"} ${isFixed ? 'static':'fixed'}top-0 transition-colors duration-500 ease-in-out w-full z-10`}>
+            initial={{opacity:0}}
+            animate={{opacity:1}}
+            transition={{duration:0.5}}
+            className={`navbar ${isScrolled ? 'scrolled' : ''} ${isHome ? navBg : "bg-white dark:bg-black backdrop-blur-2xl"} ${isFixed ? 'static' : 'fixed'} top-0 transition-colors duration-500 ease-in-out w-full z-10`}>
+
             <div className='lg:w-[95%] mx-auto sm:px-6 lg:px-6'>
                 <div className='px-4 py-4 flex item-center justify-between'>
                     {/* logo */}
                     <div>
-                        <h1 className='text-2x1 inline-flex gap-3 items-center font-bold text-black dark:text-white'><img src="/logo.png" alt="" className='w-8 h-8'/>ACTIVE-LIFE</h1>
+                        <h1 className='text-2x1 inline-flex gap-3 items-center font-bold text-white dark:text-white'><img src="/logo.png" alt="" className='w-8 h-8'/>ACTIVE-LIFE</h1>
                     </div>
                     {/*nav links */}
-                    <div className='hidden md:block text-black dark:text-white'>
+                    <div className='hidden md:block text-white dark:text-white'>
                         <div className='flex'>
                             <ul className='ml-10 flex items-center space-x-4 pr-4'>
                                 {
                                     navLinks.map((link)=>(
                                         <li key={link.route}>
                                             <NavLink to={link.route} className={({isActive})=>
-                                                `fontbold ${isActive ?'text-secondary':`${navBg.includes('bg-transparent')?
-                                            'text-black dark:text-white':'text-black dark:text-white'}`} hover:text-secondary duration-300`
+                                                `font-bold ${isActive ?'text-secondary':`${navBg.includes('bg-transparent')?
+                                            'text-white dark:text-white':'text-black dark:text-white'}`} hover:text-secondary duration-300`
                                                 }>{link.name}
                                             </NavLink>
                                         </li>
@@ -141,7 +142,7 @@ export const NavBar = () => {
                                     </li>: <li>
                                     <NavLink to="/login" className={({isActive})=>
                                         `fontbold ${isActive ?'text-secondary':`${navBg.includes('bg-transparent')?
-                                        'text-black dark:text-white':'text-black dark:text-white'}`} hover:text-secondary duration-300`
+                                        'text-white dark:text-white font-bold':'text-black dark:text-white'}`} hover:text-secondary duration-300`
                                     }>
                                     Login
                                     </NavLink>

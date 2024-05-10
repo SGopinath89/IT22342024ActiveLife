@@ -69,7 +69,6 @@ const app = express();
 const cors = require('cors');
 require('dotenv').config();
 const port = process.env.PORT || 5000;
-console.log("DB username:", process.env.DB_USER);
 
 app.use(cors());
 app.use(express.json());
@@ -89,9 +88,7 @@ const client = new MongoClient(uri, {
 async function connectAndStartServer() {
   try {
     await client.connect();
-    console.log("Connected to MongoDB");
 
-    
     const database = client.db("active-life");
     const userCollection = database.collection("users");
     const workoutCollection = database.collection("workouts");
@@ -107,7 +104,7 @@ async function connectAndStartServer() {
       const result = await userCollection.insertOne(newUser);
       res.send(result);
     });
-    
+     
     //add new diet
     app.post('/new-diet', async (req, res) => {
       const newDiet = req.body;
@@ -166,12 +163,53 @@ async function connectAndStartServer() {
       const result=await workoutCollection.find().toArray();
       res.send(result);
     })
-
+    
+    //display all instructors
     app.get('/instructors', async(req,res)=>{
       const result=await instructorCollection.find().toArray();
       res.send(result);
     })
     
+    //get single diet
+    app.get('/diets/:id',async(req,res)=>{
+      const id=req.params.id;
+      const query={_id:new ObjectId(id)};
+      const result = await dietCollection.findOne(query);
+      res.send(result);
+    })
+
+    //get single workout
+    app.get('/workouts/:id',async(req,res)=>{
+      const id=req.params.id;
+      const query={_id:new ObjectId(id)};
+      const result = await workoutCollection.findOne(query);
+      res.send(result);
+    })
+
+    //get single instructor
+    app.get('/instructors/:id',async(req,res)=>{
+      const id=req.params.id;
+      const query={_id:new ObjectId(id)};
+      const result = await instructorCollection.findOne(query);
+      res.send(result);
+    })
+
+    //get single userWorkout
+    app.get('/userWorkouts/:id',async(req,res)=>{
+      const id=req.params.id;
+      const query={_id:new ObjectId(id)};
+      const result = await userWorkoutsCollection.findOne(query);
+      res.send(result);
+    })
+
+    //get single userDiet
+    app.get('/userDiets/:id',async(req,res)=>{
+      const id=req.params.id;
+      const query={_id:new ObjectId(id)};
+      const result = await userDietsCollection.findOne(query);
+      res.send(result);
+    })
+
     //display workouts that each user has added to profile
     app.get('/userWorkouts', async(req,res)=>{
       const result=await userWorkoutsCollection.find().toArray();
@@ -185,7 +223,7 @@ async function connectAndStartServer() {
     })
     
     //update number of days finished in workouts
-    app.patch('/update-userWorkouts/:id',async(req,res)=>{
+    app.patch('/update-workoutDays/:id',async(req,res)=>{
       const id=req.params.id;
       const days=req.body.finishedDays;
       const filter={_id:new ObjectId(id)};
@@ -198,14 +236,61 @@ async function connectAndStartServer() {
       const result = await userWorkoutsCollection.updateOne(filter,updateDoc,options);
       res.send(result);
     })
+    
+    //update all diet details
+    app.put('/update-diets/:id',async(req,res)=>{
+      const id=req.params.id;
+      const updateDiet=req.body;
+      const filter={_id: new ObjectId(id)};
+      const options={upsert:true};
+      const updateDoc={
+        $set:{
+          name:updateDiet.name,
+          howItWorks:updateDiet.howItWorks,
+          benefits:updateDiet.benefits,
+          downsides:updateDiet.downsides
+        }
+      };
+      const result =await dietCollection.updateOne(filter,updateDoc,options)
+      res.send(result);
+    })
 
+    app.put('/update-workouts/:id',async(req,res)=>{
+      const id=req.params.id;
+      const updateWorkout=req.body;
+      const filter={_id: new ObjectId(id)};
+      const options={upsert:true};
+      const updateDoc={
+        $set:{
+          name:updateWorkout.name,
+          numberOfDays:parseInt(updateWorkout.numberOfDays),
+          howToDo:updateWorkout.howToDo
+        }
+      };
+      const result =await workoutCollection.updateOne(filter,updateDoc,options)
+      res.send(result);
+    })
+
+    app.put('/update-instructors/:id',async(req,res)=>{
+      const id=req.params.id;
+      const updateInstructor=req.body;
+      const filter={_id: new ObjectId(id)};
+      const options={upsert:true};
+      const updateDoc={
+        $set:{
+          
+        }
+      };
+      const result =await instructorCollection.updateOne(filter,updateDoc,options)
+      res.send(result);
+    })
 
     //DB Connect
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
     
     app.listen(port, () => {
-      console.log(`Example app listening on port ${port}`);
+      console.log(`App is running on port ${port}`);
     });
   } catch (err) {
     console.error("Error connecting to MongoDB:", err);
