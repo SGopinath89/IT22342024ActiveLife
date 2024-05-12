@@ -444,17 +444,17 @@ async function connectAndStartServer() {
       res.send(result);
     })
 
-    /*
+    
     app.get('/',(req,res)=>{
-      res.send('Hello Developers 2024')
-    })*/
+      res.send('Active Life Server is running!!')
+    })
 
     //DB Connect
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
     
     app.listen(port, () => {
-      console.log(`App is running on port ${port}`);
+      console.log(`Server is running on port ${port}`);
     });
   } catch (err) {
     console.error("Error connecting to MongoDB:", err);

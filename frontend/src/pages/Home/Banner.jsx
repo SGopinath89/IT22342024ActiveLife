@@ -32,33 +32,40 @@ const Banner = () => {
                   </div>
                  
                   <h1 className="md:text-7xl text-4xl font-bold" data-aos="fade-up"> Welcome to Active-Life!!</h1>
-                  <br/><br/>
+                  <br/>
                   <h2 className="md:text-4xl text-2xl md:w-1/2" data-aos="fade-up">Your ultimate companion on your journey to optimal health and fitness!</h2> 
-                  <br/><br/>
-                  <p className='md:w-1/2' data-aos="fade-up">Active-Life is designed to revolutionize the way you approach your wellness goals by providing you with 
+                  <br/>
+                  <p className='md:w-1/2'>Active-Life is designed to revolutionize the way you approach your wellness goals by providing you with 
                     comprehensive tools and insights. Whether you're looking to lose weight, build muscle, improve your 
                     cardiovascular endurance, or simply adopt a healthier lifestyle, we've got you covered.
                   </p>
-                  <br/><br/>
-                  <p className='md:w-1/2'data-aos="fade-up" >  
+                  <p className='md:w-1/2'>  
                     With our intuitive interface, you can easily track your daily activity, including steps taken, calories burned, 
                     and active minutes. Set personalized goals and let Active-Life motivate you with real-time progress updates and achievements. 
                     Our diverse range of workout plans, from yoga and Pilates to HIIT and strength training, ensures that there's something 
                     for everyone, regardless of fitness level or preference.
                   </p>
-                  <br/><br/>
-                  <p className='md:w-1/2' data-aos="fade-up">  
+                  <p className='md:w-1/2'>  
                     But we don't stop there. Active-Life goes beyond physical activity to help you make smarter choices in nutrition. 
                     Access a vast database of healthy recipes, track your meals, and monitor your macros to fuel your body optimally. 
                     Plus, stay motivated and connected with our supportive community of like-minded individuals, sharing tips, challenges, 
                     and successes.
                   </p> 
-                  <br/><br/>
-                  <p className='md:w-1/2 'data-aos="fade-up" > 
+                  <p className='md:w-1/2 '> 
                     Join us today and embark on a transformative journey towards a happier, healthier you. 
                     It's time to take control of your wellness—let Active-Life be your guide!
                   </p>
-                  <br/><br/>
+                  <br/>
+                  <div className='flex flex-wrap items-center gap-5' >
+                    <button className='px-7 py-3 rounded-lg bg-secondary font-bold uppercase' >
+                      View Workouts
+                    </button>
+                    <button className='px-7 py-3 rounded-lg border hover:bg-secondary font-bold uppercase'>
+                      View Diets
+                    </button>
+                    
+                  </div>
+                  <br/>
                 </div>
             </div>
         </div>
