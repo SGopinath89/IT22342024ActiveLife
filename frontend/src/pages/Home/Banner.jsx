@@ -57,7 +57,7 @@ const Banner = () => {
                   </p>
                   <br/>
                   <div className='flex flex-wrap items-center gap-5' >
-                    <button className='px-7 py-3 rounded-lg bg-secondary font-bold uppercase' >
+                    <button className='px-7 py-3 rounded-lg border hover:bg-secondary font-bold uppercase' >
                       View Workouts
                     </button>
                     <button className='px-7 py-3 rounded-lg border hover:bg-secondary font-bold uppercase'>

@@ -1,7 +1,9 @@
 import React from 'react'
-
+import ContentD from './ContentD'
 export const Diets = () => {
   return (
-    <div>Diets</div>
+    <div>
+      <ContentD/>
+    </div>
   )
 }

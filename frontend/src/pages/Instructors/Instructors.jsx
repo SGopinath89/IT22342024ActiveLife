@@ -1,7 +1,10 @@
 import React from 'react'
+import ContentI from './ContentI'
 
 export const Instructors = () => {
   return (
-    <div>Instructors</div>
+    <div>
+      <ContentI/>
+    </div>
   )
 }
