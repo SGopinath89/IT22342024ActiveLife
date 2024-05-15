@@ -7,9 +7,7 @@ import { useEffect } from 'react';
 import photoURL from "../../assets/home/user.png"
 import {FaBars} from "react-icons/fa"
 import {motion} from "framer-motion"
-<style>
-    
-</style>
+
 const navLinks=[
     {name:'Home', route:'/'},
     {name:'Wourkout', route:"/workouts"},//section id

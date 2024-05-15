@@ -3,7 +3,6 @@ import bgImg from '../../assets/home/home.jpg'
 import { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css'; 
-import './home.css'
 import icon1 from '../../assets/home/healthy.png'
 import icon2 from '../../assets/home/diet.png'
 import icon3 from '../../assets/home/instructor.png'
