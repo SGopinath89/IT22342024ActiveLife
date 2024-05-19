@@ -1,15 +1,18 @@
-import React, { useEffect,useState } from 'react'
+import React, { useContext, useEffect,useState } from 'react'
 import useAxiosFetch from '../../hooks/useAxiosFetch'
+import AuthProvider, { AuthContext } from '../../utilities/providers/AuthProvider';
 export const Diets = () => {
   const axiosFetch = useAxiosFetch();
-    const [diets,setDiets] = useState([]);
-    useEffect(()=>{
-        const fetchDiets = async()=>{
-            const response = await axiosFetch.get('/diets')
-            setDiets(response.data);
-        }
-        fetchDiets();
-    },[])
+  const [diets,setDiets] = useState([]);
+
+  const {user}=useContext(AuthContext);
+  console.log("The Current user:",user)
+  useEffect(()=>{
+    axiosFetch
+      .get("/diets")
+      .then((res)=>setDiets(res.data))
+      .catch((err)=>console.log(err))
+  },[])
   return (
     <div className='md:w-[80%]mx-auto my-36'>
             <div>
@@ -26,7 +29,7 @@ export const Diets = () => {
                 {
                     diets.map((diet,index)=>(
                       
-                      <div className='shadow-lg rounded-lg p-3 flex flex-col justify-between border border-secondary overflow-hidden m-4'>
+                      <div key={diet._id} className='shadow-lg rounded-lg p-3 flex flex-col justify-between border border-secondary overflow-hidden m-4'>
                         <div className='p-4'>
                             <h2 className='text-xl font-semibold mb-10 dark:text-white text-center'>{diet.name}</h2>
                             <div className='flex justify-center'>

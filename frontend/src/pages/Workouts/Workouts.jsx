@@ -5,12 +5,10 @@ export const Workouts = () => {
   const axiosFetch = useAxiosFetch();
     const [workouts,setWorkouts] = useState([]);
     useEffect(()=>{
-        const fetchWorkouts = async()=>{
-            const response = await axiosFetch.get('/workouts')
-            //console.log(response.data);
-            setWorkouts(response.data);
-        }
-        fetchWorkouts();
+      axiosFetch
+        .get("/workouts")
+        .then((res)=>setWorkouts(res.data))
+        .catch((err)=>console.log(err))
     },[])
   return (
     <div className='md:w-[80%]mx-auto my-36'>
@@ -28,16 +26,16 @@ export const Workouts = () => {
                 <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4 '>
                 {
                     workouts.map((workout,w)=>(
-                      <div className='shadow-lg rounded-lg p-3 flex flex-col justify-between border border-secondary overflow-hidden m-4'>
+                      <div key={workout._id} className='shadow-lg rounded-lg p-3 flex flex-col justify-between border border-secondary overflow-hidden m-4'>
                         <div className='p-4'>
                             <h2 className='text-xl font-semibold mb-20 dark:text-white text-center'>{workout.name}</h2>
                             <p className='text-black mb-2 text-center dark:text-white'><span className='font-bold'>Total Number of Days: </span>{workout.numberOfDays}</p>
                             <p className='text-black mb-2 text-center dark:text-white'><span className='font-bold'>Steps :</span>
                             
-                              {workout.howToDo.split(' ').map(word => {
+                              {workout.howToDo.split(' ').map((word,index )=> {
                                   if (word === "Step") {
                                       return (
-                                          <React.Fragment >
+                                        <React.Fragment key={index}>
                                           <br /> <span className="font-bold">{word} </span>
                                           </React.Fragment>
                                       );

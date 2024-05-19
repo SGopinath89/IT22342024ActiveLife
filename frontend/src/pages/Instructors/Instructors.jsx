@@ -27,7 +27,7 @@ export const Instructors = () => {
               <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4 '>
                   {
                       instructors.map((instructor,i)=>(
-                        <div className='shadow-lg rounded-lg p-3 flex flex-col justify-between border border-secondary overflow-hidden m-4 '>
+                        <div key={instructor._id} className='shadow-lg rounded-lg p-3 flex flex-col justify-between border border-secondary overflow-hidden m-4 '>
                           <div className='p-4 '>
                               <h2 className='text-xl font-semibold mb-20 text-black dark:text-white text-center'>{instructor.name}</h2>
                               <p className='text-black mb-2 text-center dark:text-white'><span className='font-bold'>Email: </span>{instructor.email}</p>
