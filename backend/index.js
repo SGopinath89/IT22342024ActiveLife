@@ -353,6 +353,46 @@ async function connectAndStartServer() {
       res.send(result);
     })
 
+    app.get('/userWorkouts/:email',async(req,res)=>{
+      const email=req.params.email;
+      const query={userEmail:email};
+      const pipeline=[
+        {
+          $match: query
+        },
+        {
+          $lookup:{
+            from:"diets",
+            localField:"dietId",
+            foreignField:"_id",
+            as:"diets"
+          }
+        },
+        {
+          $unwind:"$diets"
+        },
+        {
+          $lookup:{
+            from:"users",
+            localField:"diets.name",
+            foreignField:"email",
+            as:"dName"
+          }
+        },
+        {
+          $project:{
+            _id:0,
+            dName:{
+              $arrayElemAt:["$dName",0]
+            },
+            diets:1
+          }
+        }
+      ];
+      const result = await userDietsCollection.aggregate(pipeline).toArray(); 
+      res.send(result);
+    })
+
     //display workouts that each user has added to profile
     app.get('/userWorkouts', async(req,res)=>{
       const result=await userWorkoutsCollection.find().toArray();

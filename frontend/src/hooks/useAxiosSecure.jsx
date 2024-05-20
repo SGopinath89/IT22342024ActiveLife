@@ -1,9 +1,9 @@
-import React, { useContext } from 'react'
+import React, { useContext ,useEffect} from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../utilities/providers/AuthProvider'
 
-const useAxioSecure = () => {
+const useAxiosSecure = () => {
   const {logout} = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -34,4 +34,4 @@ const useAxioSecure = () => {
   },[logout,navigate,axiosSecure])
   return axiosSecure;
 }
-export default useAxioSecure
+export default useAxiosSecure

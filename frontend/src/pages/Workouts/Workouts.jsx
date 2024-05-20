@@ -22,13 +22,16 @@ export const Workouts = () => {
                 <br/>
             </div>
             {
-              workouts?<>
                 <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4 '>
                 {
                     workouts.map((workout,w)=>(
                       <div key={workout._id} className='shadow-lg rounded-lg p-3 flex flex-col justify-between border border-secondary overflow-hidden m-4'>
                         <div className='p-4'>
                             <h2 className='text-xl font-semibold mb-20 dark:text-white text-center'>{workout.name}</h2>
+                            <div className='flex justify-center'>
+                              <img className='shadow-lg rounded-lg'src={workout.workoutImg} alt="Workout Image"/>
+                            </div>
+                            <br/>
                             <p className='text-black mb-2 text-center dark:text-white'><span className='font-bold'>Total Number of Days: </span>{workout.numberOfDays}</p>
                             <p className='text-black mb-2 text-center dark:text-white'><span className='font-bold'>Steps :</span>
                             
@@ -55,7 +58,6 @@ export const Workouts = () => {
                     ))
                 }
             </div>
-              </>:<></>
             }
 
         </div>

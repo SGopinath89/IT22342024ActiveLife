@@ -1,18 +1,28 @@
 import React, { useContext, useEffect,useState } from 'react'
 import useAxiosFetch from '../../hooks/useAxiosFetch'
 import AuthProvider, { AuthContext } from '../../utilities/providers/AuthProvider';
+import useUser from '../../hooks/useUser';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 export const Diets = () => {
   const axiosFetch = useAxiosFetch();
   const [diets,setDiets] = useState([]);
-
+  const {currentUser}=useUser();
+  const [userDiets,setUserDiets]=useState([])
   const {user}=useContext(AuthContext);
-  console.log("The Current user:",user)
+  const axiosSecure = useAxiosSecure();
   useEffect(()=>{
     axiosFetch
       .get("/diets")
       .then((res)=>setDiets(res.data))
       .catch((err)=>console.log(err))
-  },[])
+  },[]);
+  
+  //handle add button
+  const handleAdd = (id)=>{
+    console.log(id)
+    //axiosSecure.get(`/userWorkouts/${currentUser?.email}`)
+    //.then(res=>setUserDiets(res.data).catch(err=>console.log(err)))
+  }
   return (
     <div className='md:w-[80%]mx-auto my-36'>
             <div>
@@ -41,7 +51,7 @@ export const Diets = () => {
                             <p className='text-gray-600 mb-2 text-center'><span className='font-bold'>Downsides : </span>{diet.downsides}  </p>
                             <br/>
                             <div className='text-center'>
-                                <button className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
+                                <button onClick={()=>handleAdd(diet._id)} className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
                                     Add
                                 </button>
                             </div>
