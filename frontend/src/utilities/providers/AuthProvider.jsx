@@ -73,7 +73,7 @@ const AuthProvider = ({children}) => {
     //observer for users
     
     useEffect(()=>{
-      const unsubscribe = onAuthStateChanged(auth,(user)=>{
+      const unsubscribe = auth.onAuthStateChanged((user)=>{
         setUser(user)
         if(user){
           axios.post('http://localhost:5000/api/set-token',{email:user.email,name:user.displayName})

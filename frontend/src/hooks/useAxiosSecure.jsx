@@ -11,6 +11,7 @@ const useAxiosSecure = () => {
     baseURL:'http://localhost:5000'
   });
   useEffect(()=>{
+    //add request interceptors
     const requestInterceptor = axiosSecure.interceptors.request.use((config)=>{
       const token = localStorage.getItem('token');
       if(token){
@@ -19,19 +20,28 @@ const useAxiosSecure = () => {
       }
       return config;
     })
-    const responseInterceptor = axiosSecure.interceptors.response.use((response)=> response, async(error)=>{
-      if(error.response && (error.response.status === 401 || error.response.status === 403)){
-        await logout();
-        navigate('/login');
-        throw error;
-      }
-      throw error;
-    })
+
+    //add response interceptors
+    const responseInterceptor = axiosSecure.interceptors.response.use((response) => response, 
+      async (error) => {
+        console.log(response); 
+          console.log('Interceptor Error:', error);
+          if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+            console.log('Unauthorized or Forbidden Error');
+            await logout();
+            navigate('/login');
+            return Promise.reject(error)
+          }
+        //throw error;
+    });
+       
+      
     return ()=>{
       axiosSecure.interceptors.request.eject(requestInterceptor);
       axiosSecure.interceptors.response.eject(responseInterceptor);
     }
-  },[logout,navigate,axiosSecure])
+  },[logout,navigate])
   return axiosSecure;
 }
 export default useAxiosSecure
+

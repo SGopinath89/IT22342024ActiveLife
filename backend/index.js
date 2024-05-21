@@ -1,69 +1,3 @@
-/*const express = require('express')
-const app = express()
-const cors=require('cors')
-require('dotenv').config()
-const port = process.env.PORT || 5000
-console.log("DB username:",process.env.DB_USER)
-
-//username=devsadini
-//password=65dh3OolewveCipv
-////mongodb connection
-
-app.use(cors());
-app.use(express.json())
-
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@active-life.y0xkuj8.mongodb.net/?retryWrites=true&w=majority&appName=active-life`;
-
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
-
-async function run() {
-  try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    console.log("Connected to mongo")
-    //create database and collection
-
-    const database=client.db("active-life")
-    const userCollection=database.collection("users")
-    const workoutCollection=database.collection("workouts")
-    const dietCollection=database.collection("diets")
-    const instructorCollection=database.collection("instructors")
-
-    //class routes 
-    app.post('/new-user',async(req,res)=>{
-        const newUser=req.body;
-        console.log("send data success")
-        const result= await userCollection.insertOne(newUser)
-        res.send(result)
-    })
-
-
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-}
-run().catch(console.dir);
-
-
-app.get('/', (req, res) => {
-  res.send('Hello Developers!!')
-})
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})*/
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -150,14 +84,14 @@ async function connectAndStartServer() {
       res.send(result);
     })
 
-    app.get('/users/:id',verifyJWT,async(req,res)=>{
+    app.get('/user/:id',verifyJWT,async(req,res)=>{
       const id=req.params.id;
       const query={_id:new ObjectId(id)};
       const result = await userCollection.findOne(query);
       res.send(result);
     })
 
-    app.get('/users/:email',verifyJWT,async(req,res)=>{
+    app.get('/user/:email',verifyJWT,async(req,res)=>{
       const email=req.params.id;
       const query={email:email};
       const result = await userCollection.findOne(query);
@@ -353,9 +287,15 @@ async function connectAndStartServer() {
       res.send(result);
     })
 
-    app.get('/userWorkouts/:email',async(req,res)=>{
+    app.get('/userDiets-email/:email',async(req,res)=>{
+      /*const uEmail=req.params.email;
+      const query={email:uEmail};
+      const result = await userDietsCollection.findOne(query);
+      res.send(result);*/
       const email=req.params.email;
       const query={userEmail:email};
+      //console.log(email)
+      
       const pipeline=[
         {
           $match: query
@@ -390,6 +330,7 @@ async function connectAndStartServer() {
         }
       ];
       const result = await userDietsCollection.aggregate(pipeline).toArray(); 
+      //console.log(result)
       res.send(result);
     })
 
@@ -430,12 +371,25 @@ async function connectAndStartServer() {
     });
     
     //get single userDiet
-    app.get('/userDiets/:id',async(req,res)=>{
+    app.get('/userDiet/:id',async(req,res)=>{
       const id=req.params.id;
-      const query={_id:new ObjectId(id)};
-      const result = await userDietsCollection.findOne(query);
+      const email =req.query.email;
+      const query={dietId:id, userEmail:email};
+      const projection = {dietId:1};
+      const result = await userDietsCollection.findOne(query,{projection:projection})
       res.send(result);
     })
+    app.get('/userDiet-cartEmail/:email',async(req,res)=>{
+      const email=req.params.email;
+      const query={userEmail:email};
+      const projection = {dietId:1};
+      const userDiets = await userDietsCollection.find(query,{projection:projection}).toArray();
+      const dietIds = userDiets.map(userDiet=>new ObjectId(userDiet.dietId))
+      const query2 = {_id:{$in:dietIds}};
+      const result = await userDietsCollection.find(query2).toArray();
+      res.send(result);
+    })
+
     //display diets that each user has added to profile
     app.get('/userDiets', async(req,res)=>{
       const result=await userDietsCollection.find().toArray();
@@ -484,7 +438,6 @@ async function connectAndStartServer() {
       res.send(result);
     })
 
-    
     app.get('/',(req,res)=>{
       res.send('Active Life Server is running!!')
     })

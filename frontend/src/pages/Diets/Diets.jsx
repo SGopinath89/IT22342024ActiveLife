@@ -3,26 +3,74 @@ import useAxiosFetch from '../../hooks/useAxiosFetch'
 import AuthProvider, { AuthContext } from '../../utilities/providers/AuthProvider';
 import useUser from '../../hooks/useUser';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
-export const Diets = () => {
+import { toast } from 'react-toastify';
+
+import { useNavigate } from 'react-router-dom';
+
+const Diets = () => {
+  const navigate = useNavigate();
   const axiosFetch = useAxiosFetch();
   const [diets,setDiets] = useState([]);
   const {currentUser}=useUser();
+  const uName=currentUser?.userName;
   const [userDiets,setUserDiets]=useState([])
-  const {user}=useContext(AuthContext);
+  
   const axiosSecure = useAxiosSecure();
   useEffect(()=>{
     axiosFetch
       .get("/diets")
-      .then((res)=>setDiets(res.data))
+      .then((res)=>{setDiets(res.data)})
       .catch((err)=>console.log(err))
-  },[]);
-  
+  },[axiosFetch]);
   //handle add button
   const handleAdd = (id)=>{
     console.log(id)
-    //axiosSecure.get(`/userWorkouts/${currentUser?.email}`)
-    //.then(res=>setUserDiets(res.data).catch(err=>console.log(err)))
-  }
+    //console.log(currentUser)
+    //if(currentUser=="undefined"){
+      //return toast.error("Please Login")
+    //}
+    if(currentUser?.email){
+      console.log(currentUser.email)
+      axiosSecure.get(`/userDiets-email/${currentUser?.email}`)
+      .then((res) => {console.log(res.data); setUserDiets(res.data)})
+      .catch((err)=>console.log(err));
+    }else{
+      console.log('no email found')
+      //toast.error("Please Login")
+      navigate('/login');
+    }
+
+    axiosSecure
+      .get(`/userDiet/${id}?email=${currentUser.email}`)
+      .then(res=>{
+        if(res.data.dietId ===id){
+          return toast.error("Already Added!")
+        }else if(userDiets.find(item=>item.diets._id ===id)){
+          return toast.error("Already Added!")
+        }else{
+          const data={
+            dietId:id,
+            userEmail:currentUser.email,
+            data: new Date()
+          }
+          toast
+            .promise(axiosSecure.post('/new-userDiet',data))
+            .then(res=>{
+              console.log(res.data)
+            }),{
+              pending: 'Adding...',
+              success:{
+                render({data}){
+                  return "Added Successfully!!"
+                }
+              },
+              error:{
+                return: `Error: ${data.message}`
+              }
+            }
+        }
+      })
+}
   return (
     <div className='md:w-[80%]mx-auto my-36'>
             <div>
@@ -37,7 +85,7 @@ export const Diets = () => {
             {
               <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4 '>
                 {
-                    diets.map((diet,index)=>(
+                    diets.map((diet)=>(
                       
                       <div key={diet._id} className='shadow-lg rounded-lg p-3 flex flex-col justify-between border border-secondary overflow-hidden m-4'>
                         <div className='p-4'>
@@ -51,7 +99,9 @@ export const Diets = () => {
                             <p className='text-gray-600 mb-2 text-center'><span className='font-bold'>Downsides : </span>{diet.downsides}  </p>
                             <br/>
                             <div className='text-center'>
-                                <button onClick={()=>handleAdd(diet._id)} className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
+                                <button onClick={()=>handleAdd(diet._id)} title={uName == 'admin' ? 'Admin cannot be available to add' : 'You can Add Diets'} 
+                                disabled={uName=='admin'}
+                                className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
                                     Add
                                 </button>
                             </div>
@@ -65,3 +115,5 @@ export const Diets = () => {
         </div>
   )
 }
+
+export default Diets

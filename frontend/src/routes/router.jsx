@@ -3,7 +3,8 @@ import MainLayout from "../layouts/MainLayout";
 import Home from "../pages/Home/Home";
 import { Instructors } from "../pages/instructors/instructors";
 import { Workouts } from "../pages/Workouts/Workouts";
-import { Diets } from "../pages/Diets/Diets";
+import Login from "../pages/login";
+import Diets from "../pages/Diets/Diets";
 
 export const router = createBrowserRouter([
     {
@@ -28,5 +29,9 @@ export const router = createBrowserRouter([
           element:<Diets/>
         }
       ]
+    },
+    {
+      path:"/login",
+      element: <Login/>
     }
   ]);
