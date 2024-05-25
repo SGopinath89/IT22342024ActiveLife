@@ -4,6 +4,7 @@ import AuthProvider, { AuthContext } from '../../utilities/providers/AuthProvide
 import useUser from '../../hooks/useUser';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -22,6 +23,7 @@ const Diets = () => {
       .then((res)=>{setDiets(res.data)})
       .catch((err)=>console.log(err))
   },[axiosFetch]);
+  
   //handle add button
   const handleAdd = (id)=>{
     console.log(id)
@@ -36,10 +38,10 @@ const Diets = () => {
       .catch((err)=>console.log(err));
     }else{
       console.log('no email found')
-      //toast.error("Please Login")
       navigate('/login');
+      toast("Please Login First!!")
     }
-
+/*
     axiosSecure
       .get(`/userDiet/${id}?email=${currentUser.email}`)
       .then(res=>{
@@ -69,7 +71,7 @@ const Diets = () => {
               }
             }
         }
-      })
+      })*/
 }
   return (
     <div className='md:w-[80%]mx-auto my-36'>
