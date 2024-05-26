@@ -111,7 +111,7 @@ export const NavBar = () => {
                 <div className='px-4 py-4 flex item-center justify-between'>
                     {/* logo */}
                     <div>
-                        <h1 className='text-2x1 inline-flex gap-3 items-center font-bold text-white dark:text-white'><img src="/logo.png" alt="" className='w-8 h-8'/>ACTIVE-LIFE</h1>
+                        <h1 className='text-2x1 inline-flex gap-3 items-center font-bold text-black dark:text-white'><img src="/logo.png" alt="" className='w-8 h-8'/>ACTIVE-LIFE</h1>
                     </div>
                     {/*nav links */}
                     <div className='hidden md:block text-white dark:text-white'>

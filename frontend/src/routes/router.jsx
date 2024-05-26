@@ -5,6 +5,7 @@ import { Instructors } from "../pages/instructors/instructors";
 import { Workouts } from "../pages/Workouts/Workouts";
 import Diets from "../pages/Diets/Diets";
 import Login from "../pages/user/Login";
+import Register from "../pages/user/Register";
 
 export const router = createBrowserRouter([
     {
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
         {
           path:"/login",
           element: <Login/>
+        },
+        {
+          path:"/register",
+          element: <Register/>
         }
       ]
     }
