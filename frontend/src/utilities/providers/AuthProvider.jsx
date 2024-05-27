@@ -30,7 +30,8 @@ const AuthProvider = ({children}) => {
     const login=async(email,password)=>{
       try{
         setLoader(true);
-        return await signInWithEmailAndPassword(auth,email,password)
+        const userCredentials = await signInWithEmailAndPassword(auth,email,password)
+        return userCredentials.user;
       }catch(error){
         setError(error.code);
         throw error;

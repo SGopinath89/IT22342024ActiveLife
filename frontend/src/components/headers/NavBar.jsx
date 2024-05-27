@@ -7,7 +7,6 @@ import { useEffect } from 'react';
 import photoURL from "../../assets/home/user.png"
 import {FaBars} from "react-icons/fa"
 import {motion} from "framer-motion"
-
 const navLinks=[
     {name:'Home', route:'/'},
     {name:'Wourkout', route:"/workouts"},//section id
@@ -35,8 +34,9 @@ export const NavBar = () => {
     const [scrollPosition,setScrollPosition]=useState(0);
     const [isFixed, setIsFixed]=useState(false);
     const [isDarkMode, setIsDarkMode]=useState(false);
-    var user=false;
-
+    
+    const user=location.state?.user;
+    console.log(user)
     const [isScrolled, setIsScrolled] = useState(false);
 
   const handleScroll = () => {
@@ -55,9 +55,6 @@ export const NavBar = () => {
     };
   }, []);
 
-    const toggleMobileMenu=()=>{
-        setisMobileMenuOpen(!isMobileMenuOpen)
-    };
 
     useEffect(()=>{
         const darkClass='dark';
@@ -158,6 +155,9 @@ export const NavBar = () => {
                                             Logout
                                         </NavLink>
                                     </li>
+                                }
+                                {
+
                                 }
                                 {/*Color toggle*/}
                                 <li>

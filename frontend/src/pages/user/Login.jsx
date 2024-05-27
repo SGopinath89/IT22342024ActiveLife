@@ -14,20 +14,33 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const handleSubmit = e => {
-    setError('')
+  const handleSubmit = async(e) => {
     e.preventDefault();
+    setError('')   
 
     const data = new FormData(e.target);
     const formData = Object.fromEntries(data)
     //console.log(formData)
-    login(formData.email, formData.password).then(()=>{
+    try{
+      const user = await login(formData.email,formData.password);
       alert("Login Successfull!!")
-      navigate(location.state?.from || '/')
+      navigate(location.state?.from || '/', {state:{user}})
+    }catch(err){
+      setError(err.code);
+    }finally{
+      setLoader(false);
+    }
+    /*
+    login(formData.email, formData.password)
+    .then(()=>{
+      alert("Login Successfull!!")
+      navigate(location.state?.from || '/',{state:{email:formData.email}})
+            
     }).catch((err)=>{
       setError(err.code);
       setLoader(false)
-    })
+    })*/
+    
   }
 
   return (

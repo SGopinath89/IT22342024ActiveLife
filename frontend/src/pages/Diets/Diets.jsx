@@ -17,20 +17,21 @@ const Diets = () => {
   const [userDiets,setUserDiets]=useState([])
   
   const axiosSecure = useAxiosSecure();
+
   useEffect(()=>{
     axiosFetch
       .get("/diets")
       .then((res)=>{setDiets(res.data)})
       .catch((err)=>console.log(err))
   },[axiosFetch]);
-  
-  //handle add button
-  const handleAdd = (id)=>{
-    console.log(id)
+  {/*
+//console.log(id)
     //console.log(currentUser)
     //if(currentUser=="undefined"){
       //return toast.error("Please Login")
     //}
+    /*
+    console.log(currentUser.email)
     if(currentUser?.email){
       console.log(currentUser.email)
       axiosSecure.get(`/userDiets-email/${currentUser?.email}`)
@@ -40,39 +41,32 @@ const Diets = () => {
       console.log('no email found')
       navigate('/login');
       toast("Please Login First!!")
-    }
-/*
-    axiosSecure
-      .get(`/userDiet/${id}?email=${currentUser.email}`)
-      .then(res=>{
-        if(res.data.dietId ===id){
-          return toast.error("Already Added!")
-        }else if(userDiets.find(item=>item.diets._id ===id)){
-          return toast.error("Already Added!")
-        }else{
-          const data={
-            dietId:id,
-            userEmail:currentUser.email,
-            data: new Date()
-          }
-          toast
-            .promise(axiosSecure.post('/new-userDiet',data))
-            .then(res=>{
-              console.log(res.data)
-            }),{
-              pending: 'Adding...',
-              success:{
-                render({data}){
-                  return "Added Successfully!!"
-                }
-              },
-              error:{
-                return: `Error: ${data.message}`
-              }
-            }
-        }
-      })*/
-}
+    }*/}
+  //handle add button
+  const handleAdd = (id,name) => {
+  axiosSecure
+    .get(`/userDiet/${id}?email=${currentUser.email}`)
+    .then((res) => {
+      
+      if (res.data.dietId === id) {
+        alert("Already Added!");
+      } else if (userDiets.find((item) => item.diets._id === id)) {
+        alert("Already Added!");
+      } else {
+        const data = {
+          dietName:name,
+          dietId: id,
+          userEmail: currentUser.email,
+          data: new Date(),
+        };
+        axiosSecure.post('/new-userDiet', data)
+        console.log(res.data)
+        alert("Added Successfully!!")
+      }
+    })
+    .catch((err) => console.log(err));
+};
+
   return (
     <div className='md:w-[80%]mx-auto my-36'>
             <div>
@@ -101,7 +95,7 @@ const Diets = () => {
                             <p className='text-gray-600 mb-2 text-center'><span className='font-bold'>Downsides : </span>{diet.downsides}  </p>
                             <br/>
                             <div className='text-center'>
-                                <button onClick={()=>handleAdd(diet._id)} title={uName == 'admin' ? 'Admin cannot be available to add' : 'You can Add Diets'} 
+                                <button onClick={()=>handleAdd(diet._id,diet.name)} title={uName == 'admin' ? 'Admin cannot be available to add' : 'You can Add Diets'} 
                                 disabled={uName=='admin'}
                                 className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
                                     Add

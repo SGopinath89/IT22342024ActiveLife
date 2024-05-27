@@ -12,6 +12,7 @@ app.use(express.json());
 const verifyJWT = (req,res,next)=>{
   const authorization=req.headers.authorization;
   if(!authorization){
+    console.log(error.message)
     return res.status(401).send({message:"Invalid authorization"});
   }
   const token =authorization?.split(' ')[1];
@@ -91,8 +92,8 @@ async function connectAndStartServer() {
       res.send(result);
     })
 
-    app.get('/user/:email',verifyJWT,async(req,res)=>{
-      const email=req.params.id;
+    app.get('/user/:email',async(req,res)=>{
+      const email=req.params.email;
       const query={email:email};
       const result = await userCollection.findOne(query);
       res.send(result);
@@ -303,8 +304,8 @@ async function connectAndStartServer() {
         {
           $lookup:{
             from:"diets",
-            localField:"dietId",
-            foreignField:"_id",
+            localField:"_id",
+            foreignField:"dietId",
             as:"diets"
           }
         },
