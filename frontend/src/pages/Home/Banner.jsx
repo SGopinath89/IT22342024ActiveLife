@@ -16,18 +16,18 @@ const Banner = () => {
                 <div className="space-y-4">
                   <br/><br/>
                   <div data-aos="fade-down" style={{ width: '100px', height: '100px', position: 'absolute', top: '100px', left: '1100px' }}> 
+                    <img src={icon4} alt="icon4" />
+                  </div>
+                  
+                  <div data-aos="fade-right" style={{ width: '100px', height: '100px', position: 'absolute', top: '287px', left: '850px' }}> 
+                    <img src={icon3} alt="icon3" />
+                  </div>
+                  
+                  <div data-aos="fade-left" style={{ width: '100px', height: '100px', position: 'absolute', top: '287px', left: '1100px' }}> 
                     <img src={icon1} alt="icon1" />
                   </div>
-                  
-                  <div data-aos="fade-right" style={{ width: '100px', height: '100px', position: 'absolute', top: '300px', left: '850px' }}> 
-                    <img src={icon3} alt="icon1" />
-                  </div>
-                  
-                  <div data-aos="fade-left" style={{ width: '100px', height: '100px', position: 'absolute', top: '300px', left: '1350px' }}> 
-                    <img src={icon4} alt="icon1" />
-                  </div>
-                  <div data-aos="fade-up" style={{ width: '100px', height: '100px', position: 'absolute', top: '550px', left: '1100px' }}> 
-                    <img src={icon2} alt="icon1" />
+                  <div style={{ width: '100px', height: '100px', position: 'absolute', top: '474px', left: '1100px' }}> 
+                    <img src={icon2} alt="icon2" />
                   </div>
                  
                   <h1 className="md:text-7xl text-4xl font-bold" data-aos="fade-up"> Welcome to Active-Life!!</h1>

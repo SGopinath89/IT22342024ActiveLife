@@ -35,7 +35,7 @@ export const NavBar = () => {
     const [scrollPosition,setScrollPosition]=useState(0);
     const [isFixed, setIsFixed]=useState(false);
     const [isDarkMode, setIsDarkMode]=useState(false);
-    const user=false;
+    var user=false;
 
     const [isScrolled, setIsScrolled] = useState(false);
 

@@ -24,8 +24,8 @@ const GoogleLogin = () => {
           age: "Is not specified",
           address: "Is not specified",
           userName: "Is not specified",
+          photoUrl:"Is not specified",
           password: "Is not specified",
-          maritalStatus: "Is not specified",
           employmentStatus: "Is not specified"
         };
 
@@ -42,15 +42,7 @@ const GoogleLogin = () => {
     }catch(error){
       console.error(error.message)
     }
-    /*
-    googleLogin().then((userCredential)=>{
-      const user = userCredential.user;
-        
-    }).catch((error)=>{
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorMessage);
-    })*/
+    
   }
 
   return (

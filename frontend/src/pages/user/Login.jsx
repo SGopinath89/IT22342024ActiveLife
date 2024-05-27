@@ -22,7 +22,8 @@ const Login = () => {
     const formData = Object.fromEntries(data)
     //console.log(formData)
     login(formData.email, formData.password).then(()=>{
-      navigate(location.state?.from || '/dashboard')
+      alert("Login Successfull!!")
+      navigate(location.state?.from || '/')
     }).catch((err)=>{
       setError(err.code);
       setLoader(false)
@@ -30,10 +31,10 @@ const Login = () => {
   }
 
   return (
-    <div className='mx-auto max-w-screen-xl px-4 py-16 lg:px-8 '>
+    <div className='mx-auto max-w-screen-xl px-4 py-16 lg:px-8 bg-gray-100'>
       <h1 className='text-2xl font-bold text-secondary sm:text-3xl text-center'>Let's Get Started!!</h1>
       <p className='mx-auto mt-4 max-w-md text-center text-gray-500'>Explore our Exclusive diet plans and Workout routines!!!</p>
-      <div className='mx-auto max-w-lg mb-0 mt-6 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8'>
+      <div className='mx-auto max-w-lg mb-0 mt-6 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8 bg-gray-200'>
         <form onSubmit={handleSubmit} className='space-y-4'>
           <p className='text-center text-red-400 text-lg font-medium'>Sign in to your account</p>
           <div>
