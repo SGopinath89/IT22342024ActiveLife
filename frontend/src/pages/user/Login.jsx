@@ -44,7 +44,7 @@ const Login = () => {
   }
 
   return (
-    <div className='mx-auto max-w-screen-xl px-4 py-16 lg:px-8 bg-gray-100'>
+    <div className='mx-auto max-w-screen-xl px-4 py-16 lg:px-8 bg-gray-100 dark:bg-black'>
       <h1 className='text-2xl font-bold text-secondary sm:text-3xl text-center'>Let's Get Started!!</h1>
       <p className='mx-auto mt-4 max-w-md text-center text-gray-500'>Explore our Exclusive diet plans and Workout routines!!!</p>
       <div className='mx-auto max-w-lg mb-0 mt-6 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8 bg-gray-200'>
@@ -66,7 +66,7 @@ const Login = () => {
             </div>
           </div>
           <button type='submit' className='block w-full rounded-lg bg-secondary px-5 py-3 font-medium text-white text-lg'>Sign-in</button>
-          <p className='text-center text-sm text-gray-500'>No account? <Link className='underline' to="/register">Sign-up</Link></p>
+          <p className='text-center text-sm text-gray-500'>No account? <Link className='underline text-secondary' to="/register">Sign-up</Link></p>
           <GoogleLogin/>
         </form>
 

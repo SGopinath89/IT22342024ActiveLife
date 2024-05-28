@@ -7,6 +7,7 @@ import icon1 from '../../assets/home/healthy.png'
 import icon2 from '../../assets/home/diet.png'
 import icon3 from '../../assets/home/instructor.png'
 import icon4 from '../../assets/home/workout.png'
+import { Link } from 'react-router-dom';
 const Banner = () => {
   return (
     <div className='' style={{backgroundImage:`url(${bgImg})`, backgroundSize:'cover'}}>
@@ -56,12 +57,16 @@ const Banner = () => {
                   </p>
                   <br/>
                   <div className='flex flex-wrap items-center gap-5' >
+                    <Link to="/workouts"> 
                     <button className='px-7 py-3 rounded-lg border hover:bg-secondary font-bold uppercase' >
                       View Workouts
                     </button>
-                    <button className='px-7 py-3 rounded-lg border hover:bg-secondary font-bold uppercase'>
+                    </Link>
+                    <Link to="/diets">
+                    <button  className='px-7 py-3 rounded-lg border hover:bg-secondary font-bold uppercase'>
                       View Diets
                     </button>
+                    </Link>
                     
                   </div>
                   <br/>

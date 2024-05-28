@@ -57,7 +57,7 @@ const Register = () => {
     }
     const password = watch('password','')
   return (
-    <div className='flex justify-center items-center pt-14 bg-gray-100'>
+    <div className='flex justify-center items-center pt-14 bg-gray-100 dark:bg-black'>
         <div className="bg-gray-200 p-8 rounded-lg shadow-md">
             <h2 className="text-3xl font-bold text-center mb-6 text-secondary">Please Register</h2>
 

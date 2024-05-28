@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import photoURL from "../../assets/home/user.png"
 import {FaBars} from "react-icons/fa"
 import {motion} from "framer-motion"
+import useUser from '../../hooks/useUser';
 const navLinks=[
     {name:'Home', route:'/'},
     {name:'Wourkout', route:"/workouts"},//section id
@@ -28,6 +29,7 @@ export const NavBar = () => {
     const [navBg, setNavBg] = useState('bg-[#15151580');
     const navigation=useNavigation();
     const location=useLocation();
+    const {currentUser} = useUser();
     const [isMobileMenuOpen,setisMobileMenuOpen]=useState(false);
     const [isHome,setIsHome]=useState(false);
     const [isLogin,setIsLogin]=useState(false);
@@ -37,7 +39,7 @@ export const NavBar = () => {
     
     //const user=location.state?.user;
     //console.log(user)
-    const user=true;
+    const role=currentUser?.role;;
     const [isScrolled, setIsScrolled] = useState(false);
 
   const handleScroll = () => {
@@ -128,7 +130,7 @@ export const NavBar = () => {
                                 }
                                 {/*Based on users */}
                                 {
-                                    user ? null:isLogin?<li>
+                                    role ? null:isLogin?<li>
                                         <NavLink to="/register" className={({isActive})=>
                                             `fontbold ${isActive ?'text-secondary':`${navBg.includes('bg-transparent')?
                                             'text-black dark:text-white':'text-black dark:text-white'}`} hover:text-secondary duration-300`
@@ -146,14 +148,14 @@ export const NavBar = () => {
                                 }
 
                                 {
-                                    user && <li>
+                                    (role === "user"|| role === "admin") && <li>
                                         <NavLink to="/dashboard" className={'font-bold px-3 py-2 bg-secondary text-white rounded-xl'}>
                                             Dashboard
                                         </NavLink>
                                     </li>
                                 }
                                 {
-                                    user && <li>
+                                    (role === "user"|| role === "admin") && <li>
                                         <NavLink onClick={handleLogout} className={'font-bold px-3 py-2 bg-secondary text-white rounded-xl'}>
                                             Logout
                                         </NavLink>

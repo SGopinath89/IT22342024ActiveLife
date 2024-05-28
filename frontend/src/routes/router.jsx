@@ -28,7 +28,7 @@ export const router = createBrowserRouter([
           element:<Workouts/>
         },
         {
-          path:"diets",
+          path:"/diets",
           element:<Diets/>
         },
         {

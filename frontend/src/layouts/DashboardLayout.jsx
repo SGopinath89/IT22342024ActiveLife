@@ -41,7 +41,8 @@ const adminNavItems=[
         label:"Instructors"
     },
 ]
-const studentNavItems=[
+
+const userNavItems=[
     {
         to:"/dashboard/student", 
         icon: <BiHomeAlt className='text-4xl'/>, 
@@ -49,23 +50,18 @@ const studentNavItems=[
     },
     {
         to:"/dashboard/my-Diets", 
-        icon: <FaUsers className='text-4xl'/>, 
-        label:"Users"
+        icon: <IoFastFoodSharp className='text-4xl'/>, 
+        label:" My Diets"
     },
     {
         to:"/dashboard/my-Workouts", 
-        icon: <IoFastFoodSharp className='text-4xl'/>, 
-        label:"Diets"
+        icon: <CgGym className='text-4xl'/>, 
+        label:"My Workouts"
     },
     {
         to:"/dashboard/my-Instructors", 
-        icon: <CgGym className='text-4xl'/>, 
-        label:"Workouts"
-    },
-    {
-        to:"/dashboard/manageInstructors", 
         icon: <FaChalkboardTeacher className='text-4xl'/>, 
-        label:"Instructors"
+        label:"My Instructors"
     },
 ]
 
@@ -84,7 +80,7 @@ const DashboardLayout = () => {
     const [open, setOpen] = useState(true);
     const {loader,logout} = useAuth();
     const {currentUser} = useUser();
-    const role = currentUser?.role;
+    //const role = currentUser?.role;
     const navigate = useNavigate();
     if(loader){
         return <div>Loading...</div>
@@ -113,6 +109,7 @@ const DashboardLayout = () => {
             }
           });
     }
+    const role = "user";
   return (
     <div className='flex'>
         <div className={`${open ? "w-[250px] overflow-y-auto":"w-[125px] overflow-auto"} bg-[#e4c91b] h-screen p-5 
@@ -147,6 +144,31 @@ const DashboardLayout = () => {
 
                 </ul>
             }
+            {
+                role === "user" && 
+                <ul className='pt-6'>
+                    <p className={`ml-3 text-gray-700 ${!open && "hidden"}`}><small>MENU</small></p>
+                
+                    {
+                        role === "user" && userNavItems.map((menuItem, index) => (
+                            <li className='mb-2' key={index}>
+                                <NavLink to={menuItem.to}
+                                    className={({ isActive }) =>
+                                        `flex ${isActive ? "bg-[#f2e48d] text-black" : "text-[#413F44]"} "items-center gap-x-4 p-2 rounded-md 
+                                        duration-150 cursor-pointer font-bold text-sm  hover:bg-secondary hover:text-black"`
+                                    }>
+                                    {menuItem.icon}
+                                    <span className={`${!open && "hidden"} origin-left duration-200`}>
+                                        {menuItem.label}
+                                    </span>
+                                </NavLink>
+                            </li>
+                        ))
+                    }
+
+                </ul>
+            }
+
             {<ul className='pt-6'>
                     <p className={`ml-3 text-gray-700 ${!open && "hidden"}`}><small>USEFUL LINKS</small></p>
                 
@@ -169,7 +191,7 @@ const DashboardLayout = () => {
                     <li>
                         <button
                             onClick={()=>handleLogOut()}
-                            className=" flex items-center gap-x-4 p-2 rounded-md 
+                            className=" flex items-center gap-x-4 p-2 rounded-md text-[#413F44]
                                 duration-150 cursor-pointer font-bold text-sm  hover:bg-secondary hover:text-black">
                             <IoMdLogOut className='text-2xl'/>
                             <span className={`${!open && "hidden"} origin-left duration-200`}>
