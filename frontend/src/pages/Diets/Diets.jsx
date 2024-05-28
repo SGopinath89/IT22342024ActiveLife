@@ -5,7 +5,6 @@ import useUser from '../../hooks/useUser';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 import { useNavigate } from 'react-router-dom';
 
 const Diets = () => {
@@ -13,6 +12,7 @@ const Diets = () => {
   const axiosFetch = useAxiosFetch();
   const [diets,setDiets] = useState([]);
   const {currentUser}=useUser();
+  //console.log(currentUser)
   const uName=currentUser?.userName;
   const [userDiets,setUserDiets]=useState([])
   
@@ -24,48 +24,37 @@ const Diets = () => {
       .then((res)=>{setDiets(res.data)})
       .catch((err)=>console.log(err))
   },[axiosFetch]);
-  {/*
-//console.log(id)
-    //console.log(currentUser)
-    //if(currentUser=="undefined"){
-      //return toast.error("Please Login")
-    //}
-    /*
-    console.log(currentUser.email)
-    if(currentUser?.email){
-      console.log(currentUser.email)
-      axiosSecure.get(`/userDiets-email/${currentUser?.email}`)
-      .then((res) => {console.log(res.data); setUserDiets(res.data)})
-      .catch((err)=>console.log(err));
-    }else{
-      console.log('no email found')
-      navigate('/login');
-      toast("Please Login First!!")
-    }*/}
+  
   //handle add button
   const handleAdd = (id,name) => {
-  axiosSecure
-    .get(`/userDiet/${id}?email=${currentUser.email}`)
-    .then((res) => {
-      
-      if (res.data.dietId === id) {
-        alert("Already Added!");
-      } else if (userDiets.find((item) => item.diets._id === id)) {
-        alert("Already Added!");
-      } else {
-        const data = {
-          dietName:name,
-          dietId: id,
-          userEmail: currentUser.email,
-          data: new Date(),
-        };
-        axiosSecure.post('/new-userDiet', data)
-        console.log(res.data)
-        alert("Added Successfully!!")
+    axiosSecure
+      .get(`/userDiet/${id}?email=${currentUser.email}`)
+      .then((res) => {
+        console.log(res.data.dietId)
+        if (res.data.dietId === id) {
+          alert("Already Added!");
+        } else if (userDiets.find((item) => item.diets._id === id)) {
+          alert("Already Added!");
+        } else if(currentUser.email){
+          const data = {
+            dietName:name,
+            dietId: id,
+            userEmail: currentUser.email,
+            data: new Date(),
+          };
+          axiosSecure.post('/new-userDiet', data).then((res)=>{
+            console.log(res.data)
+            alert("Added Successfully!!")
+          })
+          
+        }
+      })
+      .catch((err) => console.log(err));
+      if(!currentUser){
+        alert("Please login First!!")
+        navigate('/login');
       }
-    })
-    .catch((err) => console.log(err));
-};
+  };
 
   return (
     <div className='md:w-[80%]mx-auto my-36'>

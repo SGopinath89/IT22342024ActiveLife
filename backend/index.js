@@ -281,10 +281,12 @@ async function connectAndStartServer() {
     });
 
     //get single userWorkout
-    app.get('/userWorkouts/:id',async(req,res)=>{
+    app.get('/userWorkout/:id',async(req,res)=>{
       const id=req.params.id;
-      const query={_id:new ObjectId(id)};
-      const result = await userWorkoutsCollection.findOne(query);
+      const email =req.query.email;
+      const query={workoutId:id, userEmail:email};
+      const projection = {workoutId:1};
+      const result = await userWorkoutsCollection.findOne(query,{projection:projection})
       res.send(result);
     })
 
@@ -331,6 +333,49 @@ async function connectAndStartServer() {
         }
       ];
       const result = await userDietsCollection.aggregate(pipeline).toArray(); 
+      //console.log(result)
+      res.send(result);
+    })
+
+    app.get('/userWorkouts-email/:email',async(req,res)=>{
+      
+      const email=req.params.email;
+      const query={userEmail:email};
+      
+      const pipeline=[
+        {
+          $match: query
+        },
+        {
+          $lookup:{
+            from:"workouts",
+            localField:"_id",
+            foreignField:"workoutId",
+            as:"workouts"
+          }
+        },
+        {
+          $unwind:"$workouts"
+        },
+        {
+          $lookup:{
+            from:"users",
+            localField:"workouts.name",
+            foreignField:"email",
+            as:"wName"
+          }
+        },
+        {
+          $project:{
+            _id:0,
+            dName:{
+              $arrayElemAt:["$wName",0]
+            },
+            workouts:1
+          }
+        }
+      ];
+      const result = await userWorkoutsCollection.aggregate(pipeline).toArray(); 
       //console.log(result)
       res.send(result);
     })
