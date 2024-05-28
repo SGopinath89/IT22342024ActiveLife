@@ -35,8 +35,9 @@ export const NavBar = () => {
     const [isFixed, setIsFixed]=useState(false);
     const [isDarkMode, setIsDarkMode]=useState(false);
     
-    const user=location.state?.user;
-    console.log(user)
+    //const user=location.state?.user;
+    //console.log(user)
+    const user=true;
     const [isScrolled, setIsScrolled] = useState(false);
 
   const handleScroll = () => {
@@ -146,7 +147,9 @@ export const NavBar = () => {
 
                                 {
                                     user && <li>
-                                        <img src={photoURL} alt="" className="h-[40px] rounded-full w-[40px]"/>
+                                        <NavLink to="/dashboard" className={'font-bold px-3 py-2 bg-secondary text-white rounded-xl'}>
+                                            Dashboard
+                                        </NavLink>
                                     </li>
                                 }
                                 {

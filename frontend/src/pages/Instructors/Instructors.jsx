@@ -1,16 +1,57 @@
-import React, { useEffect,useState } from 'react'
+import React, { useContext, useEffect,useState } from 'react'
 import useAxiosFetch from '../../hooks/useAxiosFetch'
+import AuthProvider, { AuthContext } from '../../utilities/providers/AuthProvider';
+import useUser from '../../hooks/useUser';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
+
 export const Instructors = () => {
-  const axiosFetch = useAxiosFetch();
+    const axiosFetch = useAxiosFetch();
     const [instructors,setInstructors] = useState([]);
+    const navigate = useNavigate();
+    const {currentUser}=useUser();
+    //console.log(currentUser)
+    const role=currentUser?.role;
+    const [userInstructor,setUserInstructor]=useState([])
+    const axiosSecure = useAxiosSecure();
     useEffect(()=>{
-        const fetchInstructor=async()=>{
-            const response = await axiosFetch.get('/instructors')
-            //console.log(response.data);
-            setInstructors(response.data);
-        }
-        fetchInstructor()
-    },[])
+        axiosFetch
+          .get("/instructors")
+          .then((res)=>setInstructors(res.data))
+          .catch((err)=>console.log(err))
+    },[axiosFetch])
+
+    const handleRequest = (id,name) => {
+        axiosSecure
+          .get(`/userInstructor/${id}?email=${currentUser.email}`)
+          .then((res) => {
+            console.log(res.data.instructorId)
+            if (res.data.instructorId === id) {
+              alert("Already Added!");
+            } else if (userInstructor.find((item) => item.instructors._id === id)) {
+              alert("Already Added!");
+            } else if(currentUser.email){
+              const data = {
+                instructorName:name,
+                instructorId: id,
+                userEmail: currentUser.email,
+                data: new Date(),
+              };
+              axiosSecure.post('/new-userInstructor', data).then((res)=>{
+                console.log(res.data)
+                alert("Requested Successfully... Contact the Instructor/Doctor!!")
+              })
+              
+            }
+          })
+          .catch((err) => console.log(err));
+          if(!currentUser){
+            alert("Please login First!!")
+            navigate('/login');
+          }
+      };
   return (
       <div className='md:w-[80%]mx-auto my-36'>
             <div>
@@ -36,9 +77,11 @@ export const Instructors = () => {
                               <p className='text-black mb-2 text-center dark:text-white'><span className='font-bold'>Experiences: </span>{instructor.experience}</p>
                               <p className='text-black mb-2 text-center dark:text-white'><span className='font-bold'>Specialities: </span>{instructor.specialities}</p>
                               <div className='text-center'>
-                                  <button className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
-                                      Request
-                                  </button>
+                              <button onClick={()=>handleRequest(instructor._id,instructor.name)} title={role == 'admin' ? 'Admin cannot be available to add' : 'You can Add Diets'} 
+                                disabled={role=='admin'}
+                                className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
+                                    Request
+                                </button>
                               </div>
                           </div>
                       </div>

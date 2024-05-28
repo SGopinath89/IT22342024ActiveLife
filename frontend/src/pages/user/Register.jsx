@@ -33,6 +33,7 @@ const Register = () => {
                         address: data.address,
                         userName: data.userName,
                         password: data.password,
+                        role:"user",
                         photoUrl: data.photoUrl,
                         employmentStatus: data.employmentStatus
                     }

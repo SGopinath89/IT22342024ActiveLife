@@ -25,6 +25,7 @@ const GoogleLogin = () => {
           address: "Is not specified",
           userName: "Is not specified",
           photoUrl:"Is not specified",
+          role:"user",
           password: "Is not specified",
           employmentStatus: "Is not specified"
         };

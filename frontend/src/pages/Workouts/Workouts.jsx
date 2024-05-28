@@ -13,7 +13,7 @@ export const Workouts = () => {
   const navigate = useNavigate();
   const {currentUser}=useUser();
   //console.log(currentUser)
-  const uName=currentUser?.userName;
+  const role=currentUser?.role;
   const [userWoukouts,setUserWoukouts]=useState([])
   const axiosSecure = useAxiosSecure();
   
@@ -94,8 +94,8 @@ export const Workouts = () => {
                           
                             </p><br/>
                             <div className='text-center'>
-                            <button onClick={()=>handleAdd(workout._id,workout.name)} title={uName == 'admin' ? 'Admin cannot be available to add' : 'You can Add Workouts'} 
-                                disabled={uName=='admin'}
+                            <button onClick={()=>handleAdd(workout._id,workout.name)} title={role == 'admin' ? 'Admin cannot be available to add' : 'You can Add Workouts'} 
+                                disabled={role=='admin'}
                                 className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
                                     Add
                                 </button>

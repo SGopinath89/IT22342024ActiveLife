@@ -13,7 +13,7 @@ const Diets = () => {
   const [diets,setDiets] = useState([]);
   const {currentUser}=useUser();
   //console.log(currentUser)
-  const uName=currentUser?.userName;
+  const role=currentUser?.role;
   const [userDiets,setUserDiets]=useState([])
   
   const axiosSecure = useAxiosSecure();
@@ -84,8 +84,8 @@ const Diets = () => {
                             <p className='text-gray-600 mb-2 text-center'><span className='font-bold'>Downsides : </span>{diet.downsides}  </p>
                             <br/>
                             <div className='text-center'>
-                                <button onClick={()=>handleAdd(diet._id,diet.name)} title={uName == 'admin' ? 'Admin cannot be available to add' : 'You can Add Diets'} 
-                                disabled={uName=='admin'}
+                                <button onClick={()=>handleAdd(diet._id,diet.name)} title={role == 'admin' ? 'Admin cannot be available to add' : 'You can Add Diets'} 
+                                disabled={role=='admin'}
                                 className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
                                     Add
                                 </button>

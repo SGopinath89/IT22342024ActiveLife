@@ -6,6 +6,8 @@ import { Workouts } from "../pages/Workouts/Workouts";
 import Diets from "../pages/Diets/Diets";
 import Login from "../pages/user/Login";
 import Register from "../pages/user/Register";
+import DashboardLayout from "../layouts/DashboardLayout";
+import Dashboard from "../pages/Dashboard/Dashboard";
 
 export const router = createBrowserRouter([
     {
@@ -38,6 +40,16 @@ export const router = createBrowserRouter([
           element: <Register/>
         }
       ]
+    },
+
+    {
+      path:"/dashboard",
+      element:<DashboardLayout/>,
+      children:[
+        {
+          index:true,
+          element:<Dashboard/>
+        }
+      ]
     }
-    
   ]);

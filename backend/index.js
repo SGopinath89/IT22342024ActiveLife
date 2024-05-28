@@ -48,6 +48,8 @@ async function connectAndStartServer() {
     const dietCollection = database.collection("diets");
     const userWorkoutsCollection = database.collection("userWorkouts");
     const userDietsCollection = database.collection("userDiets");
+    
+    const userInstructorsCollection = database.collection("userInstructors");
     const instructorCollection = database.collection("instructors");
 
     app.post('/api/set-token',async(req,res)=>{
@@ -279,7 +281,7 @@ async function connectAndStartServer() {
       const result = await userWorkoutsCollection.insertOne(newUserWorkout);
       res.send(result);
     });
-
+    
     //get single userWorkout
     app.get('/userWorkout/:id',async(req,res)=>{
       const id=req.params.id;
@@ -290,11 +292,18 @@ async function connectAndStartServer() {
       res.send(result);
     })
 
+    app.get('/userInstructor/:id',async(req,res)=>{
+      const id=req.params.id;
+      const email =req.query.email;
+      const query={instructorId:id, userEmail:email};
+      const projection = {instructorId:1};
+      const result = await userInstructorsCollection.findOne(query,{projection:projection})
+      res.send(result);
+    })
+    
+/*
     app.get('/userDiets-email/:email',async(req,res)=>{
-      /*const uEmail=req.params.email;
-      const query={email:uEmail};
-      const result = await userDietsCollection.findOne(query);
-      res.send(result);*/
+      
       const email=req.params.email;
       const query={userEmail:email};
       //console.log(email)
@@ -336,7 +345,8 @@ async function connectAndStartServer() {
       //console.log(result)
       res.send(result);
     })
-
+    */
+/*
     app.get('/userWorkouts-email/:email',async(req,res)=>{
       
       const email=req.params.email;
@@ -378,7 +388,7 @@ async function connectAndStartServer() {
       const result = await userWorkoutsCollection.aggregate(pipeline).toArray(); 
       //console.log(result)
       res.send(result);
-    })
+    })*/
 
     //display workouts that each user has added to profile
     app.get('/userWorkouts', async(req,res)=>{
@@ -408,6 +418,24 @@ async function connectAndStartServer() {
       res.send(result);
     })
 
+    app.get('/userInstructors', async(req,res)=>{
+      const result=await userInstructorsCollection.find().toArray();
+      res.send(result);
+    })
+
+    app.delete('/delete-userInstructor/:id',async(req,res)=>{
+      const id=req.params.id;
+      const query = {_id: new ObjectId(id)};
+      const result=await userInstructorsCollection.deleteOne(query);
+      res.send(result);
+    });
+
+    app.post('/new-userInstructor', async (req, res) => {
+      const newUserInstructor = req.body;
+      const result = await userInstructorsCollection.insertOne(newUserInstructor);
+      res.send(result);
+    });
+
     //add diet to a user
     app.post('/new-userDiet', async (req, res) => {
       const newUserDiet = req.body;
@@ -425,6 +453,7 @@ async function connectAndStartServer() {
       const result = await userDietsCollection.findOne(query,{projection:projection})
       res.send(result);
     })
+    /*
     app.get('/userDiet-cartEmail/:email',async(req,res)=>{
       const email=req.params.email;
       const query={userEmail:email};
@@ -434,7 +463,7 @@ async function connectAndStartServer() {
       const query2 = {_id:{$in:dietIds}};
       const result = await userDietsCollection.find(query2).toArray();
       res.send(result);
-    })
+    })*/
 
     //display diets that each user has added to profile
     app.get('/userDiets', async(req,res)=>{
