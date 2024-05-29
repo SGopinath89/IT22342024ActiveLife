@@ -24,6 +24,12 @@ export const Instructors = () => {
     },[axiosFetch])
 
     const handleRequest = (id,name) => {
+        if (!currentUser || !currentUser.email) {
+          alert("Please login First!!");
+          navigate('/login');
+          return;
+        }
+    
         axiosSecure
           .get(`/userInstructor/${id}?email=${currentUser.email}`)
           .then((res) => {
@@ -47,10 +53,7 @@ export const Instructors = () => {
             }
           })
           .catch((err) => console.log(err));
-          if(!currentUser){
-            alert("Please login First!!")
-            navigate('/login');
-          }
+          
       };
   return (
       <div className='md:w-[80%]mx-auto my-36'>

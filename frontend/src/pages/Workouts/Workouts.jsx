@@ -25,6 +25,11 @@ export const Workouts = () => {
     },[axiosFetch])
 
     const handleAdd = (id,name) => {
+      if (!currentUser || !currentUser.email) {
+        alert("Please login First!!");
+        navigate('/login');
+        return;
+      }  
       axiosSecure
         .get(`/userWorkout/${id}?email=${currentUser.email}`)
         .then((res) => {
@@ -48,10 +53,7 @@ export const Workouts = () => {
           }
         })
         .catch((err) => console.log(err));
-        if(!currentUser){
-          alert("Please login First!!")
-          navigate('/login');
-        }
+        
     };
 
 

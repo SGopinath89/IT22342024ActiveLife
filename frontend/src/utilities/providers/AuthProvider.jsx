@@ -42,9 +42,9 @@ const AuthProvider = ({children}) => {
 
     //logout user
 
-    const logout=async()=>{
+    const logout=async(email,password)=>{
       try{
-        return await signOut(auth,email,password)
+        const user = await signOut(auth,email,password)
       }catch(error){
         setError(error.code);
         throw error;

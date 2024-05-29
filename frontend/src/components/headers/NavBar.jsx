@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink, useLocation, useNavigation } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate, useNavigation } from 'react-router-dom'
 import { useState} from 'react'
 import { ThemeProvider, THEME_ID, createTheme } from '@mui/material/styles';
 import { Switch } from '@mui/material';
@@ -8,6 +8,10 @@ import photoURL from "../../assets/home/user.png"
 import {FaBars} from "react-icons/fa"
 import {motion} from "framer-motion"
 import useUser from '../../hooks/useUser';
+import Swal from 'sweetalert2';
+import { IoMdLogOut } from "react-icons/io";
+import useAuth from '../../hooks/useAuth';
+
 const navLinks=[
     {name:'Home', route:'/'},
     {name:'Wourkout', route:"/workouts"},//section id
@@ -30,12 +34,15 @@ export const NavBar = () => {
     const navigation=useNavigation();
     const location=useLocation();
     const {currentUser} = useUser();
+    const {logout} = useAuth();
     const [isMobileMenuOpen,setisMobileMenuOpen]=useState(false);
     const [isHome,setIsHome]=useState(false);
     const [isLogin,setIsLogin]=useState(false);
     const [scrollPosition,setScrollPosition]=useState(0);
     const [isFixed, setIsFixed]=useState(false);
     const [isDarkMode, setIsDarkMode]=useState(false);
+    
+    const navigate = useNavigate();
     
     //const user=location.state?.user;
     //console.log(user)
@@ -96,8 +103,29 @@ export const NavBar = () => {
         }
     },[scrollPosition]);
 
-    const handleLogout=()=>{
-        console.log("Logged Out");
+    const handleLogOut = ()=>{
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Log Out Me!"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                logout(currentUser.email, currentUser.password).then(Swal.fire({                
+                title: "Loged Out!",
+                text: "You have logged out from your acoount.",
+                icon: "success"
+              }) 
+            ).catch((err)=>
+                    console.log(err)
+            );
+            navigate("/");
+              
+            }
+          });
     }
 
     return (
@@ -156,9 +184,13 @@ export const NavBar = () => {
                                 }
                                 {
                                     (role === "user"|| role === "admin") && <li>
-                                        <NavLink onClick={handleLogout} className={'font-bold px-3 py-2 bg-secondary text-white rounded-xl'}>
-                                            Logout
-                                        </NavLink>
+                                        <button
+                                            onClick={()=>handleLogOut()}
+                                            className=" flex items-center gap-x-4 p-2 rounded-md text-white
+                                                duration-150 cursor-pointer font-bold text-sm  bg-secondary hover:text-black">
+                                            <IoMdLogOut className='text-2xl'/>
+                                                LogOut
+                                        </button>
                                     </li>
                                 }
                                 {
@@ -169,7 +201,7 @@ export const NavBar = () => {
                                     <ThemeProvider theme={theme}>
                                         <div className="flex flex-col justify-center items-center">
                                             <Switch onChange={()=>setIsDarkMode(!isDarkMode)}>
-                                                <h1 className="text-[8px]">ight/Dark</h1>
+                                                <h1 className="text-[8px] text-gray-200">Light/Dark</h1>
                                             </Switch>
                                         </div>
                                     </ThemeProvider>

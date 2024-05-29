@@ -26,7 +26,7 @@ const Diets = () => {
   },[axiosFetch]);
   
   //handle add button
-  const handleAdd = (id,name) => {
+  /*const handleAdd = (id,name) => {
     axiosSecure
       .get(`/userDiet/${id}?email=${currentUser.email}`)
       .then((res) => {
@@ -48,12 +48,49 @@ const Diets = () => {
           })
           
         }
-      })
-      .catch((err) => console.log(err));
-      if(!currentUser){
-        alert("Please login First!!")
+      }).catch((err) =>{
+        if(!currentUser.email){
+          alert("Please login First!!")
+          navigate('/login');
+        }
+        console.log(err)
+        alert("Please login First!!");
         navigate('/login');
-      }
+      } );
+      
+  };*/
+  const handleAdd = (id, name) => {
+    if (!currentUser || !currentUser.email) {
+      alert("Please login First!!");
+      navigate('/login');
+      return;
+    }
+  
+    axiosSecure
+      .get(`/userDiet/${id}?email=${currentUser.email}`)
+      .then((res) => {
+        console.log(res.data.dietId);
+        if (res.data.dietId === id) {
+          alert("Already Added!");
+        } else if (userDiets.find((item) => item.diets._id === id)) {
+          alert("Already Added!");
+        } else {
+          const data = {
+            dietName: name,
+            dietId: id,
+            userEmail: currentUser.email,
+            date: new Date(),
+          };
+          axiosSecure.post('/new-userDiet', data).then((res) => {
+            console.log(res.data);
+            alert("Added Successfully!!");
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("An error occurred. Please try again.");
+      });
   };
 
   return (

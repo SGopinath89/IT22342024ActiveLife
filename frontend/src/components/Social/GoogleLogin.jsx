@@ -9,41 +9,44 @@ const GoogleLogin = () => {
 
   const {googleLogin} = useContext(AuthContext);
   const navigate = useNavigate();
-  const handleLogin= async ()=>{
-    //console.log("google login")
-    try{
-      const userCredential=await googleLogin();
+  const handleLogin = async () => {
+    try {
+      const userCredential = await googleLogin();
       const user = userCredential.user;
       console.log(user);
-      if(user){
-        const userImp={
-          fullName:user?.displayName,
-          gender:"Is not specified",
+      if (user) {
+        const userImp = {
+          fullName: user?.displayName,
+          gender: "Is not specified",
           email: user?.email,
           phoneNo: "Is not specified",
           age: "Is not specified",
           address: "Is not specified",
           userName: "Is not specified",
-          photoUrl:"Is not specified",
-          role:"user",
+          photoUrl: "Is not specified",
+          role: "user",
           password: "Is not specified",
           employmentStatus: "Is not specified"
         };
 
-        if(user.email && user.displayName){
-          return axios.post('http://localhost:5000/new-user',userImp).then(()=>{
-              navigate('/');
-              return "Registration Successful"
-          }).catch((err)=>{
-            console.log(err)
-            throw new Error(err)
-          })
+        if (user.email && user.displayName) {
+          // Check if the user already exists in the database
+          const existingUser = await axios.get(`http://localhost:5000/user/${user.email}`);
+          if (existingUser.data) {
+            // User exists, proceed with login
+            navigate('/');
+            alert("Login Successful");
+          } else {
+            // User does not exist, create a new user document
+            await axios.post('http://localhost:5000/new-user', userImp);
+            navigate('/');
+            alert("Registration Successful");
+          }
         }
       }
-    }catch(error){
-      console.error(error.message)
+    } catch (error) {
+      console.error(error.message);
     }
-    
   }
 
   return (

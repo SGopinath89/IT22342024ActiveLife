@@ -9,7 +9,7 @@ import { IoFastFoodSharp } from "react-icons/io5";
 import {  } from "react-icons/io";
 import {  } from "react-icons/si";
 import { CgGym } from "react-icons/cg";
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { IoMdLogOut } from "react-icons/io";
 import Swal from 'sweetalert2'
@@ -80,7 +80,7 @@ const DashboardLayout = () => {
     const [open, setOpen] = useState(true);
     const {loader,logout} = useAuth();
     const {currentUser} = useUser();
-    //const role = currentUser?.role;
+    const role = currentUser?.role;
     const navigate = useNavigate();
     if(loader){
         return <div>Loading...</div>
@@ -109,16 +109,18 @@ const DashboardLayout = () => {
             }
           });
     }
-    const role = "user";
+    //const role = "user";
   return (
     <div className='flex'>
         <div className={`${open ? "w-[250px] overflow-y-auto":"w-[125px] overflow-auto"} bg-[#e4c91b] h-screen p-5 
         md:block hidden pt-6 relative duration-300`}>
             <div className='flex gap-x-4 items-center'>
                 <img onClick={()=>setOpen(!open)} src={logoBlack} alt='' className={`cursor-pointer h-[60px] duration-500 
-                ${open && "rotate-[360deg] "}`}/>           
+                ${open && "rotate-[360deg] "}`}/> 
+                <Link to="/">
                 <h1 onClick={()=>setOpen(!open)} className={`text-dark-primary cursor-pointer font-bold origin-left 
-                text-xl duration-200 ${!open && "scale-0"}`}>Active-Life</h1>   
+                text-xl duration-200 ${!open && "scale-0"}`}>Active-Life</h1>  
+                </Link> 
             </div>
             {
                 role === "admin" && 
@@ -169,7 +171,8 @@ const DashboardLayout = () => {
                 </ul>
             }
 
-            {<ul className='pt-6'>
+            {
+                <ul className='pt-6'>
                     <p className={`ml-3 text-gray-700 ${!open && "hidden"}`}><small>USEFUL LINKS</small></p>
                 
                     {
