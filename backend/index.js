@@ -8,7 +8,6 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-//verify token
 const verifyJWT = (req,res,next)=>{
   const authorization=req.headers.authorization;
   if(!authorization){
@@ -26,9 +25,9 @@ const verifyJWT = (req,res,next)=>{
 }
 
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@active-life.y0xkuj8.mongodb.net/?retryWrites=true&w=majority&appName=active-life`;
 
-// Create a Mong oClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -48,7 +47,6 @@ async function connectAndStartServer() {
     const dietCollection = database.collection("diets");
     const userWorkoutsCollection = database.collection("userWorkouts");
     const userDietsCollection = database.collection("userDiets");
-    
     const userInstructorsCollection = database.collection("userInstructors");
     const instructorCollection = database.collection("instructors");
 
@@ -301,7 +299,7 @@ async function connectAndStartServer() {
       res.send(result);
     })
     
-/*
+    /*
     app.get('/userDiets-email/:email',async(req,res)=>{
       
       const email=req.params.email;
@@ -346,7 +344,8 @@ async function connectAndStartServer() {
       res.send(result);
     })
     */
-/*
+
+    /*
     app.get('/userWorkouts-email/:email',async(req,res)=>{
       
       const email=req.params.email;

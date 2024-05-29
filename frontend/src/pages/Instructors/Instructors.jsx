@@ -6,6 +6,7 @@ import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 export const Instructors = () => {
     const axiosFetch = useAxiosFetch();
@@ -25,7 +26,13 @@ export const Instructors = () => {
 
     const handleRequest = (id,name) => {
         if (!currentUser || !currentUser.email) {
-          alert("Please login First!!");
+          Swal.fire({
+            position: "top-end",
+            icon: "warning",
+            title: "Please Login First!!!",
+            showConfirmButton: false,
+            timer: 1500
+          });
           navigate('/login');
           return;
         }
@@ -35,9 +42,21 @@ export const Instructors = () => {
           .then((res) => {
             console.log(res.data.instructorId)
             if (res.data.instructorId === id) {
-              alert("Already Added!");
+              Swal.fire({
+                position: "top-end",
+                icon: "warning",
+                title: "Already Requested!!",
+                showConfirmButton: false,
+                timer: 1500
+              });
             } else if (userInstructor.find((item) => item.instructors._id === id)) {
-              alert("Already Added!");
+              Swal.fire({
+                position: "top-end",
+                icon: "warning",
+                title: "Already Requested!!",
+                showConfirmButton: false,
+                timer: 1500
+              });
             } else if(currentUser.email){
               const data = {
                 instructorName:name,
@@ -47,12 +66,27 @@ export const Instructors = () => {
               };
               axiosSecure.post('/new-userInstructor', data).then((res)=>{
                 console.log(res.data)
-                alert("Requested Successfully... Contact the Instructor/Doctor!!")
+                Swal.fire({
+                  position: "top-end",
+                  icon: "success",
+                  title: "Requested Successfully!!! Contact the Instructor/Doctor!!",
+                  showConfirmButton: false,
+                  timer: 1500
+                });
               })
               
             }
           })
-          .catch((err) => console.log(err));
+          .catch((err) => {
+            console.log(err);
+            Swal.fire({
+              position: "top-end",
+              icon: "warning",
+              title: "An error occurred. Please try again.",
+              showConfirmButton: false,
+              timer: 1500
+            });
+          });
           
       };
   return (
@@ -63,7 +97,9 @@ export const Instructors = () => {
             <br/>
             <div>
                 <br/>
-                <h1 className='text-3xl font-bold text-center text-black dark:text-white'>Description</h1>
+                <p className='text-2xl font-bold text-center text-black dark:text-white'>
+                You can Request guidance from a professional and contact then through the details given.
+                </p>
                 <br/>
             </div>
             {            

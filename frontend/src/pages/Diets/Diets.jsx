@@ -6,6 +6,7 @@ import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const Diets = () => {
   const navigate = useNavigate();
@@ -26,42 +27,15 @@ const Diets = () => {
   },[axiosFetch]);
   
   //handle add button
-  /*const handleAdd = (id,name) => {
-    axiosSecure
-      .get(`/userDiet/${id}?email=${currentUser.email}`)
-      .then((res) => {
-        console.log(res.data.dietId)
-        if (res.data.dietId === id) {
-          alert("Already Added!");
-        } else if (userDiets.find((item) => item.diets._id === id)) {
-          alert("Already Added!");
-        } else if(currentUser.email){
-          const data = {
-            dietName:name,
-            dietId: id,
-            userEmail: currentUser.email,
-            data: new Date(),
-          };
-          axiosSecure.post('/new-userDiet', data).then((res)=>{
-            console.log(res.data)
-            alert("Added Successfully!!")
-          })
-          
-        }
-      }).catch((err) =>{
-        if(!currentUser.email){
-          alert("Please login First!!")
-          navigate('/login');
-        }
-        console.log(err)
-        alert("Please login First!!");
-        navigate('/login');
-      } );
-      
-  };*/
-  const handleAdd = (id, name) => {
+    const handleAdd = (id, name) => {
     if (!currentUser || !currentUser.email) {
-      alert("Please login First!!");
+      Swal.fire({
+        position: "top-end",
+        icon: "warning",
+        title: "Please Login First!!!",
+        showConfirmButton: false,
+        timer: 1500
+      });
       navigate('/login');
       return;
     }
@@ -71,9 +45,21 @@ const Diets = () => {
       .then((res) => {
         console.log(res.data.dietId);
         if (res.data.dietId === id) {
-          alert("Already Added!");
+          Swal.fire({
+            position: "top-end",
+            icon: "warning",
+            title: "Already Added!!",
+            showConfirmButton: false,
+            timer: 1500
+          });
         } else if (userDiets.find((item) => item.diets._id === id)) {
-          alert("Already Added!");
+          Swal.fire({
+            position: "top-end",
+            icon: "warning",
+            title: "Already Added!!",
+            showConfirmButton: false,
+            timer: 1500
+          });
         } else {
           const data = {
             dietName: name,
@@ -83,13 +69,25 @@ const Diets = () => {
           };
           axiosSecure.post('/new-userDiet', data).then((res) => {
             console.log(res.data);
-            alert("Added Successfully!!");
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Successfully Added!!",
+              showConfirmButton: false,
+              timer: 1500
+            });
           });
         }
       })
       .catch((err) => {
         console.log(err);
-        alert("An error occurred. Please try again.");
+        Swal.fire({
+          position: "top-end",
+          icon: "warning",
+          title: "An error occurred. Please try again.",
+          showConfirmButton: false,
+          timer: 1500
+        });
       });
   };
 
@@ -100,8 +98,13 @@ const Diets = () => {
             </div>
             <br/>
             <div>
-                <br/>
-                <h1 className='text-3xl font-bold text-center text-black dark:text-white'>Description</h1>
+                <p className='text-2xl font-bold text-center text-black dark:text-white'>
+                You can choose any Diet that suits your preferences and fitness goals. </p>
+                <p className='text-2xl font-bold text-center text-black dark:text-white'>
+                Comprehensive instructions, benefits and also downsides for each diet are provided, </p>                
+                <p className='text-2xl font-bold text-center text-black dark:text-white'>
+                ensuring you understand how to maintain your meals correctly.
+                </p>
                 <br/>
             </div>
             {

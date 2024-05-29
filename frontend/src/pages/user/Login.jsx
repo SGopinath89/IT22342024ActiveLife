@@ -4,7 +4,7 @@ import { MdAlternateEmail } from "react-icons/md";
 import { IoEyeOutline } from "react-icons/io5";
 import GoogleLogin from '../../components/Social/GoogleLogin';
 import useAuth from '../../hooks/useAuth';
-
+import Swal from 'sweetalert2';
 const Login = () => {
 
   const [showPassword, setShowPassword] = useState(false)
@@ -23,23 +23,20 @@ const Login = () => {
     //console.log(formData)
     try{
       const user = await login(formData.email,formData.password);
-      alert("Login Successfull!!")
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Login Successful!!",
+        showConfirmButton: false,
+        timer: 1500
+      });
       navigate(location.state?.from || '/', {state:{user}})
     }catch(err){
       setError(err.code);
     }finally{
       setLoader(false);
     }
-    /*
-    login(formData.email, formData.password)
-    .then(()=>{
-      alert("Login Successfull!!")
-      navigate(location.state?.from || '/',{state:{email:formData.email}})
-            
-    }).catch((err)=>{
-      setError(err.code);
-      setLoader(false)
-    })*/
+    
     
   }
 

@@ -201,8 +201,9 @@ export const NavBar = () => {
                                     <ThemeProvider theme={theme}>
                                         <div className="flex flex-col justify-center items-center">
                                             <Switch onChange={()=>setIsDarkMode(!isDarkMode)}>
-                                                <h1 className="text-[8px] text-gray-200">Light/Dark</h1>
+                                                
                                             </Switch>
+                                            <h1 className="text-[8px] text-black font-bold dark:text-white">Light/Dark</h1>
                                         </div>
                                     </ThemeProvider>
                                 </li>

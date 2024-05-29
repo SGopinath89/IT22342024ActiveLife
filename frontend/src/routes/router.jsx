@@ -8,6 +8,7 @@ import Login from "../pages/user/Login";
 import Register from "../pages/user/Register";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Dashboard from "../pages/Dashboard/Dashboard";
+import UserP from "../pages/Dashboard/user/UserP";
 
 export const router = createBrowserRouter([
     {
@@ -49,6 +50,10 @@ export const router = createBrowserRouter([
         {
           index:true,
           element:<Dashboard/>
+        },
+        {
+          path:"userP",
+          element:<UserP/>
         }
       ]
     }

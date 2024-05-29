@@ -9,10 +9,12 @@ import { IoFastFoodSharp } from "react-icons/io5";
 import {  } from "react-icons/io";
 import {  } from "react-icons/si";
 import { CgGym } from "react-icons/cg";
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { IoMdLogOut } from "react-icons/io";
 import Swal from 'sweetalert2'
+import Scroll from '../hooks/useScroll';
+import RotateLoader from 'react-spinners/RotateLoader';
 
 const adminNavItems=[
     {
@@ -44,7 +46,7 @@ const adminNavItems=[
 
 const userNavItems=[
     {
-        to:"/dashboard/student", 
+        to:"/dashboard/userP", 
         icon: <BiHomeAlt className='text-4xl'/>, 
         label:"Dashboard"
     },
@@ -75,7 +77,6 @@ const lastMenuItems=[
 
 ]
 
-
 const DashboardLayout = () => {
     const [open, setOpen] = useState(true);
     const {loader,logout} = useAuth();
@@ -83,8 +84,10 @@ const DashboardLayout = () => {
     const role = currentUser?.role;
     const navigate = useNavigate();
     if(loader){
-        return <div>Loading...</div>
-    }
+        return <div className='flex justify-center items-center h-screen'>
+          <RotateLoader color="#C1A917" />
+        </div>
+      }
     const handleLogOut = ()=>{
         Swal.fire({
             title: "Are you sure?",
@@ -109,7 +112,7 @@ const DashboardLayout = () => {
             }
           });
     }
-    //const role = "user";
+
   return (
     <div className='flex'>
         <div className={`${open ? "w-[250px] overflow-y-auto":"w-[125px] overflow-auto"} bg-[#e4c91b] h-screen p-5 
@@ -204,6 +207,10 @@ const DashboardLayout = () => {
                     </li>
                 </ul>
             }
+        </div>
+        <div>
+            <Scroll/>
+            <Outlet/>
         </div>
     </div>
     

@@ -4,6 +4,8 @@ import { useContext } from "react";
 import { AuthContext } from "../../utilities/providers/AuthProvider";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';;
+
 //Video 3 time 2:45:00
 const GoogleLogin = () => {
 
@@ -35,12 +37,24 @@ const GoogleLogin = () => {
           if (existingUser.data) {
             // User exists, proceed with login
             navigate('/');
-            alert("Login Successful");
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Login Successful!!",
+              showConfirmButton: false,
+              timer: 1500
+            });
           } else {
             // User does not exist, create a new user document
             await axios.post('http://localhost:5000/new-user', userImp);
             navigate('/');
-            alert("Registration Successful");
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Login & Register Successful!!",
+              showConfirmButton: false,
+              timer: 1500
+            });
           }
         }
       }

@@ -6,6 +6,7 @@ import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 export const Workouts = () => {
   const axiosFetch = useAxiosFetch();
@@ -26,7 +27,13 @@ export const Workouts = () => {
 
     const handleAdd = (id,name) => {
       if (!currentUser || !currentUser.email) {
-        alert("Please login First!!");
+        Swal.fire({
+          position: "top-end",
+          icon: "warning",
+          title: "Please Login First!!!",
+          showConfirmButton: false,
+          timer: 1500
+        });
         navigate('/login');
         return;
       }  
@@ -35,9 +42,21 @@ export const Workouts = () => {
         .then((res) => {
           console.log(res.data.workoutId)
           if (res.data.workoutId === id) {
-            alert("Already Added!");
+            Swal.fire({
+              position: "top-end",
+              icon: "warning",
+              title: "Already Added!!",
+              showConfirmButton: false,
+              timer: 1500
+            });
           } else if (userWoukouts.find((item) => item.workouts._id === id)) {
-            alert("Already Added!");
+            Swal.fire({
+              position: "top-end",
+              icon: "warning",
+              title: "Already Added!!",
+              showConfirmButton: false,
+              timer: 1500
+            });
           } else if(currentUser.email){
             const data = {
               workoutName:name,
@@ -47,12 +66,27 @@ export const Workouts = () => {
             };
             axiosSecure.post('/new-userWorkout', data).then((res)=>{
               console.log(res.data)
-              alert("Added Successfully!!")
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Added Successfully!!",
+                showConfirmButton: false,
+                timer: 1500
+              });
             })
             
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+          Swal.fire({
+            position: "top-end",
+            icon: "warning",
+            title: "An error occurred. Please try again.",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        });
         
     };
 
@@ -64,8 +98,17 @@ export const Workouts = () => {
             </div>
             <br/>
             <div>
-                <br/>
-                <h1 className='text-3xl font-bold text-center text-black dark:text-white'>Description</h1>
+                <p className='text-2xl font-bold text-center text-black dark:text-white'>
+                You can choose any workout that suits your preferences and fitness goals. </p>
+                <p className='text-2xl font-bold text-center text-black dark:text-white'>
+                We allow you to keep a record of the number of days you have completed each workout, </p>
+                <p className='text-2xl font-bold text-center text-black dark:text-white'>
+                helping you stay on track and monitor your progress. </p>
+                <p className='text-2xl font-bold text-center text-black dark:text-white'>
+                Comprehensive instructions for each workout are provided in easy-to-follow steps, </p>                
+                <p className='text-2xl font-bold text-center text-black dark:text-white'>
+                ensuring you understand how to perform each exercise correctly and effectively.
+                </p>
                 <br/>
             </div>
             {
