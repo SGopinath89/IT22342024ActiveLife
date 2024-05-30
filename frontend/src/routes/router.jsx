@@ -9,6 +9,9 @@ import Register from "../pages/user/Register";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import UserP from "../pages/Dashboard/user/UserP";
+import MyDiets from "../pages/Dashboard/user/MyDiets";
+import MyWorkouts from "../pages/Dashboard/user/MyWorkouts";
+import MyInstructors from "../pages/Dashboard/user/MyInstructors";
 
 export const router = createBrowserRouter([
     {
@@ -54,6 +57,19 @@ export const router = createBrowserRouter([
         {
           path:"userP",
           element:<UserP/>
+        },
+        {
+          path:"my-Diets",
+          element:< MyDiets/>
+
+        },
+        {
+          path:"my-Workouts",
+          element:<MyWorkouts/>
+        },
+        {
+          path:"my-Instructors",
+          element:<MyInstructors/>
         }
       ]
     }

@@ -27,7 +27,7 @@ const Diets = () => {
   },[axiosFetch]);
   
   //handle add button
-    const handleAdd = (id, name) => {
+    const handleAdd = (id, name,img) => {
     if (!currentUser || !currentUser.email) {
       Swal.fire({
         position: "top-end",
@@ -65,6 +65,7 @@ const Diets = () => {
             dietName: name,
             dietId: id,
             userEmail: currentUser.email,
+            dietImg:img,
             date: new Date(),
           };
           axiosSecure.post('/new-userDiet', data).then((res) => {
@@ -124,7 +125,7 @@ const Diets = () => {
                             <p className='text-gray-600 mb-2 text-center'><span className='font-bold'>Downsides : </span>{diet.downsides}  </p>
                             <br/>
                             <div className='text-center'>
-                                <button onClick={()=>handleAdd(diet._id,diet.name)} title={role == 'admin' ? 'Admin cannot be available to add' : 'You can Add Diets'} 
+                                <button onClick={()=>handleAdd(diet._id,diet.name,diet.dietImg)} title={role == 'admin' ? 'Admin cannot be available to add' : 'You can Add Diets'} 
                                 disabled={role=='admin'}
                                 className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
                                     Add

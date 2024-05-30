@@ -25,7 +25,7 @@ export const Workouts = () => {
         .catch((err)=>console.log(err))
     },[axiosFetch])
 
-    const handleAdd = (id,name) => {
+    const handleAdd = (id,name,img,days) => {
       if (!currentUser || !currentUser.email) {
         Swal.fire({
           position: "top-end",
@@ -61,6 +61,8 @@ export const Workouts = () => {
             const data = {
               workoutName:name,
               workoutId: id,
+              workoutImg:img,
+              totaldays:days,
               userEmail: currentUser.email,
               data: new Date(),
             };
@@ -139,7 +141,7 @@ export const Workouts = () => {
                           
                             </p><br/>
                             <div className='text-center'>
-                            <button onClick={()=>handleAdd(workout._id,workout.name)} title={role == 'admin' ? 'Admin cannot be available to add' : 'You can Add Workouts'} 
+                            <button onClick={()=>handleAdd(workout._id,workout.name,workout.workoutImg,workout.numberOfDays)} title={role == 'admin' ? 'Admin cannot be available to add' : 'You can Add Workouts'} 
                                 disabled={role=='admin'}
                                 className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
                                     Add
