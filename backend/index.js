@@ -85,6 +85,7 @@ async function connectAndStartServer() {
       res.send(result);
     })
 
+    //get user from id
     app.get('/users/:id',verifyJWT,async(req,res)=>{
       const id=req.params.id;
       const query={_id:new ObjectId(id)};
@@ -92,6 +93,7 @@ async function connectAndStartServer() {
       res.send(result);
     })
 
+    //get user from email
     app.get('/user/:email',async(req,res)=>{
       const email=req.params.email;
       const query={email:email};
@@ -99,6 +101,7 @@ async function connectAndStartServer() {
       res.send(result);
     })
 
+    //delete user
     app.delete('/delete-user/:id',verifyJWT,verifyAdmin,async(req,res)=>{
       const id=req.params.id;
       const query = {_id: new ObjectId(id)};
@@ -106,6 +109,7 @@ async function connectAndStartServer() {
       res.send(result);
     })
 
+    //update user details
     app.put('/update-userDetails/:id',async(req,res)=>{
       const id=req.params.id;
       const updateUser=req.body;
@@ -170,6 +174,7 @@ async function connectAndStartServer() {
       res.send(result);
     })
 
+    //delete diet
     app.delete('/delete-diet/:id',verifyJWT,verifyAdmin,async(req,res)=>{
       const id=req.params.id;
       const query = {_id: new ObjectId(id)};
@@ -199,6 +204,7 @@ async function connectAndStartServer() {
       res.send(result);
     })
 
+    //update workout
     app.put('/update-workouts/:id',verifyJWT,verifyAdmin,async(req,res)=>{
       const id=req.params.id;
       const updateWorkout=req.body;
@@ -215,6 +221,7 @@ async function connectAndStartServer() {
       res.send(result);
     })
 
+    //delete workout
     app.delete('/delete-workout/:id',verifyJWT,verifyAdmin,async(req,res)=>{
       const id=req.params.id;
       const query = {_id: new ObjectId(id)};
@@ -244,6 +251,7 @@ async function connectAndStartServer() {
       res.send(result);
     })
 
+    //update instructor
     app.put('/update-instructors/:id',verifyJWT,verifyAdmin,async(req,res)=>{
       const id=req.params.id;
       const updateInstructor=req.body;
@@ -263,6 +271,7 @@ async function connectAndStartServer() {
       res.send(result);
     })
 
+    //delete instructor
     app.delete('/delete-instructor/:id',verifyJWT,verifyAdmin,async(req,res)=>{
       const id=req.params.id;
       const query = {_id: new ObjectId(id)};
@@ -290,6 +299,7 @@ async function connectAndStartServer() {
       res.send(result);
     })
 
+    //get user's instructors by id
     app.get('/userInstructor/:id',async(req,res)=>{
       const id=req.params.id;
       const email =req.query.email;
@@ -409,6 +419,7 @@ async function connectAndStartServer() {
       res.send(result);
     })
 
+    //delete user workouts
     app.delete('/delete-userWorkout/:id',async(req,res)=>{
       const id=req.params.id;
       const query = {_id: new ObjectId(id)};
@@ -416,11 +427,13 @@ async function connectAndStartServer() {
       res.send(result);
     })
 
+    //get all user instructors
     app.get('/userInstructors', async(req,res)=>{
       const result=await userInstructorsCollection.find().toArray();
       res.send(result);
     })
 
+    //delete user instructors
     app.delete('/delete-userInstructor/:id',async(req,res)=>{
       const id=req.params.id;
       const query = {_id: new ObjectId(id)};
@@ -428,6 +441,7 @@ async function connectAndStartServer() {
       res.send(result);
     });
 
+    //add new user instructor
     app.post('/new-userInstructor', async (req, res) => {
       const newUserInstructor = req.body;
       const result = await userInstructorsCollection.insertOne(newUserInstructor);
@@ -452,6 +466,7 @@ async function connectAndStartServer() {
       res.send(result);
     })
     
+    //get user diet by email
     app.get('/userDiet-Email/:userEmail', async (req, res) => {
       const userEmail = req.params.userEmail;
       try {
@@ -466,6 +481,7 @@ async function connectAndStartServer() {
       }
     });
     
+    //get user workout by email
     app.get('/userWorkout-Email/:userEmail', async (req, res) => {
       const userEmail = req.params.userEmail;
       try {
@@ -480,6 +496,7 @@ async function connectAndStartServer() {
       }
     });
 
+    //get user Instructor by email
     app.get('/userInstructor-Email/:userEmail', async (req, res) => {
       const userEmail = req.params.userEmail;
       try {
@@ -500,6 +517,7 @@ async function connectAndStartServer() {
       res.send(result);
     })
   
+    //delete user diet
     app.delete('/delete-userDiet/:id',async(req,res)=>{
       const id=req.params.id;
       const query = {_id: new ObjectId(id)};
@@ -515,6 +533,7 @@ async function connectAndStartServer() {
       res.send(result);
     });
 
+    //update user health record
     app.put('/update-userHRecord/:id',async(req,res)=>{
       const id=req.params.id;
       const updateRecord=req.body;
@@ -542,6 +561,7 @@ async function connectAndStartServer() {
       res.send(result);
     })
 
+    
     app.get('/',(req,res)=>{
       res.send('Active Life Server is running!!')
     })
