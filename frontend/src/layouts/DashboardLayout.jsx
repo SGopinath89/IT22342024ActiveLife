@@ -83,11 +83,13 @@ const DashboardLayout = () => {
     const {currentUser} = useUser();
     const role = currentUser?.role;
     const navigate = useNavigate();
+
     if(loader){
         return <div className='flex justify-center items-center h-screen'>
           <RotateLoader color="#C1A917" />
         </div>
-      }
+    }
+
     const handleLogOut = ()=>{
         Swal.fire({
             title: "Are you sure?",
@@ -99,15 +101,15 @@ const DashboardLayout = () => {
             confirmButtonText: "Yes, Log Out Me!"
           }).then((result) => {
             if (result.isConfirmed) {
-                logout().then(Swal.fire({                
+                logout(currentUser.email, currentUser.password).then(Swal.fire({                
                 title: "Loged Out!",
                 text: "You have logged out from your acoount.",
                 icon: "success"
               }) 
             ).catch((err)=>
-                    console.log(err.message)
+                    console.log(err)
             );
-            navigate("/")
+            navigate("/");
               
             }
           });
@@ -115,7 +117,7 @@ const DashboardLayout = () => {
 
   return (
     <div className='flex'>
-        <div className={`${open ? "w-[250px] overflow-y-auto":"w-[125px] overflow-auto"} bg-[#e4c91b] h-screen p-5 
+        <div className={`${open ? "w-72 overflow-y-auto":"w-[110px] overflow-auto"} bg-[#e4c91b] h-screen p-5 
         md:block hidden pt-6 relative duration-300`}>
             <div className='flex gap-x-4 items-center'>
                 <img onClick={()=>setOpen(!open)} src={logoBlack} alt='' className={`cursor-pointer h-[60px] duration-500 
@@ -199,7 +201,7 @@ const DashboardLayout = () => {
                             onClick={()=>handleLogOut()}
                             className=" flex items-center gap-x-4 p-2 rounded-md text-[#413F44]
                                 duration-150 cursor-pointer font-bold text-sm  hover:bg-secondary hover:text-black">
-                            <IoMdLogOut className='text-2xl'/>
+                            <IoMdLogOut className='text-3xl'/>
                             <span className={`${!open && "hidden"} origin-left duration-200`}>
                                    LogOut
                             </span>
@@ -208,7 +210,7 @@ const DashboardLayout = () => {
                 </ul>
             }
         </div>
-        <div>
+        <div className='w-full'>
             <Scroll/>
             <Outlet/>
         </div>

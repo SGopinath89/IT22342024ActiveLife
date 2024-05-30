@@ -300,7 +300,7 @@ async function connectAndStartServer() {
     })
     
     /*
-    app.get('/userDiets-email/:email',async(req,res)=>{
+    app.get('/userDiets-PipeEmail/:email',async(req,res)=>{
       
       const email=req.params.email;
       const query={userEmail:email};
@@ -340,11 +340,10 @@ async function connectAndStartServer() {
         }
       ];
       const result = await userDietsCollection.aggregate(pipeline).toArray(); 
-      //console.log(result)
+      console.log(result)
       res.send(result);
-    })
-    */
-
+    })*/
+    
     /*
     app.get('/userWorkouts-email/:email',async(req,res)=>{
       
@@ -452,17 +451,48 @@ async function connectAndStartServer() {
       const result = await userDietsCollection.findOne(query,{projection:projection})
       res.send(result);
     })
-    /*
-    app.get('/userDiet-cartEmail/:email',async(req,res)=>{
-      const email=req.params.email;
-      const query={userEmail:email};
-      const projection = {dietId:1};
-      const userDiets = await userDietsCollection.find(query,{projection:projection}).toArray();
-      const dietIds = userDiets.map(userDiet=>new ObjectId(userDiet.dietId))
-      const query2 = {_id:{$in:dietIds}};
-      const result = await userDietsCollection.find(query2).toArray();
-      res.send(result);
-    })*/
+    
+    app.get('/userDiet-Email/:userEmail', async (req, res) => {
+      const userEmail = req.params.userEmail;
+      try {
+        const documents = await userDietsCollection.find({ userEmail: userEmail }).toArray();
+        if (documents.length > 0) {
+          res.status(200).json(documents);
+        } else {
+          res.status(404).json({ error: 'No documents found' });
+        }
+      } catch (error) {
+        res.status(500).json({ error: 'An error occurred while fetching the documents' });
+      }
+    });
+    
+    app.get('/userWorkout-Email/:userEmail', async (req, res) => {
+      const userEmail = req.params.userEmail;
+      try {
+        const documents = await userWorkoutsCollection.find({ userEmail: userEmail }).toArray();
+        if (documents.length > 0) {
+          res.status(200).json(documents);
+        } else {
+          res.status(404).json({ error: 'No documents found' });
+        }
+      } catch (error) {
+        res.status(500).json({ error: 'An error occurred while fetching the documents' });
+      }
+    });
+
+    app.get('/userInstructor-Email/:userEmail', async (req, res) => {
+      const userEmail = req.params.userEmail;
+      try {
+        const documents = await userInstructorsCollection.find({ userEmail: userEmail }).toArray();
+        if (documents.length > 0) {
+          res.status(200).json(documents);
+        } else {
+          res.status(404).json({ error: 'No documents found' });
+        }
+      } catch (error) {
+        res.status(500).json({ error: 'An error occurred while fetching the documents' });
+      }
+    });
 
     //display diets that each user has added to profile
     app.get('/userDiets', async(req,res)=>{
