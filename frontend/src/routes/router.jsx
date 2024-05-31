@@ -12,6 +12,8 @@ import UserP from "../pages/Dashboard/user/UserP";
 import MyDiets from "../pages/Dashboard/user/MyDiets";
 import MyWorkouts from "../pages/Dashboard/user/MyWorkouts";
 import MyInstructors from "../pages/Dashboard/user/MyInstructors";
+import UpdateUserDetails from "../pages/Dashboard/user/UpdateUserDetails";
+import AddHealthDetails from "../pages/Dashboard/user/AddHealthDetails";
 
 export const router = createBrowserRouter([
     {
@@ -70,6 +72,14 @@ export const router = createBrowserRouter([
         {
           path:"my-Instructors",
           element:<MyInstructors/>
+        },
+        {
+          path:"updateUserDetails",
+          element:<UpdateUserDetails/>
+        },
+        {
+          path:"addHealthDetails",
+          element:<AddHealthDetails/>
         }
       ]
     }

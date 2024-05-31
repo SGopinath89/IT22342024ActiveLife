@@ -110,7 +110,7 @@ async function connectAndStartServer() {
     })
 
     //update user details
-    app.put('/update-userDetails/:id',async(req,res)=>{
+    app.patch('/update-userDetails/:id',async(req,res)=>{
       const id=req.params.id;
       const updateUser=req.body;
       const filter={_id: new ObjectId(id)};
@@ -125,7 +125,7 @@ async function connectAndStartServer() {
             address:updateUser.address, 
             userName:updateUser.userName, 
             password:updateUser.password,
-            maritalStatus:updateUser.maritalStatus, 
+            photoUrl:updateUser.photoUrl, 
             employmentStatus:updateUser.employmentStatus
         
         }

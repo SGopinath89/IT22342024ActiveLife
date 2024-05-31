@@ -1,5 +1,6 @@
 import React from 'react'
 import useUser from '../../../hooks/useUser'
+import { Link } from 'react-router-dom';
 
 const UserP = () => {
     const {currentUser} = useUser();
@@ -26,15 +27,19 @@ const UserP = () => {
                           <p className='text-black mb-2 text-center'><span className='font-bold'>Employment Status : </span>{currentUser?.employmentStatus}  </p>
                           <br/>
                           <div className='text-center'>
-                              <button 
-                              className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
-                                  Edit your Details
-                              </button>
+                              <Link to='/dashboard/updateUserDetails'>
+                                <button
+                                className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
+                                    Edit your Details                                    
+                                </button>
+                              </Link>
                               <br/><br/>
-                              <button 
-                              className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
-                                  Add your Health Details
-                              </button>
+                              <Link to="/dashboard/addHealthDetails">
+                                <button 
+                                className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
+                                    Add your Health Details
+                                </button>
+                              </Link>
                               </div>
                         </div>
                     </div>

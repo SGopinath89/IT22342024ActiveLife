@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useState } from 'react'
 import {app}from '../../config/firebase.init'
 import {getAuth,createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile, GoogleAuthProvider, signInWithPopup, onAuthStateChanged} from 'firebase/auth'
 import axios from 'axios'
+import useUser from '../../hooks/useUser';
 
 export const AuthContext = createContext();
 
@@ -56,11 +57,14 @@ const AuthProvider = ({children}) => {
     //update user profile
 
     const updateUser=async(name,photo)=>{
+      const auth = getAuth();
+      const { refetch } = useUser();
       try{
         await updateProfile(auth.currentUser,{
           displayName:name,
           photoURL:photo
         })
+        await refetch(); 
         setUser(auth.currentUser)
       }catch(error){
         setError(error.code);

@@ -60,6 +60,41 @@ const MyWorkouts = () => {
     });
   }
 
+  const handleUpdateDays = (id, currentDays) => {
+    Swal.fire({
+      title: 'Update Number of Days',
+      input: 'number',
+      inputLabel: 'Enter new number of days',
+      inputValue: currentDays,
+      showCancelButton: true,
+      confirmButtonText: 'Update',
+      inputValidator: (value) => {
+        if (!value || value <= 0) {
+          return 'Please enter a valid number of days';
+        }
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const newDays = parseInt(result.value)
+        axiosSecure.patch(`/update-userWorkoutDays/${id}`, { finishedDays: newDays })
+          .then((res) => {
+            Swal.fire({
+              title: 'Updated!',
+              text: 'Number of days has been updated.',
+              icon: 'success'
+            });
+            const updatedWorkouts = userWorkouts.map((item) =>
+              item._id === id ? { ...item, finishedDays: result.value } : item
+            );
+            setUserWorkouts(updatedWorkouts);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    });
+  };
+
   if(loading){
     return <div>Loading...</div>
   }
@@ -112,7 +147,7 @@ const MyWorkouts = () => {
                             </button>
                           </td>
                           <td className='text-center'>
-                            <button 
+                            <button onClick={()=>handleUpdateDays(item._id,item.finishedDays)}
                             className='text-center px-12 py-3 cursor-pointer bg-green-500 rounded-3xl text-white font-bold'>
                               <MdUpdate/>
                             </button>
