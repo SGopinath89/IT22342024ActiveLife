@@ -215,7 +215,8 @@ const UpdateUserDetails = () => {
                     <Link to="/dashboard">
                       <button
                       type='cancle'
-                      className='bg-red-300 justify-center hover:bg-red-500 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+                      className='bg-red-300 justify-center hover:bg-red-500 text-black font-bold py-2 px-4 
+                      rounded focus:outline-none focus:shadow-outline'
                       >
                         Cancle
                       </button>

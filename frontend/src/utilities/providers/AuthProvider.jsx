@@ -55,16 +55,16 @@ const AuthProvider = ({children}) => {
     }
 
     //update user profile
-
+    //
     const updateUser=async(name,photo)=>{
-      const auth = getAuth();
-      const { refetch } = useUser();
+      //const auth = getAuth();
+      //const { refetch } = useUser();
       try{
         await updateProfile(auth.currentUser,{
           displayName:name,
           photoURL:photo
         })
-        await refetch(); 
+        //await refetch(); 
         setUser(auth.currentUser)
       }catch(error){
         setError(error.code);

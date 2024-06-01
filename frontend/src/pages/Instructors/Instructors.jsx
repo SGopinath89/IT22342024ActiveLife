@@ -12,6 +12,7 @@ export const Instructors = () => {
     const axiosFetch = useAxiosFetch();
     const [instructors,setInstructors] = useState([]);
     const navigate = useNavigate();
+    const {currentUser}=useUser();
     const role=currentUser?.role;
     const [userInstructor,setUserInstructor]=useState([])
     const axiosSecure = useAxiosSecure();

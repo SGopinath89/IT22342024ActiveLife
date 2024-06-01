@@ -9,14 +9,13 @@ const UserP = () => {
     <div className='h-screen justify-center flex items-center'>
         <div>
           <div>
-                <div className='p-5'>
+                <div className=' flex items-center p-5'>
                   <h1 className='text-4xl capitalize font-bold'>  Hi, <span>{currentUser?.fullName}!!  </span>Welcome to your dashboard</h1>
+                  <span><img className='shadow-lg rounded-lg h-[75px] w-[75px]'src={currentUser?.photoUrl} alt="Profile photo"/></span>
                 </div>
-                <div className='w-full shadow-lg rounded-lg p-3 flex flex-col justify-between border border-secondary overflow-hidden m-4'>
-                    <div className='p-4 grid md:grid-cols-2 lg:grid-cols-2 gap-4 '>
-                        <div className='flex justify-center'>
-                          <img className='shadow-lg rounded-lg h-[200px]'src={currentUser?.photoUrl} alt="Profile photo"/>
-                        </div>
+                <div className='w-[1000px] shadow-lg rounded-lg p-3 flex flex-col justify-between border border-secondary overflow-hidden m-4'>
+                    <div className='p-2 grid md:grid-cols-4 lg:grid-cols-4 gap-4 '>
+                        
                         <div >
                           <p className='text-black mb-2 text-center'><span className='font-bold'>Full Name : </span>{currentUser?.fullName}</p>
                           <p className='text-black mb-2 text-center'><span className='font-bold'>Email : </span>{currentUser?.email}</p>
@@ -41,6 +40,9 @@ const UserP = () => {
                                 </button>
                               </Link>
                               </div>
+                        </div>
+                        <div className='text-center'>
+                          <h2 className='font-bold'>Health Details</h2>
                         </div>
                     </div>
                 </div>

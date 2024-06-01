@@ -21,8 +21,7 @@ const Register = () => {
         //setError('');
         signUp(data.email, data.password).then((result)=>{
             const user = result.user;
-            if(user){
-                return updateUser(data.fullName,data.photoUrl)
+            updateUser(data.fullName,data.photoUrl)
                 .then(()=>{
                     const userImp = {
                         fullName:user?.displayName,
@@ -43,16 +42,16 @@ const Register = () => {
                             navigate('/');
                             return "Registration Successful"
                         }).catch((err)=>{
-                          console.log(err)
+                          console.log(err.message)
                           throw new Error(err)
                         })
                       }
                 })
                 .catch((err)=>{
-                    setError(err.code);
-                    throw new Error(err)
+                    setError(err);
+                    console.log(err.message)
                 })
-            }
+            
         })
     }
     const password = watch('password','')
