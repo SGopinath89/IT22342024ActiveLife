@@ -1,83 +1,80 @@
-import { useForm } from "react-hook-form"
+import React, { useState, useEffect } from 'react';
+import useUser from '../../../hooks/useUser';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { FaWeight } from "react-icons/fa";
 import { GiBodyHeight, GiHeartBeats, GiSleepingBag } from "react-icons/gi";
 import { MdBloodtype, MdOutlineHealthAndSafety } from "react-icons/md";
 import { CgSmileNone } from "react-icons/cg";
-import {Link, useNavigate} from "react-router-dom"
-import { useContext, useState } from "react";
-import axios from "axios";
-import Swal from "sweetalert2";
-import useUser from "../../../hooks/useUser";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
-const AddHealthDetails = () => {
-    const { currentUser} = useUser();
+const UpdateHealthdata = () => {
+    const { currentUser, refetch } = useUser();
     const [formData, setFormData] = useState({});
     const axiosSecure = useAxiosSecure();
     const navigate = useNavigate();
+    
+    //const [userRecords,setUserRecords] = useState([]);
 
+    useEffect(() => {
+        axiosSecure.get(`/userHealthRecord-Nocount/${currentUser?.email}`)
+          .then((res) => {
+            //console.log(res.data._id)
+            setFormData({
+                weight: res.data.weight,
+                height: res.data.height,
+                averageHeartRate: res.data.averageHeartRate,
+                bloodPressure: res.data.bloodPressure,
+                existingMedicalCondition: res.data.existingMedicalCondition,
+                anySurgeries: res.data.anySurgeries,
+                currentLevelofPhysicalActivity: res.data.currentLevelofPhysicalActivity,
+                fitnessGoals: res.data.fitnessGoals,
+                AnyAllergies: res.data.AnyAllergies,
+                stressScale: res.data.stressScale,
+                sleepHours: res.data.sleepHours,
+              });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    }, [axiosSecure]);
+
+    
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
           ...formData,
           [name]: value,
         });
+        console.log(formData)
     };
 
     const handleSubmit = (e) => {
+       // console.log(formData)
         e.preventDefault();
-        const updatedFormData = {
-            ...formData,
-            email: currentUser.email,
-            weight: parseInt(formData.weight, 10),
-            height: parseInt(formData.height, 10),
-            averageHeartRate: parseInt(formData.averageHeartRate, 10),
-            bloodPressure: parseInt(formData.bloodPressure, 10),
-            sleepHours: parseInt(formData.sleepHours, 10),
-            stressScale: parseInt(formData.stressScale, 10)
-          };
-    axiosSecure
-        .get(`/userHealthRecord/${currentUser.email}`)
-        .then((res) => {
-            console.log(res.data)
-            if(res.data.count===0){
-                axiosSecure.post('/new-userHealthRecord', updatedFormData)
-                .then((res) => {
-                    Swal.fire({
-                    title: 'Success!',
-                    text: 'Your details have been updated.',
-                    icon: 'success',
-                    });
-                    navigate('/dashboard/userP');
-                })
-                .catch((error) => {
-                    console.log(error);
-                    Swal.fire({
-                    title: 'Error!',
-                    text: 'There was an error updating your details.',
-                    icon: 'error',
-                    });
-                });
-            }else{
-                Swal.fire({
-                    title: '',
-                    text: 'Already Submitted!!',
-                    icon: 'warning',
-                });
-            } 
-        })
-        .catch((err) => {
-            console.log(err);
+        axiosSecure.patch(`/update-userHRecord/${currentUser.email}`, formData)
+          .then((res) => {
             Swal.fire({
-                position: "top-end",
-                icon: "warning",
-                title: "An error occurred. Please try again.",
-                showConfirmButton: false,
-                timer: 1500
+              title: 'Success!',
+              text: 'Your details have been updated.',
+              icon: 'success',
             });
-            
-        });
-    };
+            refetch();
+            navigate('/dashboard/userP');
+          })
+          .catch((error) => {
+            console.log(error);
+            Swal.fire({
+              title: 'Error!',
+              text: 'There was an error updating your details.',
+              icon: 'error',
+            });
+          });
+      };
+
+   
+
+
 
   return (
     <div className='justify-center items-center bg-white dark:bg-black'>
@@ -91,7 +88,7 @@ const AddHealthDetails = () => {
                         <input 
                         type='number' 
                         name="weight"
-                        placeholder="Enter your Weight" 
+                        //value={formData.weight || ''}
                         onChange={handleChange}
                         className="w-full border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring
                         focus:border-blue-300"/>
@@ -103,7 +100,7 @@ const AddHealthDetails = () => {
                         <input 
                         type='number' 
                         name="height"
-                        placeholder="Enter your Height" 
+                        value={formData.height || ''}
                         onChange={handleChange}
                         className="w-full border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring
                         focus:border-blue-300"/>
@@ -115,8 +112,8 @@ const AddHealthDetails = () => {
                         <input 
                         type='number' 
                         name="averageHeartRate"
-                        placeholder="Enter your Average Heart Rate" 
                         onChange={handleChange}
+                        value={formData.averageHeartRate || ''} 
                         className="w-full border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring
                         focus:border-blue-300"/>
                     </div>
@@ -127,7 +124,7 @@ const AddHealthDetails = () => {
                           <input 
                           type='number' 
                           name="bloodPressure"
-                          placeholder="Enter your Average Bood Pressure" 
+                          value={formData.bloodPressure || ''}  
                           onChange={handleChange}
                           className="w-full border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring
                           focus:border-blue-300"/>
@@ -142,7 +139,7 @@ const AddHealthDetails = () => {
                         type='number' 
                         name="sleepHours"
                         onChange={handleChange}
-                        placeholder="Enter your Sleeping Hours" 
+                        value={formData.sleepHours || ''}  
                         className="w-full border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring
                         focus:border-blue-300"/>
                     </div>
@@ -153,6 +150,7 @@ const AddHealthDetails = () => {
                         <select 
                         onChange={handleChange} 
                         name="stressScale"
+                        value={formData.stressScale || ''} 
                         className="w-full border-gray-300 
                         border rounded-md py-2 px-4 focus:outline-none focus:ring focus:border-blue-300">
                             <option value="">Select</option>
@@ -171,6 +169,7 @@ const AddHealthDetails = () => {
                         <select 
                         onChange={handleChange} 
                         name="currentLevelofPhysicalActivity"
+                        value={formData.currentLevelofPhysicalActivity || ''} 
                         className="w-full border-gray-300 
                         border rounded-md py-2 px-4 focus:outline-none focus:ring focus:border-blue-300">
                             <option value="">Select</option>
@@ -192,7 +191,7 @@ const AddHealthDetails = () => {
                             name="existingMedicalCondition"
                             className="w-full border-gray-300 
                             border rounded-md py-2 px-4 focus:outline-none focus:ring focus:border-blue-300"
-                            placeholder="">
+                            value={formData.existingMedicalCondition || ''} >
                         </textarea>
                     </div>
                     <div className="w-full mb-4">
@@ -205,7 +204,7 @@ const AddHealthDetails = () => {
                             rows="2"
                             className="w-full border-gray-300 
                             border rounded-md py-2 px-4 focus:outline-none focus:ring focus:border-blue-300"
-                            placeholder="">
+                            value={formData.anySurgeries || ''} >
                         </textarea>
                     </div>
                 </div>
@@ -220,7 +219,7 @@ const AddHealthDetails = () => {
                             rows="2"
                             className="w-full border-gray-300 
                             border rounded-md py-2 px-4 focus:outline-none focus:ring focus:border-blue-300"
-                            placeholder="">
+                            value={formData.AnyAllergies || ''} >
                         </textarea>
                     </div>
                     <div className="w-full mb-4">
@@ -233,7 +232,7 @@ const AddHealthDetails = () => {
                             rows="2"
                             className="w-full border-gray-300 
                             border rounded-md py-2 px-4 focus:outline-none focus:ring focus:border-blue-300"
-                            placeholder="">
+                            value={formData.fitnessGoals || ''} >
                         </textarea>
                     </div>
                 </div>
@@ -256,8 +255,7 @@ const AddHealthDetails = () => {
 
         </div>
     </div>
-    
   )
 }
 
-export default AddHealthDetails
+export default UpdateHealthdata

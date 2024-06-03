@@ -20,7 +20,6 @@ const Login = () => {
 
     const data = new FormData(e.target);
     const formData = Object.fromEntries(data)
-    //console.log(formData)
     try{
       const user = await login(formData.email,formData.password);
       Swal.fire({
@@ -33,6 +32,13 @@ const Login = () => {
       navigate(location.state?.from || '/', {state:{user}})
     }catch(err){
       setError(err.code);
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Invalid Password or Email!!",
+        showConfirmButton: false,
+        timer: 1500
+      });
     }finally{
       setLoader(false);
     }

@@ -528,40 +528,64 @@ async function connectAndStartServer() {
     //user Health Record 
     app.post('/new-userHealthRecord', async (req, res) => {
       const newRecord = req.body;
-
       const result = await userHealthRecordCollection.insertOne(newRecord);
       res.send(result);
     });
 
-    //update user health record
-    app.put('/update-userHRecord/:id',async(req,res)=>{
-      const id=req.params.id;
-      const updateRecord=req.body;
-      const filter={_id: new ObjectId(id)};
-      const options={upsert:true};
-      const updateDoc={
-        $set:{
-          
-          email:updateRecord.email,
-          weight:updateRecord.weight,
-          height:updateRecord.height,
-          averageHeartRate:updateRecord,averageHeartRate,
-          bloodPressure:updateRecord.bloodPressure,
-          existingMedicalCondition:updateRecord.existingMedicalCondition,
-          anySurgeries:updateRecord.anySurgeries,
-          currentLevelofPhysicalActivity:updateRecord.currentLevelofPhysicalActivity,
-          fitnessGoals:updateRecord.fitnessGoals,
-          AnyAllergies:updateRecord.AnyAllergies,
-          stressScale:updateRecord.stressScale,
-          sleepHours:updateRecord.sleepHours
+    app.get('/userHealthRecord/:email',async(req,res)=>{
+      const email = req.params.email;
+      try {
+        const documents = await userHealthRecordCollection.find({ email: email }).toArray();
+        if (documents.length > 0) {
+          res.status(200).json({ documents, count: documents.length });
+        } else {
+          res.status(200).json({ count: 0 });
+        }
+      } catch (error) {
+        res.status(500).json({ error: 'An error occurred while fetching the documents' });
+      }
+      
+    })
+
+    app.get('/userHealthRecord-Nocount/:email',async(req,res)=>{
+      const email = req.params.email;
+      try {
+        const result = await userHealthRecordCollection.findOne({ email: email });
+        //console.log(result)
+        res.send(result);
         
+      } catch (error) {
+        res.status(500).json({ error: 'An error occurred while fetching the documents' });
+      }
+      
+    })
+
+    //update user health record
+    app.patch('/update-userHRecord/:email', async (req, res) => {
+      const email = req.params.email;
+      const updateRecord = req.body;
+      const filter = { email: email };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: {
+          weight: updateRecord.weight,
+          height: updateRecord.height,
+          averageHeartRate: updateRecord.averageHeartRate,
+          bloodPressure: updateRecord.bloodPressure,
+          existingMedicalCondition: updateRecord.existingMedicalCondition,
+          anySurgeries: updateRecord.anySurgeries,
+          currentLevelofPhysicalActivity: updateRecord.currentLevelofPhysicalActivity,
+          fitnessGoals: updateRecord.fitnessGoals,
+          AnyAllergies: updateRecord.AnyAllergies,
+          stressScale: updateRecord.stressScale,
+          sleepHours: updateRecord.sleepHours,
         }
       };
+      
       const result =await userHealthRecordCollection.updateOne(filter,updateDoc,options)
       res.send(result);
     })
 
-    
     app.get('/',(req,res)=>{
       res.send('Active Life Server is running!!')
     })

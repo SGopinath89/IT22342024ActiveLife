@@ -14,6 +14,7 @@ import MyWorkouts from "../pages/Dashboard/user/MyWorkouts";
 import MyInstructors from "../pages/Dashboard/user/MyInstructors";
 import UpdateUserDetails from "../pages/Dashboard/user/UpdateUserDetails";
 import AddHealthDetails from "../pages/Dashboard/user/AddHealthDetails";
+import UpdateHealthdata from "../pages/Dashboard/user/UpdateHealthdata";
 
 export const router = createBrowserRouter([
     {
@@ -80,6 +81,10 @@ export const router = createBrowserRouter([
         {
           path:"addHealthDetails",
           element:<AddHealthDetails/>
+        },
+        {
+          path:"updateHealthdetails",
+          element:<UpdateHealthdata/>
         }
       ]
     }
