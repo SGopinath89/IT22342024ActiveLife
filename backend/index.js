@@ -570,10 +570,8 @@ async function connectAndStartServer() {
         $set: {}
       };
     
-      // Loop through each key in updateRecord
       for (const key in updateRecord) {
-        // If the value is not null, update the field
-        if (updateRecord[key] !== null) {
+        if (updateRecord[key] !== "") {
           updateDoc.$set[key] = updateRecord[key];
         }
       }

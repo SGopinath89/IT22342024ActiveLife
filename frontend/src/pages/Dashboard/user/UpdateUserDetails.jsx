@@ -92,19 +92,20 @@ const UpdateUserDetails = () => {
                         required
                         />
                     </div>
-                    <div className='mb-4'>
-                        <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='gender'>
-                        Gender
-                        </label>
-                        <input
-                        id='gender'
-                        name='gender'
-                        type='text'
-                        value={formData.gender || ''}
-                        onChange={handleChange}
-                        className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                        required
-                        />
+                    <div className="mb-4">
+                      <label htmlFor="gender" className='block text-gray-700 front-bold mb-2'>
+                      Employment Status
+                      </label>
+                      <select
+                      name="gender"
+                      value={formData.gender}
+                      onChange={handleChange}
+                      className="w-full border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring focus:border-blue-300"
+                      >
+                      <option value="">Select</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      </select>
                     </div>
                     <div className='mb-4'>
                         <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='phoneNo'>
@@ -135,10 +136,10 @@ const UpdateUserDetails = () => {
                         />
                     </div>
                     <button
-                    type='submit'
-                    className='bg-[#f2e48d] justify-center hover:bg-secondary text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
-                    >
-                    Save Changes
+                      type='submit'
+                      className='bg-[#f2e48d] justify-center hover:bg-secondary text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+                      >
+                      Save Changes
                     </button>
                 </div>
                 <div className='justify-center'>
@@ -170,19 +171,22 @@ const UpdateUserDetails = () => {
                         required
                         />
                     </div>
-                    <div className='mb-4'>
-                        <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='employmentStatus'>
-                        Employment Status
-                        </label>
-                        <input
-                        id='employmentStatus'
-                        name='employmentStatus'
-                        type='text'
-                        value={formData.employmentStatus || ''}
-                        onChange={handleChange}
-                        className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                        required
-                        />
+                    <div className="mb-4">
+                            <label htmlFor="employmentStatus" className='block text-gray-700 front-bold mb-2'>
+                                Employment Status
+                            </label>
+                            <select
+                                name="employmentStatus"
+                                value={formData.employmentStatus}
+                                onChange={handleChange}
+                                className="w-full border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring focus:border-blue-300"
+                            >
+                                <option value="">Select</option>
+                                <option value="undergraduate">Undergraduate</option>
+                                <option value="school">School</option>
+                                <option value="working">Working</option>
+                                <option value="unemployed">Unemployed</option>
+                            </select>
                     </div>
                     <div className='mb-4'>
                         <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='photoUrl'>
