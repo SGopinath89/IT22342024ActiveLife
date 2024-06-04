@@ -15,6 +15,9 @@ import MyInstructors from "../pages/Dashboard/user/MyInstructors";
 import UpdateUserDetails from "../pages/Dashboard/user/UpdateUserDetails";
 import AddHealthDetails from "../pages/Dashboard/user/AddHealthDetails";
 import UpdateHealthdata from "../pages/Dashboard/user/UpdateHealthdata";
+import AdminP from "../pages/Dashboard/admin/adminP";
+import Users from "../pages/Dashboard/admin/Users";
+import AllDiets from "../pages/Dashboard/admin/AllDiets";
 
 export const router = createBrowserRouter([
     {
@@ -85,6 +88,18 @@ export const router = createBrowserRouter([
         {
           path:"updateHealthdetails",
           element:<UpdateHealthdata/>
+        },
+        {
+          path:"adminHome",
+          element:<AdminP/>
+        },
+        {
+          path:"manageUser",
+          element:<Users/>
+        },
+        {
+          path:"manageDiets",
+          element:<AllDiets/>
         }
       ]
     }

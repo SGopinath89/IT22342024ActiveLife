@@ -63,7 +63,7 @@ async function connectAndStartServer() {
       const email =req.decoded.email;
       const query ={email:email};
       const user=await userCollection.findOne(query);
-      if(user.userName==='admin'){
+      if(user.role==='admin'){
         next();
       }else{
         return res.status(401).send({message:"Forbidden access"});
@@ -102,7 +102,7 @@ async function connectAndStartServer() {
     })
 
     //delete user
-    app.delete('/delete-user/:id',verifyJWT,verifyAdmin,async(req,res)=>{
+    app.delete('/delete-user/:id',async(req,res)=>{
       const id=req.params.id;
       const query = {_id: new ObjectId(id)};
       const result=await userCollection.deleteOne(query);
@@ -135,7 +135,7 @@ async function connectAndStartServer() {
     })
 
     //add new diet
-    app.post('/new-diet', verifyJWT,verifyAdmin,async (req, res) => {
+    app.post('/new-diet',async (req, res) => {
       const newDiet = req.body;
 
       const result = await dietCollection.insertOne(newDiet);
@@ -157,7 +157,7 @@ async function connectAndStartServer() {
     })
     
     //update all diet details
-    app.put('/update-diets/:id',verifyJWT,verifyAdmin,async(req,res)=>{
+    app.put('/update-diets/:id',async(req,res)=>{
       const id=req.params.id;
       const updateDiet=req.body;
       const filter={_id: new ObjectId(id)};
@@ -175,7 +175,7 @@ async function connectAndStartServer() {
     })
 
     //delete diet
-    app.delete('/delete-diet/:id',verifyJWT,verifyAdmin,async(req,res)=>{
+    app.delete('/delete-diet/:id',async(req,res)=>{
       const id=req.params.id;
       const query = {_id: new ObjectId(id)};
       const result=await dietCollection.deleteOne(query);
@@ -183,7 +183,7 @@ async function connectAndStartServer() {
     })
 
     //add new workout
-    app.post('/new-workout', verifyJWT,verifyAdmin,async (req, res) => {
+    app.post('/new-workout',async (req, res) => {
       const newWorkout = req.body;
 
       const result = await workoutCollection.insertOne(newWorkout);
@@ -205,7 +205,7 @@ async function connectAndStartServer() {
     })
 
     //update workout
-    app.put('/update-workouts/:id',verifyJWT,verifyAdmin,async(req,res)=>{
+    app.put('/update-workouts/:id',async(req,res)=>{
       const id=req.params.id;
       const updateWorkout=req.body;
       const filter={_id: new ObjectId(id)};
@@ -222,7 +222,7 @@ async function connectAndStartServer() {
     })
 
     //delete workout
-    app.delete('/delete-workout/:id',verifyJWT,verifyAdmin,async(req,res)=>{
+    app.delete('/delete-workout/:id',async(req,res)=>{
       const id=req.params.id;
       const query = {_id: new ObjectId(id)};
       const result=await workoutCollection.deleteOne(query);
@@ -230,7 +230,7 @@ async function connectAndStartServer() {
     })
 
     //add new instructor
-    app.post('/new-instructor', verifyJWT,verifyAdmin,async (req, res) => {
+    app.post('/new-instructor',async (req, res) => {
       const newInstructor = req.body;
 
       const result = await instructorCollection.insertOne(newInstructor);
@@ -252,7 +252,7 @@ async function connectAndStartServer() {
     })
 
     //update instructor
-    app.put('/update-instructors/:id',verifyJWT,verifyAdmin,async(req,res)=>{
+    app.put('/update-instructors/:id',async(req,res)=>{
       const id=req.params.id;
       const updateInstructor=req.body;
       const filter={_id: new ObjectId(id)};
@@ -272,7 +272,7 @@ async function connectAndStartServer() {
     })
 
     //delete instructor
-    app.delete('/delete-instructor/:id',verifyJWT,verifyAdmin,async(req,res)=>{
+    app.delete('/delete-instructor/:id',async(req,res)=>{
       const id=req.params.id;
       const query = {_id: new ObjectId(id)};
       const result=await instructorCollection.deleteOne(query);
@@ -567,20 +567,16 @@ async function connectAndStartServer() {
       const filter = { email: email };
       const options = { upsert: true };
       const updateDoc = {
-        $set: {
-          weight: updateRecord.weight,
-          height: updateRecord.height,
-          averageHeartRate: updateRecord.averageHeartRate,
-          bloodPressure: updateRecord.bloodPressure,
-          existingMedicalCondition: updateRecord.existingMedicalCondition,
-          anySurgeries: updateRecord.anySurgeries,
-          currentLevelofPhysicalActivity: updateRecord.currentLevelofPhysicalActivity,
-          fitnessGoals: updateRecord.fitnessGoals,
-          AnyAllergies: updateRecord.AnyAllergies,
-          stressScale: updateRecord.stressScale,
-          sleepHours: updateRecord.sleepHours,
-        }
+        $set: {}
       };
+    
+      // Loop through each key in updateRecord
+      for (const key in updateRecord) {
+        // If the value is not null, update the field
+        if (updateRecord[key] !== null) {
+          updateDoc.$set[key] = updateRecord[key];
+        }
+      }
       
       const result =await userHealthRecordCollection.updateOne(filter,updateDoc,options)
       res.send(result);

@@ -34,8 +34,8 @@ const Login = () => {
       setError(err.code);
       Swal.fire({
         position: "top-end",
-        icon: "error",
-        title: "Invalid Password or Email!!",
+        icon: "warning",
+        title: "Give correct Email and password!!",
         showConfirmButton: false,
         timer: 1500
       });
