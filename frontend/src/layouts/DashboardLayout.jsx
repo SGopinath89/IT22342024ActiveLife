@@ -116,9 +116,9 @@ const DashboardLayout = () => {
     }
 
   return (
-    <div className='flex'>
-        <div className={`${open ? "w-72 overflow-y-auto":"w-[110px] overflow-auto"} bg-[#e4c91b] h-screen p-5 
-        md:block hidden pt-6 relative duration-300`}>
+    <div className='flex fixed overflow-hidden' >
+        <div className={`${open ? " w-72 overflow-y-auto":"w-[110px] overflow-auto"}  bg-[#e4c91b] h-screen p-5 
+        md:block hidden pt-6  duration-300`}>
             <div className='flex gap-x-4 items-center'>
                 <img onClick={()=>setOpen(!open)} src={logoBlack} alt='' className={`cursor-pointer h-[60px] duration-500 
                 ${open && "rotate-[360deg] "}`}/> 
@@ -201,7 +201,7 @@ const DashboardLayout = () => {
                             onClick={()=>handleLogOut()}
                             className=" flex items-center gap-x-4 p-2 rounded-md text-[#413F44]
                                 duration-150 cursor-pointer font-bold text-sm  hover:bg-secondary hover:text-black">
-                            <IoMdLogOut className='text-3xl'/>
+                            <IoMdLogOut className='text-2xl'/>
                             <span className={`${!open && "hidden"} origin-left duration-200`}>
                                    LogOut
                             </span>
@@ -210,7 +210,7 @@ const DashboardLayout = () => {
                 </ul>
             }
         </div>
-        <div className='w-full'>
+        <div className='overflow-x-auto overflow-y-auto flex-grow'>
             <Scroll/>
             <Outlet/>
         </div>

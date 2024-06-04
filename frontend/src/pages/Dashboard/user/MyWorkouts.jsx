@@ -100,7 +100,7 @@ const MyWorkouts = () => {
   }
 
   return (
-    <div>
+    <div className='w-[1100px]'>
       <div className='my-6 text-center'>
         <h1 className='text-4xl font-bold'>My <span className='text-secondary'>Workouts</span></h1>
       </div>

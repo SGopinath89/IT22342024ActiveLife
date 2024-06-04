@@ -65,7 +65,7 @@ const MyInstructors = () => {
   }
 
   return (
-    <div>
+    <div className='w-[1100px]'>
       <div className='my-6 text-center'>
         <h1 className='text-4xl font-bold'>My <span className='text-secondary'>Instructors</span></h1>
       </div>

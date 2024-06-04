@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { MdDelete ,MdUpdate} from 'react-icons/md';
 import Swal from 'sweetalert2'
 
-const AllDiets = () => {
+const AllWorkouts = () => {
     const [loading,setLoading] = useState(true);
-    const [diets,setDiets] = useState([]);
+    const [workouts,setWorkouts] = useState([]);
     const axiosSecure = useAxiosSecure(); 
-
+    
     useEffect(()=>{
-      axiosSecure.get('/diets')
+      axiosSecure.get('/workouts')
       .then((res)=>{
-        setDiets(res.data);
+        setWorkouts(res.data);
         setLoading(false)
       })
       .catch((error)=>{
@@ -32,15 +32,15 @@ const AllDiets = () => {
         confirmButtonText: "Yes, delete it!"
       }).then((result) => {
         if (result.isConfirmed) {
-          axiosSecure.delete(`/delete-diet/${id}`)
+          axiosSecure.delete(`/delete-workout/${id}`)
           .then((res)=>{
               Swal.fire({
                 title: "Deleted!",
-                text: "Diet has been deleted.",
+                text: "Workout has been deleted.",
                 icon: "success"
               });
-              const newDiets = diets.filter((item)=>item._id!==id);
-              setDiets(newDiets);
+              const newWorkouts = workouts.filter((item)=>item._id!==id);
+              setWorkouts(newWorkouts);
             
             
           })
@@ -58,14 +58,14 @@ const AllDiets = () => {
     return (
       <div className='h-screen'>
         <div className='my-6 text-center w-[1000px]'>
-          <h1 className='text-4xl font-bold text-secondary'>All Diets</h1>
+          <h1 className='text-4xl font-bold text-secondary'>All Workouts</h1>
         </div>
         <div className='h-screen py-8'>
           <div className='text-right'>
-            <Link to="/dashboard/addDiet">
+            <Link to="/dashboard/addWorkout">
               <button 
               className='px-12 py-3 cursor-pointer bg-red-500 rounded-3xl text-white font-bold text-center'>
-              Add Diet
+              Add Workout
               </button>
             </Link>
           </div>
@@ -76,9 +76,8 @@ const AllDiets = () => {
                   <thead>
                     <tr >
                       <th className='text-left font-semibold'>Name</th>
-                      <th className='text-left font-semibold'>How It Works</th>
-                      <th className='text-left font-semibold'>Benefitd</th>
-                      <th className='text-left font-semibold'>Downsides</th>
+                      <th className='text-left font-semibold'>Number of Days</th>
+                      <th className='text-left font-semibold'>How to do</th>
                       <th className='text-left font-semibold'>Edit</th>
                       <th className='text-left font-semibold'>Delete</th>
                     </tr>
@@ -87,21 +86,28 @@ const AllDiets = () => {
                   <tbody>
                     { 
 
-                        diets.length === 0 ? <tr><td colSpan='4' className='text-center text-2xl'>No Diets Found</td></tr>
-                      :diets.map((item)=>{
+                    workouts.length === 0 ? <tr><td colSpan='4' className='text-center text-2xl'>No Workouts Found</td></tr>
+                      :workouts.map((item)=>{
                             return <tr key={item._id}>
                             <td className='py-4'>
                               <div className='flex items-center'>
                                 <span>{item.name}</span>
                               </div></td>
                             <td className='py-4'>
-                              {item.howItWorks} 
+                              {item.numberOfDays} 
                             </td>
                             <td className='py-4'>
-                              {item.benefits} 
-                            </td>
-                            <td className='py-4'>
-                              {item.downsides} 
+                                {item.howToDo.split(' ').map((word,index )=> {
+                                  if (word === "Step") {
+                                      return (
+                                        <React.Fragment key={index}>
+                                          <br /> <span className="font-bold">{word} </span>
+                                          </React.Fragment>
+                                      );
+                                  } else {
+                                  return word + ' ';
+                                  }
+                                })}
                             </td>
                             <td className='text-center'>
                                 <Link to="/dashboard">
@@ -134,4 +140,4 @@ const AllDiets = () => {
     )
 }
 
-export default AllDiets
+export default AllWorkouts

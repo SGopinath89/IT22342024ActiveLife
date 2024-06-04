@@ -22,13 +22,12 @@ const UserP = () => {
           setLoading(false);
         });
     }, [axiosSecure]);
-    //console.log(userRecords)
 
     if(loading){
       return <div>Loading...</div>
     }
   return (
-    <div className='h-screen justify-center flex items-center'>
+    <div className='w-[1100px] h-screen justify-center flex items-center'>
         <div>
           <div>
                 <div className=' flex items-center p-5'>

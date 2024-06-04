@@ -18,6 +18,11 @@ import UpdateHealthdata from "../pages/Dashboard/user/UpdateHealthdata";
 import AdminP from "../pages/Dashboard/admin/adminP";
 import Users from "../pages/Dashboard/admin/Users";
 import AllDiets from "../pages/Dashboard/admin/AllDiets";
+import AddDiet from "../pages/Dashboard/admin/AddDiet";
+import AllWorkouts from "../pages/Dashboard/admin/AllWorkouts";
+import AddWorkout from "../pages/Dashboard/admin/AddWorkout";
+import AllInstructors from "../pages/Dashboard/admin/AllInstructors";
+import AddInstructor from "../pages/Dashboard/admin/AddInstructor";
 
 export const router = createBrowserRouter([
     {
@@ -100,6 +105,26 @@ export const router = createBrowserRouter([
         {
           path:"manageDiets",
           element:<AllDiets/>
+        },
+        {
+          path:"addDiet",
+          element:<AddDiet/>
+        },
+        {
+          path:"manageWorkouts",
+          element:<AllWorkouts/>
+        },
+        {
+          path:"addWorkout",
+          element:<AddWorkout/>
+        },
+        {
+          path:"manageInstructors",
+          element:<AllInstructors/>
+        },
+        {
+          path:"addInstructor",
+          element:<AddInstructor/>
         }
       ]
     }

@@ -155,6 +155,7 @@ async function connectAndStartServer() {
       const result = await dietCollection.findOne(query);
       res.send(result);
     })
+
     
     //update all diet details
     app.put('/update-diets/:id',async(req,res)=>{
