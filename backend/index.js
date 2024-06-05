@@ -57,7 +57,7 @@ async function connectAndStartServer() {
         service: 'Gmail', 
         auth: {
             user: "activelifeadm1@gmail.com",
-            pass: "4wol c6lf kigy cjnz w2b5 g4ao mqdd vyab"
+            pass: "4wolc6lfkigycjnzw2b5g4aomqddvyab"
         }
     });
   

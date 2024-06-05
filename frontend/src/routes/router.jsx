@@ -24,6 +24,8 @@ import AddWorkout from "../pages/Dashboard/admin/AddWorkout";
 import AllInstructors from "../pages/Dashboard/admin/AllInstructors";
 import AddInstructor from "../pages/Dashboard/admin/AddInstructor";
 import UpdateD from "../pages/Dashboard/admin/UpdateD";
+import UpdateW from "../pages/Dashboard/admin/UpdateW";
+import UpdateI from "../pages/Dashboard/admin/UpdateI";
 
 export const router = createBrowserRouter([
     {
@@ -130,6 +132,14 @@ export const router = createBrowserRouter([
         {
           path:"updateD/:dietId",
           element:<UpdateD/>
+        },
+        {
+          path:"updateW/:workoutId",
+          element:<UpdateW/>
+        },
+        {
+          path:"updateI/:instructorId",
+          element:<UpdateI/>
         }
       ]
     }

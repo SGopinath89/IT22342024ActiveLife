@@ -4,31 +4,28 @@ import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { Link,  useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-const UpdateD = () => {
-    const { dietId } = useParams();
+const UpdateW = () => {
+    const { workoutId } = useParams();
     const { currentUser, refetch } = useUser();
-    const [dietData, setdietData] = useState({
+    const [workoutData, setworkoutData] = useState({
         name: "",
-        howItWorks: "",
-        benefits: "",
-        downsides: "",
-        dietImg: ""
+        numberOfDays: "",
+        howToDo: "",
+        workoutImg: ""
     });
     const [formData, setFormData] = useState({});
     const axiosSecure = useAxiosSecure();
     const navigate = useNavigate();
-    
+
     useEffect(() => {
         if (currentUser?.email) {
-            axiosSecure.get(`/diets/${dietId}`)
+            axiosSecure.get(`/workouts/${workoutId}`)
                 .then((res) => {
-                    //console.log(res.data)
-                    setdietData({
+                    setworkoutData({
                         name: res.data.name,
-                        howItWorks: res.data.howItWorks,
-                        benefits: res.data.benefits,
-                        downsides:res.data.downsides,
-                        dietImg: res.data.dietImg
+                        numberOfDays: res.data.numberOfDays,
+                        howToDo: res.data.howToDo,
+                        workoutImg: res.data.workoutImg
                     });
                 })
                 .catch((error) => {
@@ -47,102 +44,86 @@ const UpdateD = () => {
 
     const handleSubmit = (e) => {  
         e.preventDefault();
-        axiosSecure.patch(`/update-diets/${dietId}`, formData)
+        axiosSecure.patch(`/update-workouts/${workoutId}`, formData)
             .then((res) => {
                 Swal.fire({
                     title: 'Success!',
-                    text: 'Diet details have been updated.',
+                    text: 'Workout details have been updated.',
                     icon: 'success',
                 });
                 refetch();
-                navigate('/dashboard/manageDiets');
+                navigate('/dashboard/manageWorkouts');
             })
             .catch((error) => {
                 console.log(error);
                 Swal.fire({
                     title: 'Error!',
-                    text: 'There was an error updating Diet.',
+                    text: 'There was an error updating Workout.',
                     icon: 'error',
                 });
             });
     };
-
   return (
     <div className='w-[1100px] justify-center items-center bg-white dark:bg-black flex'>
-        
         <div className="bg-white p-8 rounded-lg text-center">
-        <h2 className="text-3xl font-bold text-center mb-6 text-secondary">Edit Diet</h2>
+        <h2 className="text-3xl font-bold text-center mb-6 text-secondary">Edit Workout</h2>
             <form onSubmit={handleSubmit} className="text-center">
                 <div className="flex items-center gap-5 md:grid-cols-2 lg:grid-cols-2">
                     <div>
                         <div className="w-[300px] mb-4">
                             <label htmlFor="name" className='block text-gray-700 front-bold mb-2'>
-                                Name of the Diet
+                                Name of the Workout
                             </label>
                             <input 
                             type='text' 
                             name="name"
-                            placeholder={dietData.name} 
+                            placeholder={workoutData.name} 
                             onChange={handleChange}
                             className="w-full border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring
                             focus:border-blue-300"/>
                         </div>
                         <div className="w-[300pxpx] mb-4">
-                            <label htmlFor="dietImg" className='block text-gray-700 front-bold mb-2'>
-                                Diet Image
+                            <label htmlFor="workoutImg" className='block text-gray-700 front-bold mb-2'>
+                            Workout Image
                             </label>
                             <input 
                             type='text' 
-                            name="dietImg"
-                            placeholder={dietData.dietImg} 
+                            name="workoutImg"
+                            placeholder={workoutData.workoutImg} 
+                            onChange={handleChange}
+                            className="w-full border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring
+                            focus:border-blue-300"/>
+                        </div>
+                        <div className="w-[300pxpx] mb-4">
+                            <label htmlFor="numberOfDays" className='block text-gray-700 front-bold mb-2'>
+                            Number Of Days
+                            </label>
+                            <input 
+                            type='text' 
+                            name="numberOfDays"
+                            placeholder={workoutData.numberOfDays} 
                             onChange={handleChange}
                             className="w-full border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring
                             focus:border-blue-300"/>
                         </div>
                     </div>
                     <div>
-                        {/**How it works */}
+                        
+                        {/**howtodo */}
                         <div className="w-[500px] mb-4">
-                            <label htmlFor="howItWorks" className='block text-gray-700 front-bold mb-2'>
-                               How It Works
+                            <label htmlFor="howToDo" className='block text-gray-700 front-bold mb-2'>
+                                How to Do:
                             </label>
                             <textarea 
                                 onChange={handleChange}
-                                rows=""
-                                name="howItWorks"
+                                name="howToDo"
+                                rows="9"
                                 className="w-full border-gray-300 
                                 border rounded-md py-2 px-4 focus:outline-none focus:ring focus:border-blue-300"
-                                placeholder={dietData.howItWorks}>
+                                placeholder={workoutData.howToDo}>
                             </textarea>
                         </div>
-                        {/**Benefits */}
-                        <div className="w-[500px] mb-4">
-                            <label htmlFor="benefits" className='block text-gray-700 front-bold mb-2'>
-                                Benefits
-                            </label>
-                            <textarea 
-                                onChange={handleChange}
-                                name="benefits"
-                                rows="2"
-                                className="w-full border-gray-300 
-                                border rounded-md py-2 px-4 focus:outline-none focus:ring focus:border-blue-300"
-                                placeholder={dietData.benefits}>
-                            </textarea>
-                        </div>
-                        {/**Downsides */}
-                        <div className="w-[500px] mb-4">
-                            <label htmlFor="downsides" className='block text-gray-700 front-bold mb-2'>
-                                Downsides
-                            </label>
-                            <textarea 
-                                onChange={handleChange}
-                                name="downsides"
-                                rows="2"
-                                className="w-full border-gray-300 
-                                border rounded-md py-2 px-4 focus:outline-none focus:ring focus:border-blue-300"
-                                placeholder={dietData.downsides}>
-                            </textarea>
-                        </div>
+                        
                     </div>
                 </div>
                 <div className="text-center">
@@ -154,7 +135,7 @@ const UpdateD = () => {
                 <br/>
             </form>
             <div className="text-center">
-                <Link to="/dashboard/manageDiets">
+                <Link to="/dashboard/manageWorkouts">
                     <button className="bg-red-300 justify-center hover:bg-red-500 text-black font-bold py-2 px-4 
                       rounded focus:outline-none focus:shadow-outline">
                         Cancle
@@ -167,4 +148,4 @@ const UpdateD = () => {
   )
 }
 
-export default UpdateD
+export default UpdateW

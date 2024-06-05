@@ -110,7 +110,7 @@ const AllWorkouts = () => {
                                 })}
                             </td>
                             <td className='text-center'>
-                                <Link to="/dashboard">
+                                <Link to={`/dashboard/updateW/${item._id}`}>
                                     <button 
                                     className='text-center px-12 py-3 cursor-pointer bg-green-500 rounded-3xl text-white font-bold'>
                                     <MdUpdate/>
