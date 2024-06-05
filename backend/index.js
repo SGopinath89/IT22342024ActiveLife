@@ -1,17 +1,20 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const nodemailer = require('nodemailer');
+const bodyParser = require('body-parser');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const port = process.env.PORT || 5000;
 
+app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json());
 
 const verifyJWT = (req,res,next)=>{
   const authorization=req.headers.authorization;
   if(!authorization){
-    console.log(error.message)
+    //console.log(error.message)
     return res.status(401).send({message:"Invalid authorization"});
   }
   const token =authorization?.split(' ')[1];
@@ -49,6 +52,32 @@ async function connectAndStartServer() {
     const userDietsCollection = database.collection("userDiets");
     const userInstructorsCollection = database.collection("userInstructors");
     const instructorCollection = database.collection("instructors");
+    
+    let transporter = nodemailer.createTransport({
+        service: 'Gmail', 
+        auth: {
+            user: "activelifeadm1@gmail.com",
+            pass: "4wol c6lf kigy cjnz w2b5 g4ao mqdd vyab"
+        }
+    });
+  
+    app.post('/send-email', (req, res) => {
+        const { userEmail, instructorName, instructorEmail, speciality, date } = req.body;
+    
+        let mailOptions = {
+            from: "activelifeadm1@gmail.com",
+            to: instructorEmail,
+            subject: 'New Instructor Request',
+            text: `You have a new request from ${userEmail}.\n\nInstructor: ${instructorName}\nSpeciality: ${speciality}\nDate: ${date}`
+        };
+    
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                return res.status(500).send(error.toString());
+            }
+            res.status(200).send('Email sent: ' + info.response);
+        });
+    });
 
     app.post('/api/set-token',async(req,res)=>{
       const user=req.body;
@@ -58,7 +87,7 @@ async function connectAndStartServer() {
       res.send({token});
     })
 
-    //middleware for admin and instructor
+    /*middleware for admin and instructor
     const verifyAdmin=async(req,res,next)=>{
       const email =req.decoded.email;
       const query ={email:email};
@@ -68,7 +97,7 @@ async function connectAndStartServer() {
       }else{
         return res.status(401).send({message:"Forbidden access"});
       }
-    }
+    }*/
 
     //add new user
     app.post('/new-user', async (req, res) => {
@@ -102,7 +131,7 @@ async function connectAndStartServer() {
     })
 
     //delete user
-    app.delete('/delete-user/:id',async(req,res)=>{
+    app.delete('/delete-user/:id',verifyJWT,async(req,res)=>{
       const id=req.params.id;
       const query = {_id: new ObjectId(id)};
       const result=await userCollection.deleteOne(query);
@@ -122,7 +151,8 @@ async function connectAndStartServer() {
             gender:updateUser.gender, 
             email:updateUser.email, 
             age:updateUser.age, 
-            address:updateUser.address, 
+            address:updateUser.address,
+            phoneNo: updateUser.phoneNo,  
             userName:updateUser.userName, 
             password:updateUser.password,
             photoUrl:updateUser.photoUrl, 
@@ -158,19 +188,20 @@ async function connectAndStartServer() {
 
     
     //update all diet details
-    app.put('/update-diets/:id',async(req,res)=>{
+    app.patch('/update-diets/:id',async(req,res)=>{
       const id=req.params.id;
       const updateDiet=req.body;
       const filter={_id: new ObjectId(id)};
       const options={upsert:true};
-      const updateDoc={
-        $set:{
-          name:updateDiet.name,
-          howItWorks:updateDiet.howItWorks,
-          benefits:updateDiet.benefits,
-          downsides:updateDiet.downsides
-        }
+      const updateDoc = {
+        $set: {}
       };
+    
+      for (const key in updateDiet) {
+        if (updateDiet[key] !== "") {
+          updateDoc.$set[key] = updateDiet[key];
+        }
+      }
       const result =await dietCollection.updateOne(filter,updateDoc,options)
       res.send(result);
     })
@@ -206,18 +237,20 @@ async function connectAndStartServer() {
     })
 
     //update workout
-    app.put('/update-workouts/:id',async(req,res)=>{
+    app.patch('/update-workouts/:id',async(req,res)=>{
       const id=req.params.id;
       const updateWorkout=req.body;
       const filter={_id: new ObjectId(id)};
       const options={upsert:true};
-      const updateDoc={
-        $set:{
-          name:updateWorkout.name,
-          numberOfDays:parseInt(updateWorkout.numberOfDays),
-          howToDo:updateWorkout.howToDo
-        }
+      const updateDoc = {
+        $set: {}
       };
+    
+      for (const key in updateWorkout) {
+        if (updateWorkout[key] !== "") {
+          updateDoc.$set[key] = updateWorkout[key];
+        }
+      }
       const result =await workoutCollection.updateOne(filter,updateDoc,options)
       res.send(result);
     })
@@ -253,21 +286,20 @@ async function connectAndStartServer() {
     })
 
     //update instructor
-    app.put('/update-instructors/:id',async(req,res)=>{
+    app.patch('/update-instructors/:id',async(req,res)=>{
       const id=req.params.id;
       const updateInstructor=req.body;
       const filter={_id: new ObjectId(id)};
       const options={upsert:true};
-      const updateDoc={
-        $set:{
-          name:updateInstructor.name,
-          email:updateInstructor.email,
-          phoneNo:updateInstructor.phoneNo,
-          qualification:updateInstructor.qualification,
-          experience:updateInstructor.experience,
-          specialities:updateInstructor.specialities
-        }
+      const updateDoc = {
+        $set: {}
       };
+    
+      for (const key in updateInstructor) {
+        if (updateInstructor[key] !== "") {
+          updateDoc.$set[key] = updateInstructor[key];
+        }
+      }
       const result =await instructorCollection.updateOne(filter,updateDoc,options)
       res.send(result);
     })

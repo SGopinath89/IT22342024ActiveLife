@@ -90,21 +90,21 @@ const AllDiets = () => {
                         diets.length === 0 ? <tr><td colSpan='4' className='text-center text-2xl'>No Diets Found</td></tr>
                       :diets.map((item)=>{
                             return <tr key={item._id}>
-                            <td className='py-4'>
+                            <td className='py-4 text-center'>
                               <div className='flex items-center'>
                                 <span>{item.name}</span>
                               </div></td>
-                            <td className='py-4'>
+                            <td className='py-4 text-center'>
                               {item.howItWorks} 
                             </td>
-                            <td className='py-4'>
+                            <td className='py-4 text-center'>
                               {item.benefits} 
                             </td>
-                            <td className='py-4'>
+                            <td className='py-4 text-center'>
                               {item.downsides} 
                             </td>
                             <td className='text-center'>
-                                <Link to="/dashboard">
+                                <Link to={`/dashboard/updateD/${item._id}`}>
                                     <button 
                                     className='text-center px-12 py-3 cursor-pointer bg-green-500 rounded-3xl text-white font-bold'>
                                     <MdUpdate/>

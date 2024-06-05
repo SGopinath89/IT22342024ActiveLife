@@ -10,10 +10,30 @@ const AdminP = () => {
   return (
     <div className='w-[1100px] h-screen justify-center flex items-center'>
         <div>
-          <div>
-                <div className=' flex items-center p-5'>
-                  <h1 className='text-4xl capitalize font-bold'>  Hi, <span>{currentUser?.fullName}!!  </span>Welcome to your dashboard</h1>
-                </div>
+          <div className=' flex items-center p-5'>
+            <h1 className='text-4xl capitalize font-bold'>  Hi, <span>{currentUser?.fullName}!!  </span>Welcome to your dashboard</h1>
+          </div><br/>
+          <div className='p-2 grid md:grid-cols-2 lg:grid-cols-2 gap-4 '>
+            <div>
+            <h1 className='text-2xl capitalize font-bold text-center'>- Your Details -</h1><br/>
+              <p className='text-black mb-2 text-center'><span className='font-bold'>Email : </span>{currentUser?.email}</p>
+              <p className='text-black mb-2 text-center'><span className='font-bold'>Gender : </span>{currentUser?.gender}</p>
+              <p className='text-black mb-2 text-center'><span className='font-bold'>Phone Number : </span>{currentUser?.phoneNo}  </p>
+              <p className='text-black mb-2 text-center'><span className='font-bold'>Age : </span>{currentUser?.age}  </p>
+              <p className='text-black mb-2 text-center'><span className='font-bold'>Address : </span>{currentUser?.address}  </p>
+              <p className='text-black mb-2 text-center'><span className='font-bold'>Employment Status : </span>{currentUser?.employmentStatus}  </p>
+              <br/>
+              <div className='text-center'>
+                    <Link to='/dashboard/updateUserDetails'>
+                        <button
+                        className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
+                          Edit your Details                                    
+                        </button>
+                      </Link> 
+              </div>
+            </div>
+            <div>
+                <br/><br/><br/>
                 <div className='text-center'>
                     <Link to='/dashboard/addDiet'>
                         <button
@@ -38,14 +58,7 @@ const AdminP = () => {
                         </button>
                       </Link> 
                 </div> <br/>
-                <div className='text-center'>
-                    <Link to='/dashboard/updateAdminDetails'>
-                        <button
-                        className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
-                          Edit your Details                                    
-                        </button>
-                      </Link> 
-                </div>     
+            </div>     
           </div>
         </div>
     </div>

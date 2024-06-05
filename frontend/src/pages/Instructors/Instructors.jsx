@@ -24,7 +24,7 @@ export const Instructors = () => {
           .catch((err)=>console.log(err))
     },[axiosFetch])
 
-    const handleRequest = (id,name,spe) => {
+    const handleRequest = (id,name,spe,iEmail) => {
         if (!currentUser || !currentUser.email) {
           Swal.fire({
             position: "top-end",
@@ -63,6 +63,7 @@ export const Instructors = () => {
                 instructorId: id,
                 userEmail: currentUser.email,
                 speciality:spe,
+                instructorEmail:iEmail,
                 data: new Date(),
               };
               axiosSecure.post('/new-userInstructor', data).then((res)=>{
@@ -117,7 +118,7 @@ export const Instructors = () => {
                               <p className='text-black mb-2 text-center dark:text-white'><span className='font-bold'>Experiences: </span>{instructor.experience}</p>
                               <p className='text-black mb-2 text-center dark:text-white'><span className='font-bold'>Specialities: </span>{instructor.specialities}</p>
                               <div className='text-center'>
-                              <button onClick={()=>handleRequest(instructor._id,instructor.name,instructor.specialities)} title={role == 'admin' ? 'Admin cannot be available to add' : 'You can Add Diets'} 
+                              <button onClick={()=>handleRequest(instructor._id,instructor.name,instructor.specialities,instructor.email)} title={role == 'admin' ? 'Admin cannot be available to add' : 'You can Add Diets'} 
                                 disabled={role=='admin'}
                                 className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
                                     Request

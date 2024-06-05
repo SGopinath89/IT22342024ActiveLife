@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import useUser from '../../../hooks/useUser';
-import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import useUser from '../../hooks/useUser';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
@@ -45,7 +45,13 @@ const UpdateUserDetails = () => {
           icon: 'success',
         });
         refetch();
-        navigate('/dashboard/userP');
+        if(currentUser.role=="user"){
+          navigate('/dashboard/userP');
+        }else if(currentUser.role="admin"){
+          navigate('/dashboard/adminHome');
+        }
+        console.log(currentUser.phoneNo)
+        
       })
       .catch((error) => {
         console.log(error);
@@ -94,7 +100,7 @@ const UpdateUserDetails = () => {
                     </div>
                     <div className="mb-4">
                       <label htmlFor="gender" className='block text-gray-700 front-bold mb-2'>
-                      Employment Status
+                      Gender
                       </label>
                       <select
                       name="gender"
