@@ -3,8 +3,7 @@ import useAxiosFetch from '../../hooks/useAxiosFetch'
 import AuthProvider, { AuthContext } from '../../utilities/providers/AuthProvider';
 import useUser from '../../hooks/useUser';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { IoMdSearch } from "react-icons/io";
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
@@ -13,10 +12,10 @@ export const Workouts = () => {
   const [workouts,setWorkouts] = useState([]);
   const navigate = useNavigate();
   const {currentUser}=useUser();
-  //console.log(currentUser)
   const role=currentUser?.role;
   const [userWoukouts,setUserWoukouts]=useState([])
   const axiosSecure = useAxiosSecure();
+  const [searchTerm,setSearchTerm] = useState("")
   
     useEffect(()=>{
       axiosFetch
@@ -92,6 +91,20 @@ export const Workouts = () => {
         
     };
 
+    const highlightText = (text, highlight) => {
+      if (!highlight.trim()) {
+        return text;
+      }
+      const regex = new RegExp(`(${highlight})`, 'gi');
+      return text.split(regex).map((part, index) =>
+        regex.test(part) ? (
+          <span key={index} className="bg-yellow-200">{part}</span>
+        ) : (
+          part
+        )
+      );
+    };
+    
 
   return (
     <div className='md:w-[80%]mx-auto my-36'>
@@ -113,31 +126,53 @@ export const Workouts = () => {
                 </p>
                 <br/>
             </div>
+            <div className='flex text-right' style={{ display: 'flex', justifyContent: 'right', alignItems: 'right'}}>
+              <input id='searchInput' type='text' placeholder='Search' 
+              className='border-gray-300 border rounded-md py-2 px-4'
+              onChange={(event)=>{
+                setSearchTerm(event.target.value)
+              }}
+              />
+              <IoMdSearch className='w-[40px] h-[40px]'/>
+            </div>
             {
                 <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4 '>
                 {
-                    workouts.map((workout)=>(
+                    workouts
+                    .filter((workout)=>{
+                      if(searchTerm ==""){
+                        return workout;
+                      }else if(workout.name.toLowerCase().includes(searchTerm.toLowerCase()) 
+                        || workout.numberOfDays.toString().toLowerCase().includes(searchTerm.toLowerCase())
+                        || workout.howToDo.toLowerCase().includes(searchTerm.toLowerCase())
+                      ){
+                          return workout;
+                        }
+                      })
+                    .map((workout)=>(
                       <div key={workout._id} className='shadow-lg rounded-lg p-3 flex flex-col justify-between border border-secondary overflow-hidden m-4'>
                         <div className='p-4'>
-                            <h2 className='text-xl font-semibold mb-20 dark:text-white text-center'>{workout.name}</h2>
+                            <h2 className='text-xl font-semibold mb-20 dark:text-white text-center'>{highlightText(workout.name, searchTerm)}</h2>
                             <div className='flex justify-center'>
                               <img className='shadow-lg rounded-lg'src={workout.workoutImg} alt="Workout Image"/>
                             </div>
                             <br/>
-                            <p className='text-black mb-2 text-center dark:text-white'><span className='font-bold'>Total Number of Days: </span>{workout.numberOfDays}</p>
+                            <p className='text-black mb-2 text-center dark:text-white'><span className='font-bold'>Total Number of Days: </span>{highlightText(workout.numberOfDays.toString(), searchTerm)}</p>
                             <p className='text-black mb-2 text-center dark:text-white'><span className='font-bold'>Steps :</span>
                             
-                              {workout.howToDo.split(' ').map((word,index )=> {
-                                  if (word === "Step") {
-                                      return (
-                                        <React.Fragment key={index}>
-                                          <br /> <span className="font-bold">{word} </span>
-                                          </React.Fragment>
-                                      );
-                                  } else {
-                                  return word + ' ';
-                                  }
-                              })}
+                            {workout.howToDo.split(' ').map((word, index) => {
+                              const highlightedWord = highlightText(word, searchTerm);
+                              return word === "Step" ? (
+                                <React.Fragment key={index}>
+                                  <br /> <span className="font-bold">{highlightedWord} </span>
+                                </React.Fragment>
+                              ) : (
+                                <React.Fragment key={index}>
+                                  {highlightedWord}{" "}
+                                </React.Fragment>
+                              );
+                            })}
+
                           
                             </p><br/>
                             <div className='text-center'>

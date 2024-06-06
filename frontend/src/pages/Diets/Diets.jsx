@@ -3,9 +3,8 @@ import useAxiosFetch from '../../hooks/useAxiosFetch'
 import AuthProvider, { AuthContext } from '../../utilities/providers/AuthProvider';
 import useUser from '../../hooks/useUser';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import { IoMdSearch } from "react-icons/io";
 import Swal from 'sweetalert2';
 
 const Diets = () => {
@@ -13,11 +12,10 @@ const Diets = () => {
   const axiosFetch = useAxiosFetch();
   const [diets,setDiets] = useState([]);
   const {currentUser}=useUser();
-  //console.log(currentUser)
   const role=currentUser?.role;
   const [userDiets,setUserDiets]=useState([])
-  
   const axiosSecure = useAxiosSecure();
+  const [searchTerm,setSearchTerm] = useState("")
 
   useEffect(()=>{
     axiosFetch
@@ -27,7 +25,7 @@ const Diets = () => {
   },[axiosFetch]);
   
   //handle add button
-    const handleAdd = (id, name,img) => {
+  const handleAdd = (id, name,img) => {
     if (!currentUser || !currentUser.email) {
       Swal.fire({
         position: "top-end",
@@ -92,6 +90,20 @@ const Diets = () => {
       });
   };
 
+  const highlightText = (text, highlight) => {
+    if (!highlight.trim()) {
+      return text;
+    }
+    const regex = new RegExp(`(${highlight})`, 'gi');
+    return text.split(regex).map((part, index) =>
+      regex.test(part) ? (
+        <span key={index} className="bg-yellow-200">{part}</span>
+      ) : (
+        part
+      )
+    );
+  };
+
   return (
     <div className='md:w-[80%]mx-auto my-36'>
             <div>
@@ -108,21 +120,41 @@ const Diets = () => {
                 </p>
                 <br/>
             </div>
+            
+            <div className='flex text-right' style={{ display: 'flex', justifyContent: 'right', alignItems: 'right'}}>
+              <input id='searchInput' type='text' placeholder='Search' 
+              className='border-gray-300 border rounded-md py-2 px-4'
+              onChange={(event)=>{
+                setSearchTerm(event.target.value)
+              }}
+              />
+              <IoMdSearch className='w-[40px] h-[40px]'/>
+            </div>
             {
               <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4 '>
                 {
-                    diets.map((diet)=>(
-                      
-                      <div key={diet._id} className='shadow-lg rounded-lg p-3 flex flex-col justify-between border border-secondary overflow-hidden m-4'>
+                      diets
+                      .filter((diet)=>{
+                        if(searchTerm ==""){
+                          return diet;
+                        }else if(diet.name.toLowerCase().includes(searchTerm.toLowerCase()) 
+                        || diet.howItWorks.toLowerCase().includes(searchTerm.toLowerCase())
+                        || diet.benefits.toLowerCase().includes(searchTerm.toLowerCase())
+                        || diet.downsides.toLowerCase().includes(searchTerm.toLowerCase())){
+                          return diet;
+                        }
+                      })
+                      .map((diet)=>(
+                        <div key={diet._id} className='shadow-lg rounded-lg p-3 flex flex-col justify-between border border-secondary overflow-hidden m-4'>
                         <div className='p-4'>
-                            <h2 className='text-xl font-semibold mb-10 dark:text-white text-center'>{diet.name}</h2>
+                            <h2 className='text-xl font-semibold mb-10 dark:text-white text-center'>{highlightText(diet.name, searchTerm)}</h2>
                             <div className='flex justify-center'>
                               <img className='shadow-lg rounded-lg'src={diet.dietImg} alt="Diet Image"/>
                             </div>
                             <br/>
-                            <p className='text-black mb-2 text-center dark:text-white'><span className='font-bold'>How it Works : </span>{diet.howItWorks}</p>
-                            <p className='text-black mb-2 text-center dark:text-white'><span className='font-bold'>Benefits : </span>{diet.benefits}  </p>
-                            <p className='text-gray-600 mb-2 text-center'><span className='font-bold'>Downsides : </span>{diet.downsides}  </p>
+                            <p className='text-black mb-2 text-center dark:text-white'><span className='font-bold'>How it Works : </span>{highlightText(diet.howItWorks, searchTerm)}</p>
+                            <p className='text-black mb-2 text-center dark:text-white'><span className='font-bold'>Benefits : </span>{highlightText(diet.benefits, searchTerm)}  </p>
+                            <p className='text-gray-600 mb-2 text-center'><span className='font-bold'>Downsides : </span>{highlightText(diet.downsides, searchTerm)}  </p>
                             <br/>
                             <div className='text-center'>
                                 <button onClick={()=>handleAdd(diet._id,diet.name,diet.dietImg)} title={role == 'admin' ? 'Admin cannot be available to add' : 'You can Add Diets'} 
@@ -133,7 +165,7 @@ const Diets = () => {
                             </div>
                         </div>
                       </div>
-                    ))
+                      ))
                 }
               </div>
             }

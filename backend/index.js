@@ -52,6 +52,7 @@ async function connectAndStartServer() {
     const userDietsCollection = database.collection("userDiets");
     const userInstructorsCollection = database.collection("userInstructors");
     const instructorCollection = database.collection("instructors");
+    const feedbackCollection = database.collection("feedback");
     
     let transporter = nodemailer.createTransport({
         service: 'Gmail', 
@@ -610,6 +611,19 @@ async function connectAndStartServer() {
       }
       
       const result =await userHealthRecordCollection.updateOne(filter,updateDoc,options)
+      res.send(result);
+    })
+
+
+    app.post('/new-feedback', async (req, res) => {
+      const newFeedback = req.body;
+      const result = await feedbackCollection.insertOne(newFeedback);
+      res.send(result);
+    });
+
+    
+    app.get('/feedbacks', async(req,res)=>{
+      const result=await feedbackCollection.find().toArray();
       res.send(result);
     })
 
