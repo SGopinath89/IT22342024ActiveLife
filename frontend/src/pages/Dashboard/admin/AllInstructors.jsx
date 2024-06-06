@@ -4,12 +4,14 @@ import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { MdDelete ,MdEmail,MdUpdate} from 'react-icons/md';
 import moment from 'moment'
 import Swal from 'sweetalert2'
+import { IoMdSearch } from "react-icons/io";
 
 const AllInstructors = () => {
     const [loading,setLoading] = useState(true);
     const [instructors,setInstructors] = useState([]);
     const [userinstructors,setuserInstructors] = useState([]);
     const axiosSecure = useAxiosSecure(); 
+    const [searchTerm,setSearchTerm] = useState("")
     
     useEffect(()=>{
       axiosSecure.get('/instructors')
@@ -69,6 +71,20 @@ const AllInstructors = () => {
       return <div>Loading...</div>
     }
 
+    const highlightText = (text, highlight) => {
+      if (!highlight.trim()) {
+        return text;
+      }
+      const regex = new RegExp(`(${highlight})`, 'gi');
+      return text.split(regex).map((part, index) =>
+        regex.test(part) ? (
+          <span key={index} className="bg-yellow-200">{part}</span>
+        ) : (
+          part
+        )
+      );
+    };
+
     const handleSendEmail = (item) => {
       axiosSecure.post('/send-email', {
           userEmail: item.userEmail,
@@ -97,6 +113,15 @@ const AllInstructors = () => {
         <div className='my-6 text-center w-[1000px]'>
           <h1 className='text-4xl font-bold text-secondary'>All Instructor & Doctor</h1>
         </div>
+        <div className='flex text-right' style={{ display: 'flex', justifyContent: 'right', alignItems: 'right'}}>
+          <input id='searchInput' type='text' placeholder='Search' 
+            className='border-gray-300 border rounded-md py-2 px-4'
+            onChange={(event)=>{
+            setSearchTerm(event.target.value)
+            }}
+          />
+          <IoMdSearch className='w-[40px] h-[40px]'/>
+        </div>
         <div >
           <div className='container mx-auto px-4'>
             <div className='flex flex-col md:flex-row gap-4'>
@@ -116,28 +141,40 @@ const AllInstructors = () => {
                   </thead>
   
                   <tbody>
-                    { 
-
+                    {
                     instructors.length === 0 ? <tr><td colSpan='4' className='text-center text-2xl'>No Instructor/Doctor Found</td></tr>
-                      :instructors.map((item)=>{
+                      :instructors
+                      .filter((item)=>{
+                        if(searchTerm ==""){
+                          return item;
+                        }else if(item.name.toLowerCase().includes(searchTerm.toLowerCase()) 
+                        || item.email.toLowerCase().includes(searchTerm.toLowerCase())
+                        || item.phoneNo.toLowerCase().includes(searchTerm.toLowerCase())
+                        || item.qualification.toLowerCase().includes(searchTerm.toLowerCase())
+                        || item.experience.toLowerCase().includes(searchTerm.toLowerCase())
+                        || item.specialities.toLowerCase().includes(searchTerm.toLowerCase())){
+                          return item;
+                        }
+                      })
+                      .map((item,index)=>{
                             return <tr key={item._id}>
                             <td className='py-4 text-center'>
-                              {item.name}
+                              {highlightText(item.name, searchTerm)}
                             </td>
                             <td className='py-4 text-center'>
-                              {item.email} 
+                              {highlightText(item.email, searchTerm)} 
                             </td>
                             <td className='py-4 text-center'>
-                                {item.phoneNo}
+                                {highlightText(item.phoneNo, searchTerm)}
                             </td>
                             <td className='py-4 text-center'>
-                              {item.qualification} 
+                              {highlightText(item.qualification, searchTerm)} 
                             </td>
                             <td className='py-4 text-center'>
-                              {item.experience} 
+                              {highlightText(item.experience, searchTerm)} 
                             </td>
                             <td className='py-4 text-center'>
-                              {item.specialities} 
+                              {highlightText(item.specialities, searchTerm)} 
                             </td>
                             <td className='text-center'>
                                 <Link to={`/dashboard/updateI/${item._id}`}>
@@ -198,23 +235,36 @@ const AllInstructors = () => {
                       { 
 
                       userinstructors.length === 0 ? <tr><td colSpan='4' className='text-center text-2xl'>No Instructor/Doctor Found</td></tr>
-                        :userinstructors.map((item)=>{
+                        :userinstructors
+                        .filter((item)=>{
+                          const formattedDate = moment(item.data).format("MMMM Do YYYY").toLowerCase();
+                          if(searchTerm ==""){
+                            return item;
+                          }else if(item.instructorName.toLowerCase().includes(searchTerm.toLowerCase()) 
+                          || item.instructorEmail.toLowerCase().includes(searchTerm.toLowerCase())
+                          || item.userEmail.toLowerCase().includes(searchTerm.toLowerCase())
+                          || item.speciality.toLowerCase().includes(searchTerm.toLowerCase())
+                          || formattedDate.toLowerCase().includes(searchTerm.toLowerCase())){
+                            return item;
+                          }
+                        })
+                        .map((item)=>{
                               return <tr key={item._id}>
                               <td className='py-4 text-center'>
-                                {item.instructorName}
+                                {highlightText(item.instructorName, searchTerm)}
                               </td>
                               <td className='py-4 text-center'>
-                                {item.instructorEmail} 
+                                {highlightText(item.instructorEmail, searchTerm)} 
                               </td>
                               <td className='py-4 text-center'>
-                                  {item.userEmail}
+                                  {highlightText(item.userEmail, searchTerm)}
                               </td>
                               <td className='py-4 text-center'>
-                                {item.speciality} 
+                                {highlightText(item.speciality, searchTerm)} 
                               </td>
                               <td className='py-4 text-center'>
                               <p className='text-gray-500 text-sm'>
-                                {moment(item.data).format("MMMM Do YYYY")}
+                                {highlightText(moment(item.data).format("MMMM Do YYYY"), searchTerm)}
                               </p>
                               </td>
                               <td className='text-center'>

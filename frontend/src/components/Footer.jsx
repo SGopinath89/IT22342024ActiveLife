@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const Footer = () => {
   return (
     <div className='bg-[#ead448]'>
-        <div className='p-2 grid md:grid-cols-4 lg:grid-cols-4 gap-4 '>
+        <div className='p-2 grid md:grid-cols-3 lg:grid-cols-3 gap-4 '>
             <div className='flex'>
                 <img className='rounded-lg h-[75px] w-[75px] m-8'src={logo} alt="logo"/>
                 <p className='m-8'><span className='text-1xl font-bold underline'> 
@@ -27,10 +27,8 @@ const Footer = () => {
                 </p>
             </div>
             <div className='flex'>
-
-            </div>
-            <div className='flex'>
-                <p className='text-right m-8'>
+                <br/>
+                <p className='text-center m-8'>
                     New User? 
                     <Link className='underline text-secondary' to="/register">Sign-up</Link><br/>
                     Already have an account? 

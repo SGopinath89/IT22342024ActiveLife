@@ -123,10 +123,10 @@ const Diets = () => {
             
             <div className='flex text-right' style={{ display: 'flex', justifyContent: 'right', alignItems: 'right'}}>
               <input id='searchInput' type='text' placeholder='Search' 
-              className='border-gray-300 border rounded-md py-2 px-4'
-              onChange={(event)=>{
-                setSearchTerm(event.target.value)
-              }}
+                className='border-gray-300 border rounded-md py-2 px-4'
+                onChange={(event)=>{
+                  setSearchTerm(event.target.value)
+                }}
               />
               <IoMdSearch className='w-[40px] h-[40px]'/>
             </div>

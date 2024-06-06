@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import useUser from '../../../hooks/useUser'
-import { useNavigate } from 'react-router-dom';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import moment from 'moment'
 import { MdDelete, MdUpdate } from 'react-icons/md';
 import Swal from 'sweetalert2'
+import { IoMdSearch } from "react-icons/io";
 
 const MyWorkouts = () => {
   const {currentUser} = useUser();
   const [loading,setLoading] = useState(true);
   const [userWorkouts,setUserWorkouts] = useState([]);
-  const [paginatedDta,setPaginatedData] = useState([]);
-  const [page,setPage] = useState(1);;
-  const itemPerPage = 5;
-  const totalPages = Math.ceil(userWorkouts.length/itemPerPage);
-  const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
+  const [searchTerm,setSearchTerm] = useState("")
 
   useEffect(()=>{
     axiosSecure.get(`/userWorkout-Email/${currentUser?.email}`)
@@ -62,9 +58,9 @@ const MyWorkouts = () => {
 
   const handleUpdateDays = (id, currentDays) => {
     Swal.fire({
-      title: 'Update Number of Days',
+      title: 'Update Number of Finished Days',
       input: 'number',
-      inputLabel: 'Enter new number of days',
+      inputLabel: 'How many days have you finished?',
       inputValue: currentDays,
       showCancelButton: true,
       confirmButtonText: 'Update',
@@ -95,14 +91,38 @@ const MyWorkouts = () => {
     });
   };
 
+  const highlightText = (text, highlight) => {
+    if (!highlight.trim()) {
+      return text;
+    }
+    const regex = new RegExp(`(${highlight})`, 'gi');
+    return text.split(regex).map((part, index) =>
+      regex.test(part) ? (
+        <span key={index} className="bg-yellow-200">{part}</span>
+      ) : (
+        part
+      )
+    );
+  };
+
+
   if(loading){
     return <div>Loading...</div>
   }
 
   return (
-    <div className='w-[1100px]'>
+    <div className='w-[1050px]'>
       <div className='my-6 text-center'>
         <h1 className='text-4xl font-bold'>My <span className='text-secondary'>Workouts</span></h1>
+      </div>
+      <div className='flex'  style={{ display: 'flex', justifyContent: 'right', alignItems: 'right'}}>
+        <input id='searchInput' type='text' placeholder='Search' 
+        className='border-gray-300 border rounded-md py-2 px-4'
+        onChange={(event)=>{
+          setSearchTerm(event.target.value)
+        }}
+        />
+        <IoMdSearch className='w-[40px] h-[40px]'/>
       </div>
       <div className='h-screen py-8'>
         <div className='container mx-auto px-4'>
@@ -124,20 +144,32 @@ const MyWorkouts = () => {
                 <tbody>
                   {
                     userWorkouts.length === 0 ? <tr><td colSpan='7' className='text-center text-2xl'>No Workouts Found</td></tr>
-                    :userWorkouts.map((item,index)=>{
-                      const leftIndex = (page-1)* itemPerPage + index+1;
+                    :userWorkouts
+                    .filter((item)=>{
+                      const formattedDate = moment(item.data).format("MMMM Do YYYY").toLowerCase();
+                      if(searchTerm ==""){
+                        return item;
+                      }else if(item.workoutName?.toLowerCase().includes(searchTerm.toLowerCase()) 
+                      || formattedDate.includes(searchTerm.toLowerCase())
+                      || item.finishedDays.toString().toLowerCase().includes(searchTerm.toLowerCase())
+                      || item.totaldays.toString().toLowerCase().includes(searchTerm.toLowerCase())
+                    ){
+                        return item;
+                      }
+                    })
+                    .map((item,index)=>{
                       return <tr key={item._id}>
-                          <td className='py-4'>{leftIndex}</td>
+                          <td className='py-4'>{index+1}</td>
                           <td className='py-4'>
                             <div className='flex items-center'>
                               <img src={item.workoutImg} className='h-16 w-16 mr-4 rounded-lg'/>
-                              <span>{item.workoutName}</span>
+                              <span>{highlightText(item.workoutName, searchTerm)}</span>
                             </div></td>
-                          <td className='py-4'>{item.finishedDays}</td>
-                          <td className='py-4'>{item.totaldays}</td>
+                          <td className='py-4'>{highlightText(item.finishedDays.toString(), searchTerm)}</td>
+                          <td className='py-4'>{highlightText(item.totaldays.toString(), searchTerm)}</td>
                           <td className='py-4'>
                             <p className='text-gray-500 text-sm'>
-                              {moment(item.data).format("MMMM Do YYYY")}
+                              {highlightText(moment(item.data).format("MMMM Do YYYY"), searchTerm)}
                             </p>  
                           </td>
                           <td>

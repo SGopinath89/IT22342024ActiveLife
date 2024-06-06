@@ -3,11 +3,13 @@ import { Link} from 'react-router-dom';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { MdDelete ,MdUpdate} from 'react-icons/md';
 import Swal from 'sweetalert2'
+import { IoMdSearch } from "react-icons/io";
 
 const AllDiets = () => {
     const [loading,setLoading] = useState(true);
     const [diets,setDiets] = useState([]);
     const axiosSecure = useAxiosSecure(); 
+    const [searchTerm,setSearchTerm] = useState("")
 
     useEffect(()=>{
       axiosSecure.get('/diets')
@@ -55,10 +57,33 @@ const AllDiets = () => {
       return <div>Loading...</div>
     }
     
+    const highlightText = (text, highlight) => {
+      if (!highlight.trim()) {
+        return text;
+      }
+      const regex = new RegExp(`(${highlight})`, 'gi');
+      return text.split(regex).map((part, index) =>
+        regex.test(part) ? (
+          <span key={index} className="bg-yellow-200">{part}</span>
+        ) : (
+          part
+        )
+      );
+    };
+
     return (
       <div className='h-screen'>
         <div className='my-6 text-center w-[1000px]'>
           <h1 className='text-4xl font-bold text-secondary'>All Diets</h1>
+        </div>
+        <div className='flex text-right' style={{ display: 'flex', justifyContent: 'right', alignItems: 'right'}}>
+          <input id='searchInput' type='text' placeholder='Search' 
+            className='border-gray-300 border rounded-md py-2 px-4'
+            onChange={(event)=>{
+            setSearchTerm(event.target.value)
+            }}
+          />
+          <IoMdSearch className='w-[40px] h-[40px]'/>
         </div>
         <div className='h-screen py-8'>
           <div className='text-right'>
@@ -85,23 +110,31 @@ const AllDiets = () => {
                   </thead>
   
                   <tbody>
-                    { 
-
-                        diets.length === 0 ? <tr><td colSpan='4' className='text-center text-2xl'>No Diets Found</td></tr>
-                      :diets.map((item)=>{
+                    { diets.length === 0 ? <tr><td colSpan='4' className='text-center text-2xl'>No Diets Found</td></tr>
+                      :diets
+                      .filter((item)=>{
+                        if(searchTerm ==""){
+                          return item;
+                        }else if(item.name.toLowerCase().includes(searchTerm.toLowerCase()) 
+                        || item.howItWorks.toLowerCase().includes(searchTerm.toLowerCase())
+                        || item.benefits.toLowerCase().includes(searchTerm.toLowerCase())
+                        || item.downsides.toLowerCase().includes(searchTerm.toLowerCase())){
+                          return item;
+                        }
+                      })
+                      .map((item,index)=>{
                             return <tr key={item._id}>
                             <td className='py-4 text-center'>
-                              <div className='flex items-center'>
-                                <span>{item.name}</span>
-                              </div></td>
-                            <td className='py-4 text-center'>
-                              {item.howItWorks} 
+                              {highlightText(item.name, searchTerm)}
                             </td>
                             <td className='py-4 text-center'>
-                              {item.benefits} 
+                              {highlightText(item.howItWorks, searchTerm)} 
                             </td>
                             <td className='py-4 text-center'>
-                              {item.downsides} 
+                              {highlightText(item.benefits, searchTerm)} 
+                            </td>
+                            <td className='py-4 text-center'>
+                              {highlightText(item.downsides, searchTerm)} 
                             </td>
                             <td className='text-center'>
                                 <Link to={`/dashboard/updateD/${item._id}`}>

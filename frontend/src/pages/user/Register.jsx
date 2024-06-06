@@ -37,7 +37,11 @@ const Register = () => {
                         employmentStatus: data.employmentStatus
                     }
                     if(user.email && user.displayName){
-                        return axios.post('http://localhost:5000/new-user',userImp).then(()=>{
+                        const updatedFormData = {
+                            ...formData,
+                            age: parseInt(formData.age, 10)
+                          };
+                        return axios.post('http://localhost:5000/new-user',updatedFormData).then(()=>{
                             setError("");
                             navigate('/');
                             return "Registration Successful"

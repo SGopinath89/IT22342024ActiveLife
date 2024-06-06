@@ -33,7 +33,7 @@ const AdminP = () => {
               </div>
             </div>
             <div>
-                <br/><br/><br/>
+                <br/>
                 <div className='text-center'>
                     <Link to='/dashboard/addDiet'>
                         <button
@@ -55,6 +55,14 @@ const AdminP = () => {
                         <button
                         className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
                           Add Instructor                                    
+                        </button>
+                      </Link> 
+                </div> <br/>
+                <div className='text-center'>
+                    <Link to='/dashboard'>
+                        <button
+                        className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
+                          Veiw Feedback                                    
                         </button>
                       </Link> 
                 </div> <br/>

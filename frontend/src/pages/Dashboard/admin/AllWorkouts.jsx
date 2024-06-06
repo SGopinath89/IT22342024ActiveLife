@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { MdDelete ,MdUpdate} from 'react-icons/md';
 import Swal from 'sweetalert2'
+import { IoMdSearch } from "react-icons/io";
 
 const AllWorkouts = () => {
     const [loading,setLoading] = useState(true);
     const [workouts,setWorkouts] = useState([]);
     const axiosSecure = useAxiosSecure(); 
+    const [searchTerm,setSearchTerm] = useState("")
     
     useEffect(()=>{
       axiosSecure.get('/workouts')
@@ -54,11 +56,35 @@ const AllWorkouts = () => {
     if(loading){
       return <div>Loading...</div>
     }
+
+    const highlightText = (text, highlight) => {
+      if (!highlight.trim()) {
+        return text;
+      }
+      const regex = new RegExp(`(${highlight})`, 'gi');
+      return text.split(regex).map((part, index) =>
+        regex.test(part) ? (
+          <span key={index} className="bg-yellow-200">{part}</span>
+        ) : (
+          part
+        )
+      );
+    };
+
     
     return (
       <div className='h-screen'>
         <div className='my-6 text-center w-[1000px]'>
           <h1 className='text-4xl font-bold text-secondary'>All Workouts</h1>
+        </div>
+        <div className='flex'  style={{ display: 'flex', justifyContent: 'right', alignItems: 'right'}}>
+          <input id='searchInput' type='text' placeholder='Search' 
+          className='border-gray-300 border rounded-md py-2 px-4'
+          onChange={(event)=>{
+            setSearchTerm(event.target.value)
+          }}
+          />
+          <IoMdSearch className='w-[40px] h-[40px]'/>
         </div>
         <div className='h-screen py-8'>
           <div className='text-right'>
@@ -87,27 +113,37 @@ const AllWorkouts = () => {
                     { 
 
                     workouts.length === 0 ? <tr><td colSpan='4' className='text-center text-2xl'>No Workouts Found</td></tr>
-                      :workouts.map((item)=>{
+                      :workouts
+                      .filter((item)=>{if(searchTerm ==""){
+                          return item;
+                        }else if(item.dietName?.toLowerCase().includes(searchTerm.toLowerCase()) 
+                          || item.numberOfDays.toString().toLowerCase().includes(searchTerm.toLowerCase())
+                          || item.howToDo.toLowerCase().includes(searchTerm.toLowerCase())
+                        ){
+                          return item;
+                        }
+                      })
+                      .map((item,index)=>{
                             return <tr key={item._id}>
                             <td className='py-4'>
-                              <div className='flex items-center'>
-                                <span>{item.name}</span>
-                              </div></td>
-                            <td className='py-4'>
-                              {item.numberOfDays} 
+                              {highlightText(item.name, searchTerm)}
                             </td>
                             <td className='py-4'>
-                                {item.howToDo.split(' ').map((word,index )=> {
-                                  if (word === "Step") {
-                                      return (
-                                        <React.Fragment key={index}>
-                                          <br /> <span className="font-bold">{word} </span>
-                                          </React.Fragment>
-                                      );
-                                  } else {
-                                  return word + ' ';
-                                  }
-                                })}
+                              {highlightText(item.numberOfDays.toString(), searchTerm)} 
+                            </td>
+                            <td className='py-4'>
+                                {item.howToDo.split(' ').map((word, index) => {
+                              const highlightedWord = highlightText(word, searchTerm);
+                              return word === "Step" ? (
+                                <React.Fragment key={index}>
+                                  <br /> <span className="font-bold">{highlightedWord} </span>
+                                </React.Fragment>
+                              ) : (
+                                <React.Fragment key={index}>
+                                  {highlightedWord}{" "}
+                                </React.Fragment>
+                              );
+                            })}
                             </td>
                             <td className='text-center'>
                                 <Link to={`/dashboard/updateW/${item._id}`}>

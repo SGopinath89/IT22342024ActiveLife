@@ -172,8 +172,6 @@ export const Workouts = () => {
                                 </React.Fragment>
                               );
                             })}
-
-                          
                             </p><br/>
                             <div className='text-center'>
                             <button onClick={()=>handleAdd(workout._id,workout.name,workout.workoutImg,workout.numberOfDays)} title={role == 'admin' ? 'Admin cannot be available to add' : 'You can Add Workouts'} 

@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import useUser from '../../../hooks/useUser'
-import { useNavigate } from 'react-router-dom';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import moment from 'moment'
-import { MdDelete, MdUpdate } from 'react-icons/md';
+import { MdDelete} from 'react-icons/md';
 import Swal from 'sweetalert2'
+import { IoMdSearch } from "react-icons/io";
 
 const MyInstructors = () => {
   const {currentUser} = useUser();
   const [loading,setLoading] = useState(true);
   const [userInstructors,setUserInstructor] = useState([]);
-  const [paginatedDta,setPaginatedData] = useState([]);
-  const [page,setPage] = useState(1);;
-  const itemPerPage = 5;
-  const totalPages = Math.ceil(userInstructors.length/itemPerPage);
-  const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
+  const [searchTerm,setSearchTerm] = useState("")
 
   useEffect(()=>{
     axiosSecure.get(`/userInstructor-Email/${currentUser?.email}`)
@@ -64,10 +60,33 @@ const MyInstructors = () => {
     return <div>Loading...</div>
   }
 
+  const highlightText = (text, highlight) => {
+    if (!highlight.trim()) {
+      return text;
+    }
+    const regex = new RegExp(`(${highlight})`, 'gi');
+    return text.split(regex).map((part, index) =>
+      regex.test(part) ? (
+        <span key={index} className="bg-yellow-200">{part}</span>
+      ) : (
+        part
+      )
+    );
+  };
+
   return (
-    <div className='w-[1100px]'>
+    <div className='w-[1050px]'>
       <div className='my-6 text-center'>
         <h1 className='text-4xl font-bold'>My <span className='text-secondary'>Instructors</span></h1>
+      </div>
+      <div className='flex'  style={{ display: 'flex', justifyContent: 'right', alignItems: 'right'}}>
+        <input id='searchInput' type='text' placeholder='Search' 
+        className='border-gray-300 border rounded-md py-2 px-4'
+        onChange={(event)=>{
+          setSearchTerm(event.target.value)
+        }}
+        />
+        <IoMdSearch className='w-[40px] h-[40px]'/>
       </div>
       <div className='h-screen py-8'>
         <div className='container mx-auto px-4'>
@@ -83,19 +102,29 @@ const MyInstructors = () => {
                     <th className='text-left font-semibold'>Delete</th>
                   </tr>
                 </thead>
-
                 <tbody>
                   {
                     userInstructors.length === 0 ? <tr><td colSpan='7' className='text-center text-2xl'>No Instructors Found</td></tr>
-                    :userInstructors.map((item,index)=>{
-                      const leftIndex = (page-1)* itemPerPage + index+1;
+                    :userInstructors
+                    .filter((item)=>{
+                      const formattedDate = moment(item.data).format("MMMM Do YYYY").toLowerCase();
+                      if(searchTerm ==""){
+                        return item;
+                      }else if(item.instructorName?.toLowerCase().includes(searchTerm.toLowerCase()) 
+                      || formattedDate.includes(searchTerm.toLowerCase())
+                      || item.speciality.toLowerCase().includes(searchTerm.toLowerCase())
+                    ){
+                        return item;
+                      }
+                    })
+                    .map((item,index)=>{
                       return <tr key={item._id}>
-                          <td className='py-4'>{leftIndex}</td>
-                          <td className='py-4'>{item.instructorName}</td>
-                          <td className='py-4'>{item.speciality}</td>
+                          <td className='py-4'>{index+1}</td>
+                          <td className='py-4'>{highlightText(item.instructorName, searchTerm)}</td>
+                          <td className='py-4'>{highlightText(item.speciality, searchTerm)}</td>
                           <td className='py-4'>
                             <p className='text-gray-500 text-sm'>
-                              {moment(item.data).format("MMMM Do YYYY")}
+                              {highlightText(moment(item.data).format("MMMM Do YYYY"), searchTerm)}
                             </p>  
                           </td>
                           <td>

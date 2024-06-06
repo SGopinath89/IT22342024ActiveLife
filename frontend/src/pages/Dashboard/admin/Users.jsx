@@ -4,18 +4,17 @@ import { useNavigate } from 'react-router-dom';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { MdDelete } from 'react-icons/md';
 import Swal from 'sweetalert2'
+import { IoMdSearch } from "react-icons/io";
 
 const Users = () => {
     const {currentUser} = useUser();
     const [loading,setLoading] = useState(true);
     const [users,setUsers] = useState([]);
-    const [paginatedDta,setPaginatedData] = useState([]);
-    const [page,setPage] = useState(1);;
-    const itemPerPage = 5;
-    const totalPages = Math.ceil(users.length/itemPerPage);
     const navigate = useNavigate();
     const axiosSecure = useAxiosSecure();
-    const role = currentUser.role  
+    const role = currentUser.role
+    const [searchTerm,setSearchTerm] = useState("")
+
     useEffect(()=>{
       axiosSecure.get('/users')
       .then((res)=>{
@@ -62,11 +61,34 @@ const Users = () => {
     if(loading){
       return <div>Loading...</div>
     }
+
+    const highlightText = (text, highlight) => {
+      if (!highlight.trim()) {
+        return text;
+      }
+      const regex = new RegExp(`(${highlight})`, 'gi');
+      return text.split(regex).map((part, index) =>
+        regex.test(part) ? (
+          <span key={index} className="bg-yellow-200">{part}</span>
+        ) : (
+          part
+        )
+      );
+    };
     
     return (
-      <div>
+      <div className='w-[1050px]'>
         <div className='my-6 text-center'>
           <h1 className='text-4xl font-bold text-secondary'>Users</h1>
+        </div>
+        <div className='flex text-right' style={{ display: 'flex', justifyContent: 'right', alignItems: 'right'}}>
+          <input id='searchInput' type='text' placeholder='Search' 
+            className='border-gray-300 border rounded-md py-2 px-4'
+            onChange={(event)=>{
+            setSearchTerm(event.target.value)
+            }}
+          />
+          <IoMdSearch className='w-[40px] h-[40px]'/>
         </div>
         <div className='h-screen py-8'>
           <div className='container mx-auto px-4'>
@@ -87,30 +109,42 @@ const Users = () => {
   
                   <tbody>
                     { 
-
                       users.length === 0 ? <tr><td colSpan='4' className='text-center text-2xl'>No Diets Found</td></tr>
-                      :users.map((item,index)=>{
+                      :users
+                      .filter((item)=>{
+                        if(searchTerm ==""){
+                          return item;
+                        }else if(item.fullName.toLowerCase().includes(searchTerm.toLowerCase()) 
+                        || item.email.toLowerCase().includes(searchTerm.toLowerCase())
+                        || item.phoneNo.toLowerCase().includes(searchTerm.toLowerCase())
+                        || item.address.toLowerCase().includes(searchTerm.toLowerCase())
+                        || item.age.toString().toLowerCase().includes(searchTerm.toLowerCase())
+                        || item.employmentStatus.toLowerCase().includes(searchTerm.toLowerCase())){
+                          return item;
+                        }
+                      })
+                      .map((item,index)=>{
                         if(item.role=='user'){
                             return <tr key={item._id}>
                             <td className='py-4'>
                               <div className='flex items-center'>
                                 <img src={item.photoUrl} className='h-16 w-16 mr-4 rounded-lg'/>
-                                <span>{item.fullName}</span>
+                                <span>{highlightText(item.fullName, searchTerm)}</span>
                               </div></td>
                             <td className='py-4'>
-                              {item.email} 
+                              {highlightText(item.email, searchTerm)} 
                             </td>
                             <td className='py-4'>
-                              {item.phoneNo} 
+                              {highlightText(item.phoneNo, searchTerm)} 
                             </td>
                             <td className='py-4'>
-                              {item.address} 
+                              {highlightText(item.address, searchTerm)} 
                             </td>
                             <td className='py-4'>
-                              {item.age} 
+                              {highlightText(item.age.toString(), searchTerm)} 
                             </td>
                             <td className='py-4'>
-                              {item.employmentStatus} 
+                              {highlightText(item.employmentStatus, searchTerm)} 
                             </td>
                             <td>
                               <button onClick={()=>handleDelete(item._id)} 
