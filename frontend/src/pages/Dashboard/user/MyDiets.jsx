@@ -125,7 +125,7 @@ const MyDiets = () => {
                             </div></td>
                           <td className='py-4'>
                             <p className='text-gray-500 text-sm'>
-                              {moment(item.data).format("MMMM Do YYYY")}
+                              {highlightText(moment(item.data).format("MMMM Do YYYY"), searchTerm)}
                             </p>  
                           </td>
                           <td>

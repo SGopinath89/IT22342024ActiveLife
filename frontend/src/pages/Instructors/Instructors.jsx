@@ -62,7 +62,9 @@ export const Instructors = () => {
                 instructorName:name,
                 instructorId: id,
                 userEmail: currentUser.email,
+                userName:currentUser.fullName,
                 speciality:spe,
+                status:"Pending",
                 instructorEmail:iEmail,
                 data: new Date(),
               };

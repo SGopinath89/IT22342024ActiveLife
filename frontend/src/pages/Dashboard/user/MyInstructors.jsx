@@ -96,9 +96,10 @@ const MyInstructors = () => {
                 <thead>
                   <tr>
                     <th className='text-left font-semibold'>#</th>
-                    <th className='text-left font-semibold'>Name</th>
+                    <th className='text-left font-semibold'>Instructor/Doctor Name</th>
                     <th className='text-left font-semibold'>Specialities</th>
                     <th className='text-left font-semibold'>Date</th>
+                    <th className='text-left font-semibold'>Status</th>
                     <th className='text-left font-semibold'>Delete</th>
                   </tr>
                 </thead>
@@ -113,6 +114,7 @@ const MyInstructors = () => {
                       }else if(item.instructorName?.toLowerCase().includes(searchTerm.toLowerCase()) 
                       || formattedDate.includes(searchTerm.toLowerCase())
                       || item.speciality.toLowerCase().includes(searchTerm.toLowerCase())
+                      || item.status.toLowerCase().includes(searchTerm.toLowerCase())
                     ){
                         return item;
                       }
@@ -127,6 +129,7 @@ const MyInstructors = () => {
                               {highlightText(moment(item.data).format("MMMM Do YYYY"), searchTerm)}
                             </p>  
                           </td>
+                          <td className='py-4'>{highlightText(item.status, searchTerm)}</td>
                           <td>
                             <button onClick={()=>handleDelete(item._id)} 
                             className='px-3 py-3 cursor-pointer bg-red-500 rounded-3xl text-white font-bold'>

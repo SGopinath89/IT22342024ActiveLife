@@ -5,6 +5,7 @@ import { MdDelete ,MdEmail,MdUpdate} from 'react-icons/md';
 import moment from 'moment'
 import Swal from 'sweetalert2'
 import { IoMdSearch } from "react-icons/io";
+import emailjs from 'emailjs-com';
 
 const AllInstructors = () => {
     const [loading,setLoading] = useState(true);
@@ -66,7 +67,70 @@ const AllInstructors = () => {
         }
       });
     }
+
+    const handleStatus = (id, status) => {
+      Swal.fire({
+        title: 'Update Request Status',
+        input: 'text',
+        inputPlaceholder:'Pending / Email Sent / Rejected / Accepted',
+        inputValue: status,
+        showCancelButton: true,
+        confirmButtonText: 'Update',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const newStatus = result.value
+          axiosSecure.patch(`/update-userInstructorStatus/${id}`, { status: newStatus })
+            .then((res) => {
+              Swal.fire({
+                title: 'Updated!',
+                text: 'Request Status has been updated.',
+                icon: 'success'
+              });
+              const updatedUserInstructors = userinstructors.map((item) =>
+                item._id === id ? { ...item, status: result.value } : item
+              );
+              setuserInstructors(updatedUserInstructors);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      });
+    };
   
+    //pw = Active1234
+    //email = activelifeadm1@gmail.com
+    const handleSendEmail = (item) => {
+      const serviceID = 'service_0wouvog';
+      const templateID = 'template_t9faz3s';
+      const userID = 'qTuGMKdPYTd8rcL_U';
+  
+      emailjs.send(serviceID, templateID, {
+          to_email: item.instructorEmail,
+          to_name:item.instructorName,
+          user_name:item.userName,
+          user_email: item.userEmail,
+          instructor_name: item.instructorName,
+          speciality: item.speciality,
+          date: moment(item.data).format("MMMM Do YYYY")
+      }, userID)
+          .then((response) => {
+              Swal.fire({
+                  title: "Email Sent!",
+                  text: "The email has been sent successfully.",
+                  icon: "success"
+              });
+          })
+          .catch((error) => {
+              console.log(error);
+              Swal.fire({
+                  title: "Error!",
+                  text: "There was an error sending the email.",
+                  icon: "error"
+              });
+          });
+    };
+
     if(loading){
       return <div>Loading...</div>
     }
@@ -85,29 +149,6 @@ const AllInstructors = () => {
       );
     };
 
-    const handleSendEmail = (item) => {
-      axiosSecure.post('/send-email', {
-          userEmail: item.userEmail,
-          instructorName: item.instructorName,
-          instructorEmail: item.instructorEmail,
-          speciality: item.speciality,
-          date: moment(item.data).format("MMMM Do YYYY")
-      }).then((res) => {
-          Swal.fire({
-              title: "Email Sent!",
-              text: "The email has been sent successfully.",
-              icon: "success"
-          });
-      }).catch((error) => {
-          console.log(error);
-          Swal.fire({
-              title: "Error!",
-              text: "There was an error sending the email.",
-              icon: "error"
-          });
-      });
-  };
-    
     return (
       <div className='h-screen'>
         <div className='my-6 text-center w-[1000px]'>
@@ -219,14 +260,16 @@ const AllInstructors = () => {
             <div className='container mx-auto px-4'>
               <div className='flex flex-col md:flex-row gap-4'>
                 <div className='bg-white rounded-lg shadow-md p-6 mb-4 w-full'>
+                  
                   <table className='w-full '>
                     <thead>
                       <tr >
                         <th className='text-left font-semibold'>Instructor Name</th>
                         <th className='text-left font-semibold'>Instructor Email</th>
-                        <th className='text-left font-semibold'>Customer Email</th>
-                        <th className='text-left font-semibold'>Specialities</th>
-                        <th className='text-left font-semibold'>Date</th>
+                        <th className='text-left font-semibold'>Customer Name</th>
+                        <th className='text-center font-semibold'>Specialities</th>
+                        <th className='text-center font-semibold'>Date</th>
+                        <th className='text-center font-semibold'>Status</th>
                         <th className='text-center font-semibold'>Send Email</th>
                       </tr>
                     </thead>
@@ -242,7 +285,7 @@ const AllInstructors = () => {
                             return item;
                           }else if(item.instructorName.toLowerCase().includes(searchTerm.toLowerCase()) 
                           || item.instructorEmail.toLowerCase().includes(searchTerm.toLowerCase())
-                          || item.userEmail.toLowerCase().includes(searchTerm.toLowerCase())
+                          || item.userName.toLowerCase().includes(searchTerm.toLowerCase())
                           || item.speciality.toLowerCase().includes(searchTerm.toLowerCase())
                           || formattedDate.toLowerCase().includes(searchTerm.toLowerCase())){
                             return item;
@@ -257,7 +300,7 @@ const AllInstructors = () => {
                                 {highlightText(item.instructorEmail, searchTerm)} 
                               </td>
                               <td className='py-4 text-center'>
-                                  {highlightText(item.userEmail, searchTerm)}
+                                  {highlightText(item.userName, searchTerm)}
                               </td>
                               <td className='py-4 text-center'>
                                 {highlightText(item.speciality, searchTerm)} 
@@ -266,6 +309,13 @@ const AllInstructors = () => {
                               <p className='text-gray-500 text-sm'>
                                 {highlightText(moment(item.data).format("MMMM Do YYYY"), searchTerm)}
                               </p>
+                              </td>
+                              <td className='py-4 text-center'>
+                              {highlightText(item.status, searchTerm)}<br/>
+                              <button onClick={()=>handleStatus(item._id,item.status)}
+                                className='text-center px-5 py-3 cursor-pointer bg-green-500 rounded-3xl text-white font-bold'>
+                                  <MdUpdate/>
+                              </button>
                               </td>
                               <td className='text-center'>
                                       <button 

@@ -1,13 +1,10 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const nodemailer = require('nodemailer');
-const bodyParser = require('body-parser');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const port = process.env.PORT || 5000;
 
-app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json());
 
@@ -54,31 +51,6 @@ async function connectAndStartServer() {
     const instructorCollection = database.collection("instructors");
     const feedbackCollection = database.collection("feedback");
     
-    let transporter = nodemailer.createTransport({
-        service: 'Gmail', 
-        auth: {
-            user: "activelifeadm1@gmail.com",
-            pass: "4wolc6lfkigycjnzw2b5g4aomqddvyab"
-        }
-    });
-  
-    app.post('/send-email', (req, res) => {
-        const { userEmail, instructorName, instructorEmail, speciality, date } = req.body;
-    
-        let mailOptions = {
-            from: "activelifeadm1@gmail.com",
-            to: instructorEmail,
-            subject: 'New Instructor Request',
-            text: `You have a new request from ${userEmail}.\n\nInstructor: ${instructorName}\nSpeciality: ${speciality}\nDate: ${date}`
-        };
-    
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                return res.status(500).send(error.toString());
-            }
-            res.status(200).send('Email sent: ' + info.response);
-        });
-    });
 
     app.post('/api/set-token',async(req,res)=>{
       const user=req.body;
@@ -544,6 +516,20 @@ async function connectAndStartServer() {
         res.status(500).json({ error: 'An error occurred while fetching the documents' });
       }
     });
+
+    app.patch('/update-userInstructorStatus/:id',async(req,res)=>{
+      const id=req.params.id;
+      const status=req.body.status;
+      const filter={_id:new ObjectId(id)};
+      const options={upsert:true};
+      const updateDoc={
+        $set:{
+          status:status
+        }
+      }
+      const result = await userInstructorsCollection.updateOne(filter,updateDoc,options);
+      res.send(result);
+    })
 
     //display diets that each user has added to profile
     app.get('/userDiets', async(req,res)=>{
