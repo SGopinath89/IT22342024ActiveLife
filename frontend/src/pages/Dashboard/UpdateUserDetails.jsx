@@ -9,7 +9,7 @@ const UpdateUserDetails = () => {
   const [formData, setFormData] = useState({});
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
-  //console.log(currentUser.photoUrl)
+  
   useEffect(() => {
     if (currentUser) {
       setFormData({
@@ -69,6 +69,7 @@ const UpdateUserDetails = () => {
 
   return (
     <div className='w-[1100px] h-screen justify-center flex items-center'>
+      <br/>
       <form className='w-full max-w-lg' onSubmit={handleSubmit}>
         <div className='shadow-lg rounded-lg p-6'>
           <h2 className='text-2xl font-bold mb-6'>Edit Your Details</h2>
@@ -145,12 +146,6 @@ const UpdateUserDetails = () => {
                         required
                         />
                     </div>
-                    <button
-                      type='submit'
-                      className='bg-[#f2e48d] justify-center hover:bg-secondary text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
-                      >
-                      Save Changes
-                    </button>
                 </div>
                 <div className='justify-center'>
                     <div className='mb-4'>
@@ -211,31 +206,39 @@ const UpdateUserDetails = () => {
                         className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                         required
                         />
+                    </div><br/>
+                    <div className='mb-3'>
+                      <Link to="/dashboard/updatePassword">
+                        <button
+                        className='bg-[#f2e48d] justify-center hover:bg-secondary text-black font-bold py-2 px-4 
+                        rounded focus:outline-none focus:shadow-outline'
+                        >
+                          Update Password
+                        </button>
+                      </Link>
                     </div>
-                    <div className='mb-4'>
-                        <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='password'>
-                        Password
-                        </label>
-                        <input
-                        id='password'
-                        name='password'
-                        type='password'
-                        value={formData.password || ''}
-                        onChange={handleChange}
-                        className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                        required
-                        />
-                    </div>
-                    <Link to="/dashboard">
-                      <button
+                </div>  
+            </div>
+            <div className='p-4 grid md:grid-cols-2 lg:grid-cols-2 gap-4 '>
+              <div>
+                <button
+                    type='submit'
+                    className='bg-[#f2e48d] justify-center hover:bg-secondary text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+                    >
+                    Save Changes
+                </button>
+              </div>
+              <div>
+                <Link to="/dashboard">
+                    <button
                       type='cancle'
                       className='bg-red-300 justify-center hover:bg-red-500 text-black font-bold py-2 px-4 
                       rounded focus:outline-none focus:shadow-outline'
-                      >
-                        Cancle
-                      </button>
-                    </Link>
-                </div>  
+                    >
+                      Cancle
+                    </button>
+                </Link>
+              </div>
             </div>
         </div>
       </form>

@@ -38,8 +38,8 @@ const Register = () => {
                     }
                     if(user.email && user.displayName){
                         const updatedFormData = {
-                            ...formData,
-                            age: parseInt(formData.age, 10)
+                            ...userImp,
+                            age: parseInt(userImp.age, 10)
                           };
                         return axios.post('http://localhost:5000/new-user',updatedFormData).then(()=>{
                             setError("");

@@ -33,16 +33,15 @@ const Login = () => {
     }catch(err){
       setError(err.code);
       Swal.fire({
-        position: "top-end",
+        position: "center",
+        icon: "warning",
         title: "Give correct Email and password!!",
         showConfirmButton: false,
-        timer: 1500
+        timer: 1000
       });
     }finally{
       setLoader(false);
     }
-    
-    
   }
 
   return (

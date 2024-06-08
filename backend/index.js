@@ -137,6 +137,20 @@ async function connectAndStartServer() {
       res.send(result);
     })
 
+    app.patch('/update-Password/:id',async(req,res)=>{
+      const id=req.params.id;
+      const password=req.body.password;
+      const filter={_id:new ObjectId(id)};
+      const options={upsert:true};
+      const updateDoc={
+        $set:{
+          password:password
+        }
+      }
+      const result = await userCollection.updateOne(filter,updateDoc,options);
+      res.send(result);
+    })
+
     //add new diet
     app.post('/new-diet',async (req, res) => {
       const newDiet = req.body;

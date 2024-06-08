@@ -26,6 +26,7 @@ import AddInstructor from "../pages/Dashboard/admin/AddInstructor";
 import UpdateD from "../pages/Dashboard/admin/UpdateD";
 import UpdateW from "../pages/Dashboard/admin/UpdateW";
 import UpdateI from "../pages/Dashboard/admin/UpdateI";
+import UpdatePassword from "../pages/Dashboard/UpdatePassword";
 
 export const router = createBrowserRouter([
     {
@@ -140,6 +141,10 @@ export const router = createBrowserRouter([
         {
           path:"updateI/:instructorId",
           element:<UpdateI/>
+        },
+        {
+          path:"updatePassword",
+          element:<UpdatePassword/>
         }
       ]
     }
