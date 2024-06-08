@@ -1,10 +1,66 @@
-import React from 'react'
+import React, { useState } from 'react'
 import logo from '/logo-black.png?url'
 import line from '../assets/line.png'
 import { FaRegCopyright } from "react-icons/fa";
 import { SlSocialFacebook, SlSocialLinkedin, SlSocialSkype, SlSocialTwitter, SlSocialYoutube } from "react-icons/sl";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+import { MdOutlineTagFaces } from "react-icons/md";
+import { CiFaceSmile } from "react-icons/ci";
+import { CiFaceMeh } from "react-icons/ci";
+import { CiFaceFrown } from "react-icons/ci";
+import useAxiosSecure from '../hooks/useAxiosSecure';
+import Swal from 'sweetalert2'
+import useUser from '../hooks/useUser';
+
 const Footer = () => {
+    const [formData, setFormData] = useState({});
+    const axiosSecure = useAxiosSecure();
+    const navigate = useNavigate();
+    const {currentUser}=useUser();
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setFormData(prevFormData => ({
+          ...prevFormData,
+          [name]: value
+        }));
+      };
+    /*const handleIconClick = (value) => {
+        setFormData(prevFormData => ({
+          ...prevFormData,
+          rating: value
+        }));
+    };*/
+
+    const handleSubmit = (e) => {
+        const updatedFormData = {
+            ...formData,
+            userEmail: currentUser?.email
+          };
+        e.preventDefault();
+            axiosSecure.post('/new-feedback', updatedFormData)
+                .then((res) => {
+                    Swal.fire({
+                    title: 'Success!',
+                    text: 'Successfully Sent the Feedback.',
+                    icon: 'success',
+                    });
+                    navigate('/');
+                })
+                .catch((error) => {
+                    console.log(error);
+                    Swal.fire({
+                    title: 'Error!',
+                    text: 'There was an error sending the feedback.',
+                    icon: 'error',
+                    });
+                });
+            
+        
+    };
+
   return (
     <div className='bg-[#ead448]'>
         <div className='p-2 grid md:grid-cols-3 lg:grid-cols-3 gap-4 '>
@@ -19,11 +75,92 @@ const Footer = () => {
             </div>
             <div className='flex'>
                 <p className='text-1xl m-8 underline font-bold'>Give Feedback<br/><br/>
-                <Link to="/workouts"> 
-                    <button className='px-7 py-3 rounded-lg border border-black hover:bg-secondary font-bold uppercase' >
-                      Feedback Form
-                    </button>
-                </Link>
+                <Popup trigger=
+                    {<button className='px-7 py-3 rounded-lg border border-black hover:bg-secondary font-bold uppercase' >
+                        Feedback Form
+                    </button>}modal nested>
+                {
+                    close => (
+                        <div className='modal'>
+                            <div className='w-[500px] mx-auto my-5'>
+                                <div className="bg-white p-8 rounded-lg text-center">
+                                    <h2 className="text-3xl font-bold text-center mb-6 text-secondary">!Help Us to Improve!</h2>
+                                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                        <form onSubmit={handleSubmit} className="text-center" >
+                                                    <div className="w-[500px] mb-4">
+                                                        <label className='block text-gray-700 front-bold mb-2'>
+                                                            How do you rate us?
+                                                        </label>
+                                                        <button
+                                                            name="rating"
+                                                            onClick={() => handleChange('excellent')}
+                                                        >
+                                                            <MdOutlineTagFaces className='w-[50px] h-[50px]'/>
+                                                        </button>
+                                                        <button
+                                                        name="rate"
+                                                        onClick={() => handleChange('Okay')}>
+                                                            <CiFaceSmile className='w-[50px] h-[50px]'/>
+                                                        </button>
+                                                        <button
+                                                        name="rate"
+                                                        onClick={() => handleChange('Not good')}>
+                                                            <CiFaceMeh className='w-[50px] h-[50px]'/>
+                                                        </button>
+                                                        <button
+                                                        name="rate"
+                                                        onClick={() => handleChange('bad')}>
+                                                            <CiFaceFrown className='w-[50px] h-[50px]'/>
+                                                        </button>
+
+                                                    </div>
+                                                    <div className="w-[500px] mb-4">
+                                                        <label htmlFor="service" className='block text-gray-700 front-bold mb-2'>
+                                                            How often do you use our service?
+                                                        </label>
+                                                        <textarea 
+                                                            rows=""
+                                                            name="service"
+                                                            className="w-full border-gray-300 
+                                                            border rounded-md py-2 px-4 focus:outline-none focus:ring focus:border-blue-300"
+                                                            onChange={handleChange}
+                                                            placeholder="">
+                                                        </textarea>
+                                                    </div>
+                                                    <div className="w-[500px] mb-4">
+                                                        <label htmlFor="suggesions" className='block text-gray-700 front-bold mb-2'>
+                                                            Any Suggestions?
+                                                        </label>
+                                                        <textarea 
+                                                            rows=""
+                                                            name="suggesions"
+                                                            className="w-full border-gray-300 
+                                                            border rounded-md py-2 px-4 focus:outline-none focus:ring focus:border-blue-300"
+                                                            onChange={handleChange}
+                                                            placeholder="">
+                                                        </textarea>
+                                                    </div>
+                                            <div className="text-center">
+                                                <button type="submit" className="bg-[#f2e48d] justify-center hover:bg-secondary text-black font-bold py-2 px-4 
+                                                rounded focus:outline-none focus:shadow-outline">
+                                                    Submit Details
+                                                </button>
+                                            </div><br/>
+                                            <div className="text-center">
+                                                <button onClick=
+                                                    {() => close()} className="bg-red-300 justify-center hover:bg-red-500 text-black font-bold py-2 px-4 
+                                                        rounded focus:outline-none focus:shadow-outline">
+                                                            Cancle
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                }
+                </Popup>
                 </p>
             </div>
             <div className='flex'>
