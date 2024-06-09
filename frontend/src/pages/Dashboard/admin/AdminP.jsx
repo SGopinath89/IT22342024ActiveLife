@@ -59,7 +59,7 @@ const AdminP = () => {
                       </Link> 
                 </div> <br/>
                 <div className='text-center'>
-                    <Link to='/dashboard'>
+                    <Link to='/dashboard/allFeedback'>
                         <button
                         className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
                           View Feedback                                    

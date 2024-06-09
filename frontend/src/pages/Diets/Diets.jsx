@@ -120,7 +120,7 @@ const Diets = () => {
                 </p>
                 <br/>
             </div>
-            
+            {/**Search bar */}
             <div className='flex text-right' style={{ display: 'flex', justifyContent: 'right', alignItems: 'right'}}>
               <input id='searchInput' type='text' placeholder='Search' 
                 className='border-gray-300 border rounded-md py-2 px-4'
