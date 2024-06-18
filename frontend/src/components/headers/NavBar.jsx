@@ -14,7 +14,7 @@ import useAuth from '../../hooks/useAuth';
 
 const navLinks=[
     {name:'Home', route:'/'},
-    {name:'Wourkout', route:"/workouts"},//section id
+    {name:'Workout', route:"/workouts"},//section id
     {name:'Diets', route:"/diets"},//section id
     {name:'Doctors and Instructors', route:"/Instructors"},//section id
 ]
