@@ -14,7 +14,7 @@ const ViewAllFeedback = () => {
 
     useEffect(()=>{
         axiosFetch
-          .get("/feedbacks")
+          .get("http://localhost:5000/feedback")
           .then((res)=>{setFeedbacks(res.data)})
           .catch((err)=>console.log(err))
       },[axiosFetch]);

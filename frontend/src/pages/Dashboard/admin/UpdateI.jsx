@@ -21,7 +21,7 @@ const UpdateI = () => {
 
     useEffect(() => {
         if (currentUser?.email) {
-            axiosSecure.get(`/instructors/${instructorId}`)
+            axiosSecure.get(`http://localhost:5000/instructor/${instructorId}`)
                 .then((res) => {
                     setinstructorData({
                         name: res.data.name,
@@ -48,7 +48,7 @@ const UpdateI = () => {
 
     const handleSubmit = (e) => {  
         e.preventDefault();
-        axiosSecure.patch(`/update-instructors/${instructorId}`, formData)
+        axiosSecure.patch(`http://localhost:5000/instructor/${instructorId}`, formData)
             .then((res) => {
                 Swal.fire({
                     title: 'Success!',

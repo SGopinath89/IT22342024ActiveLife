@@ -11,7 +11,7 @@ const UserP = () => {
     const [dCount,setdCount] = useState();
     
     useEffect(() => {
-      axiosSecure.get(`/userHealthRecord/${currentUser?.email}`)
+      axiosSecure.get(`http://localhost:5000/userHR/${currentUser?.email}`)
         .then((res) => {
           setdCount(res.data.count);
           setUserRecords(res.data.documents || []);

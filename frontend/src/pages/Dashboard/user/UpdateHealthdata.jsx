@@ -29,7 +29,7 @@ const UpdateHealthdata = () => {
     
     useEffect(() => {
         if (currentUser?.email) {
-            axiosSecure.get(`/userHealthRecord-Nocount/${currentUser.email}`)
+            axiosSecure.get(`http://localhost:5000/userHR/${currentUser.email}`)
                 .then((res) => {
                     setHealthData({
                         weight: res.data.weight,
@@ -70,7 +70,7 @@ const UpdateHealthdata = () => {
             stressScale: parseInt(formData.stressScale, 10)
           };
         e.preventDefault();
-        axiosSecure.patch(`/update-userHRecord/${currentUser.email}`, updatedFormData)
+        axiosSecure.patch(`http://localhost:5000/userHR/${currentUser.email}`, updatedFormData)
             .then((res) => {
                 Swal.fire({
                     title: 'Success!',

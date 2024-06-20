@@ -14,7 +14,7 @@ const MyWorkouts = () => {
   const [searchTerm,setSearchTerm] = useState("")
 
   useEffect(()=>{
-    axiosSecure.get(`/userWorkout-Email/${currentUser?.email}`)
+    axiosSecure.get(`http://localhost:5000/userWorkout/${currentUser?.email}`)
     .then((res)=>{
       console.log(res.data)
       setUserWorkouts(res.data);
@@ -37,7 +37,7 @@ const MyWorkouts = () => {
       confirmButtonText: "Yes, delete it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosSecure.delete(`/delete-userWorkout/${id}`)
+        axiosSecure.delete(`http://localhost:5000/userWorkout/${id}`)
         .then((res)=>{
             Swal.fire({
               title: "Deleted!",
@@ -72,7 +72,7 @@ const MyWorkouts = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         const newDays = parseInt(result.value)
-        axiosSecure.patch(`/update-userWorkoutDays/${id}`, { finishedDays: newDays })
+        axiosSecure.patch(`http://localhost:5000/userWorkout/${id}`, { finishedDays: newDays })
           .then((res) => {
             Swal.fire({
               title: 'Updated!',

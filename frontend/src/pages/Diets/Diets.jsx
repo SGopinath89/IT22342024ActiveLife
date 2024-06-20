@@ -1,10 +1,9 @@
-import React, { useContext, useEffect,useState } from 'react'
-import useAxiosFetch from '../../hooks/useAxiosFetch'
-import AuthProvider, { AuthContext } from '../../utilities/providers/AuthProvider';
+import React, {useEffect,useState } from 'react'
 import useUser from '../../hooks/useUser';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useNavigate } from 'react-router-dom';
 import { IoMdSearch } from "react-icons/io";
+import useAxiosFetch from '../../hooks/useAxiosFetch'
 import Swal from 'sweetalert2';
 
 const Diets = () => {
@@ -19,10 +18,10 @@ const Diets = () => {
 
   useEffect(()=>{
     axiosFetch
-      .get("/diets")
-      .then((res)=>{setDiets(res.data)})
+      .get("http://localhost:5000/diet")
+      .then((res)=>setDiets(res.data))
       .catch((err)=>console.log(err))
-  },[axiosFetch]);
+  },[axiosFetch])
   
   //handle add button
   const handleAdd = (id, name,img) => {
@@ -39,7 +38,7 @@ const Diets = () => {
     }
   
     axiosSecure
-      .get(`/userDiet/${id}?email=${currentUser.email}`)
+      .get(`http://localhost:5000/userDiet/byId/${id}?email=${currentUser.email}`)
       .then((res) => {
         console.log(res.data.dietId);
         if (res.data.dietId === id) {
@@ -66,7 +65,7 @@ const Diets = () => {
             dietImg:img,
             date: new Date(),
           };
-          axiosSecure.post('/new-userDiet', data).then((res) => {
+          axiosSecure.post('http://localhost:5000/userDiet', data).then((res) => {
             console.log(res.data);
             Swal.fire({
               position: "top-end",

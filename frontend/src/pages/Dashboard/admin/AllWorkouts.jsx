@@ -12,7 +12,7 @@ const AllWorkouts = () => {
     const [searchTerm,setSearchTerm] = useState("")
     
     useEffect(()=>{
-      axiosSecure.get('/workouts')
+      axiosSecure.get('http://localhost:5000/workout')
       .then((res)=>{
         setWorkouts(res.data);
         setLoading(false)
@@ -34,7 +34,7 @@ const AllWorkouts = () => {
         confirmButtonText: "Yes, delete it!"
       }).then((result) => {
         if (result.isConfirmed) {
-          axiosSecure.delete(`/delete-workout/${id}`)
+          axiosSecure.delete(`http://localhost:5000/workout/${id}`)
           .then((res)=>{
               Swal.fire({
                 title: "Deleted!",

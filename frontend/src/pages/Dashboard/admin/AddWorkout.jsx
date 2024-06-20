@@ -22,7 +22,7 @@ const AddWorkout = () => {
             ...formData,
             numberOfDays: parseInt(formData.numberOfDays, 10)
           };
-            axiosSecure.post('/new-workout', updatedFormData)
+            axiosSecure.post('http://localhost:5000/workout', updatedFormData)
                 .then((res) => {
                     Swal.fire({
                     title: 'Success!',

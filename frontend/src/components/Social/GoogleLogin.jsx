@@ -22,7 +22,7 @@ const GoogleLogin = () => {
           gender: "Is not specified",
           email: user?.email,
           phoneNo: "Is not specified",
-          age: 0,
+          age: "Is not specified",
           address: "Is not specified",
           userName: "Is not specified",
           photoUrl: "Is not specified",
@@ -33,7 +33,7 @@ const GoogleLogin = () => {
 
         if (user.email && user.displayName) {
           // Check if the user already exists in the database
-          const existingUser = await axios.get(`http://localhost:5000/user/${user.email}`);
+          const existingUser = await axios.get(`http://localhost:5000/user/email/${user.email}`);
           if (existingUser.data) {
             // User exists, proceed with login
             navigate('/');
@@ -46,7 +46,7 @@ const GoogleLogin = () => {
             });
           } else {
             // User does not exist, create a new user document
-            await axios.post('http://localhost:5000/new-user', userImp);
+            await axios.post('http://localhost:5000/user', userImp);
             navigate('/');
             Swal.fire({
               position: "top-end",

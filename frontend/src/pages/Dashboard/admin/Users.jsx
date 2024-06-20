@@ -16,7 +16,7 @@ const Users = () => {
     const [searchTerm,setSearchTerm] = useState("")
 
     useEffect(()=>{
-      axiosSecure.get('/users')
+      axiosSecure.get('http://localhost:5000/user')
       .then((res)=>{
         console.log(res.data)
         setUsers(res.data);
@@ -39,7 +39,7 @@ const Users = () => {
         confirmButtonText: "Yes, delete it!"
       }).then((result) => {
         if (result.isConfirmed) {
-          axiosSecure.delete(`/delete-user/${id}`)
+          axiosSecure.delete(`http://localhost:5000/user/${id}`)
           .then((res)=>{
               Swal.fire({
                 title: "Deleted!",

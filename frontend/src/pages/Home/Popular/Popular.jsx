@@ -8,7 +8,7 @@ const Popular = () => {
     const [diets,setDiets] = useState([]);
     useEffect(()=>{
         const fetchWorkouts = async()=>{
-            const response = await axiosFetch.get('/workouts')
+            const response = await axiosFetch.get('http://localhost:5000/workout')
             //console.log(response.data);
             setWorkouts(response.data);
         }
@@ -17,7 +17,7 @@ const Popular = () => {
     //console.log(workouts)
     useEffect(()=>{
         const fetchDiets = async()=>{
-            const response = await axiosFetch.get('/diets')
+            const response = await axiosFetch.get('http://localhost:5000/diet')
             //console.log(response.data);
             setDiets(response.data);
         }

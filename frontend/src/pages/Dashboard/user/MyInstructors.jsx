@@ -14,7 +14,7 @@ const MyInstructors = () => {
   const [searchTerm,setSearchTerm] = useState("")
 
   useEffect(()=>{
-    axiosSecure.get(`/userInstructor-Email/${currentUser?.email}`)
+    axiosSecure.get(`http://localhost:5000/userInstructor/${currentUser?.email}`)
     .then((res)=>{
       console.log(res.data)
       setUserInstructor(res.data);
@@ -37,7 +37,7 @@ const MyInstructors = () => {
       confirmButtonText: "Yes, delete it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosSecure.delete(`/delete-userInstructor/${id}`)
+        axiosSecure.delete(`http://localhost:5000/userInstructor/${id}`)
         .then((res)=>{
             Swal.fire({
               title: "Deleted!",

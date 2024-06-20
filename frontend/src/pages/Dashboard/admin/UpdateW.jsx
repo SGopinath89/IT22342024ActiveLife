@@ -19,7 +19,7 @@ const UpdateW = () => {
 
     useEffect(() => {
         if (currentUser?.email) {
-            axiosSecure.get(`/workouts/${workoutId}`)
+            axiosSecure.get(`http://localhost:5000/workout/${workoutId}`)
                 .then((res) => {
                     setworkoutData({
                         name: res.data.name,
@@ -44,7 +44,7 @@ const UpdateW = () => {
 
     const handleSubmit = (e) => {  
         e.preventDefault();
-        axiosSecure.patch(`/update-workouts/${workoutId}`, formData)
+        axiosSecure.patch(`http://localhost:5000/workout/${workoutId}`, formData)
             .then((res) => {
                 Swal.fire({
                     title: 'Success!',

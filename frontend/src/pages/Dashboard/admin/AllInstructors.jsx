@@ -15,7 +15,7 @@ const AllInstructors = () => {
     const [searchTerm,setSearchTerm] = useState("")
     
     useEffect(()=>{
-      axiosSecure.get('/instructors')
+      axiosSecure.get('http://localhost:5000/instructor')
       .then((res)=>{
         setInstructors(res.data);
         setLoading(false)
@@ -27,7 +27,7 @@ const AllInstructors = () => {
     },[])
 
     useEffect(()=>{
-      axiosSecure.get('/userInstructors')
+      axiosSecure.get('http://localhost:5000/userInstructor')
       .then((res)=>{
         setuserInstructors(res.data);
         setLoading(false)
@@ -49,7 +49,7 @@ const AllInstructors = () => {
         confirmButtonText: "Yes, delete it!"
       }).then((result) => {
         if (result.isConfirmed) {
-          axiosSecure.delete(`/delete-instructor/${id}`)
+          axiosSecure.delete(`http://localhost:5000/instructor/${id}`)
           .then((res)=>{
               Swal.fire({
                 title: "Deleted!",
@@ -79,7 +79,7 @@ const AllInstructors = () => {
       }).then((result) => {
         if (result.isConfirmed) {
           const newStatus = result.value
-          axiosSecure.patch(`/update-userInstructorStatus/${id}`, { status: newStatus })
+          axiosSecure.patch(`http://localhost:5000/userInstructor/${id}`, { status: newStatus })
             .then((res) => {
               Swal.fire({
                 title: 'Updated!',

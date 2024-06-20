@@ -19,7 +19,7 @@ const AddInstructor = () => {
     
     const handleSubmit = (e) => {
         e.preventDefault();
-            axiosSecure.post('/new-instructor', formData)
+            axiosSecure.post('http://localhost:5000/instructor', formData)
                 .then((res) => {
                     Swal.fire({
                     title: 'Success!',

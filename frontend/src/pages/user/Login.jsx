@@ -32,13 +32,16 @@ const Login = () => {
       navigate(location.state?.from || '/', {state:{user}})
     }catch(err){
       setError(err.code);
-      Swal.fire({
-        position: "center",
-        icon: "warning",
-        title: "Give correct Email and password!!",
-        showConfirmButton: false,
-        timer: 1000
-      });
+      if((!formData.email && formData.password) || (formData.email && !formData.password)){
+        Swal.fire({
+          position: "center",
+          icon: "warning",
+          title: "Give correct Email and password!!",
+          showConfirmButton: false,
+          timer: 1000
+        });
+      }
+      
     }finally{
       setLoader(false);
     }

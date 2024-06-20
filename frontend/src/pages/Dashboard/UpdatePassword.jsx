@@ -39,7 +39,7 @@ const UpdatePassword = () => {
 
   const updatePasswordInDatabase = async (newPassword) => {
     try {
-      axiosSecure.patch(`/update-Password/${currentUser._id}`, { password: newPassword } )
+      axiosSecure.patch(`http://localhost:5000/user/${currentUser._id}`, { password: newPassword } )
       .then((res) => {
         Swal.fire({
           title: 'Success!',

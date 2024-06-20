@@ -12,7 +12,7 @@ const AllDiets = () => {
     const [searchTerm,setSearchTerm] = useState("")
 
     useEffect(()=>{
-      axiosSecure.get('/diets')
+      axiosSecure.get('http://localhost:5000/diet')
       .then((res)=>{
         setDiets(res.data);
         setLoading(false)
@@ -34,7 +34,7 @@ const AllDiets = () => {
         confirmButtonText: "Yes, delete it!"
       }).then((result) => {
         if (result.isConfirmed) {
-          axiosSecure.delete(`/delete-diet/${id}`)
+          axiosSecure.delete(`http://localhost:5000/diet/${id}`)
           .then((res)=>{
               Swal.fire({
                 title: "Deleted!",

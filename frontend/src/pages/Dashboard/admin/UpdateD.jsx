@@ -20,7 +20,7 @@ const UpdateD = () => {
     
     useEffect(() => {
         if (currentUser?.email) {
-            axiosSecure.get(`/diets/${dietId}`)
+            axiosSecure.get(`http://localhost:5000/diet/${dietId}`)
                 .then((res) => {
                     //console.log(res.data)
                     setdietData({
@@ -47,7 +47,7 @@ const UpdateD = () => {
 
     const handleSubmit = (e) => {  
         e.preventDefault();
-        axiosSecure.patch(`/update-diets/${dietId}`, formData)
+        axiosSecure.patch(`http://localhost:5000/diet/${dietId}`, formData)
             .then((res) => {
                 Swal.fire({
                     title: 'Success!',

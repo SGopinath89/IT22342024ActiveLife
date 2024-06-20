@@ -37,11 +37,11 @@ const AddHealthDetails = () => {
             stressScale: parseInt(formData.stressScale, 10)
           };
     axiosSecure
-        .get(`/userHealthRecord/${currentUser.email}`)
+        .get(`http://localhost:5000/userHR/${currentUser.email}`)
         .then((res) => {
             console.log(res.data)
             if(res.data.count===0){
-                axiosSecure.post('/new-userHealthRecord', updatedFormData)
+                axiosSecure.post('http://localhost:5000/userHR', updatedFormData)
                 .then((res) => {
                     Swal.fire({
                     title: 'Success!',

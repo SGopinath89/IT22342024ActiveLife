@@ -41,7 +41,7 @@ const UpdateUserDetails = () => {
       ...formData,
       age: parseInt(formData.age, 10)
     };
-    axiosSecure.patch(`/update-userDetails/${currentUser._id}`, updatedFormData)
+    axiosSecure.patch(`http://localhost:5000/user/${currentUser._id}`, updatedFormData)
       .then((res) => {
         Swal.fire({
           title: 'Success!',

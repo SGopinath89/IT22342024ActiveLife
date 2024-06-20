@@ -19,7 +19,7 @@ export const Instructors = () => {
 
     useEffect(()=>{
         axiosFetch
-          .get("/instructors")
+          .get("http://localhost:5000/instructor")
           .then((res)=>setInstructors(res.data))
           .catch((err)=>console.log(err))
     },[axiosFetch])
@@ -38,7 +38,7 @@ export const Instructors = () => {
         }
     
         axiosSecure
-          .get(`/userInstructor/${id}?email=${currentUser.email}`)
+          .get(`http://localhost:5000/userInstructor/byId/${id}?email=${currentUser.email}`)
           .then((res) => {
             console.log(res.data.instructorId)
             if (res.data.instructorId === id) {
@@ -68,7 +68,7 @@ export const Instructors = () => {
                 instructorEmail:iEmail,
                 data: new Date(),
               };
-              axiosSecure.post('/new-userInstructor', data).then((res)=>{
+              axiosSecure.post('http://localhost:5000/userInstructor', data).then((res)=>{
                 console.log(res.data)
                 Swal.fire({
                   position: "top-end",

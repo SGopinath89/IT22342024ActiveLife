@@ -53,7 +53,7 @@ const Footer = () => {
             userName:currentUser?.fullName
           };
         e.preventDefault();
-            axiosSecure.post('/new-feedback', updatedFormData)
+            axiosSecure.post('http://localhost:5000/feedback', updatedFormData)
                 .then((res) => {
                     Swal.fire({
                     title: 'Success!',

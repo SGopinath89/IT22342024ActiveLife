@@ -19,7 +19,7 @@ export const Workouts = () => {
   
     useEffect(()=>{
       axiosFetch
-        .get("/workouts")
+        .get("http://localhost:5000/workout")
         .then((res)=>setWorkouts(res.data))
         .catch((err)=>console.log(err))
     },[axiosFetch])
@@ -37,7 +37,7 @@ export const Workouts = () => {
         return;
       }  
       axiosSecure
-        .get(`/userWorkout/${id}?email=${currentUser.email}`)
+        .get(`http://localhost:5000/userWorkout/byId/${id}?email=${currentUser.email}`)
         .then((res) => {
           console.log(res.data.workoutId)
           if (res.data.workoutId === id) {
@@ -65,7 +65,7 @@ export const Workouts = () => {
               userEmail: currentUser.email,
               data: new Date(),
             };
-            axiosSecure.post('/new-userWorkout', data).then((res)=>{
+            axiosSecure.post('http://localhost:5000/userWorkout', data).then((res)=>{
               console.log(res.data)
               Swal.fire({
                 position: "top-end",

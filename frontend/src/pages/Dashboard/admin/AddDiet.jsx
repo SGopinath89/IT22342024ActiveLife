@@ -19,7 +19,7 @@ const AddDiet = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-            axiosSecure.post('/new-diet', formData)
+            axiosSecure.post('http://localhost:5000/diet', formData)
                 .then((res) => {
                     Swal.fire({
                     title: 'Success!',

@@ -41,7 +41,7 @@ const Register = () => {
                             ...userImp,
                             age: parseInt(userImp.age, 10)
                           };
-                        return axios.post('http://localhost:5000/new-user',updatedFormData).then(()=>{
+                        return axios.post('http://localhost:5000/user',updatedFormData).then(()=>{
                             setError("");
                             navigate('/');
                             return "Registration Successful"
