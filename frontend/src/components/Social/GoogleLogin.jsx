@@ -22,7 +22,7 @@ const GoogleLogin = () => {
           gender: "Is not specified",
           email: user?.email,
           phoneNo: "Is not specified",
-          age: "Is not specified",
+          age: 0,
           address: "Is not specified",
           userName: "Is not specified",
           photoUrl: "Is not specified",
