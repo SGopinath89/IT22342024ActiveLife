@@ -27,7 +27,7 @@ const UserP = () => {
       return <div>Loading...</div>
     }
   return (
-    <div className='w-[1100px] h-screen justify-center flex items-center'>
+    <div className='w-[1100px] justify-center flex items-center'>
         <div>
           <div>
                 <div className=' flex items-center p-5'>
@@ -60,11 +60,21 @@ const UserP = () => {
                                 </button>
                               </Link>
                               <br/><br/>
-                              
-                              </div>
+  
+                            </div>
+   
                         </div>
                         <div className='text-center'>
+                            {
+                                dCount === 0 && <Link to="/dashboard/addHealthDetails">
+                                                    <button 
+                                                      className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
+                                                          Add your Health Details
+                                                      </button>
+                                                    </Link>
+                            }
                           {
+                            
                             userRecords.map((record,index)=>(
                               <div key={record._id}>
                                 <h1 className='justify-left font-bold text-2xl'>- Health Details -</h1>
@@ -79,14 +89,7 @@ const UserP = () => {
                                 <p className='text-black mb-2 text-center'><span className='font-bold'>Any Surgeries : </span>{record.anySurgeries}</p>
                                 <p className='text-black mb-2 text-center'><span className='font-bold'>Fitness Goals : </span>{record.fitnessGoals}  </p>
                                 <p className='text-black mb-2 text-center'><span className='font-bold'>Any Allergies : </span>{record.AnyAllergies}  </p>
-                                {
-                                dCount === 0 && <Link to="/dashboard/addHealthDetails">
-                                                      <button 
-                                                      className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
-                                                          Add your Health Details
-                                                      </button>
-                                                    </Link>
-                              }
+
 
                               {
                                 dCount !=0 &&<Link to="/dashboard/updateHealthdetails">
