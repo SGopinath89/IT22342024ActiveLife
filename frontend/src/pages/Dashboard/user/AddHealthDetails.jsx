@@ -54,7 +54,7 @@ const AddHealthDetails = () => {
                     console.log(error);
                     Swal.fire({
                     title: 'Error!',
-                    text: 'There was an error updating your details.',
+                    text: 'There was an error Adding health details.',
                     icon: 'error',
                     });
                 });

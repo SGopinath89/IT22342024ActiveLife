@@ -7,6 +7,7 @@ const dietSchema = new Schema({
     benefits:{type:String, required:true},
     downsides:{type:String, required:true},
     dietImg:{type:String, required:true},
+    forGoal:{type:Array, required:true}
 })
 
 const Diet =mongoose.model('diets',dietSchema)

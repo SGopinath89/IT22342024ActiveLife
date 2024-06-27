@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import useUser from '../../../hooks/useUser'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { MdDelete } from 'react-icons/md';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import Swal from 'sweetalert2'
 
 const UserP = () => {
     const {currentUser} = useUser();
@@ -9,6 +11,7 @@ const UserP = () => {
     const [loading,setLoading] = useState(true);
     const [userRecords,setUserRecords] = useState([]);
     const [dCount,setdCount] = useState();
+    const navigate = useNavigate();
     
     useEffect(() => {
       axiosSecure.get(`http://localhost:5000/userHR/${currentUser?.email}`)
@@ -23,11 +26,38 @@ const UserP = () => {
         });
     }, [axiosSecure]);
 
+    const handleDelete=(email)=>{
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axiosSecure.delete(`http://localhost:5000/user/byEmail-allDetails/${email}`)
+          .then((res)=>{
+            Swal.fire({
+              title: "Deleted!",
+              text: "Successfully Deleted your Your Account and All your details.",
+              icon: "success"
+            });
+            navigate('/') 
+          })
+          .catch((error)=>{
+            console.log(error)
+          })
+        }
+      });
+    }
+
     if(loading){
       return <div>Loading...</div>
     }
   return (
-    <div className='w-[1100px] justify-center flex items-center'>
+    <div className='w-[1070px] h-screen px-10'>
         <div>
           <div>
                 <div className=' flex items-center p-5'>
@@ -59,6 +89,12 @@ const UserP = () => {
                                     Edit your Details                                    
                                 </button>
                               </Link>
+                                <span className='px-3'>
+                                  <button onClick={()=>handleDelete(currentUser.email)} 
+                                  className='px-3 py-3 cursor-pointer bg-red-500 rounded-3xl text-white font-bold'>
+                                    <MdDelete/>
+                                  </button>
+                                </span>
                               <br/><br/>
   
                             </div>
@@ -107,6 +143,7 @@ const UserP = () => {
                     </div>
                 </div>
           </div>
+          <br/>
         </div>
     </div>
   )

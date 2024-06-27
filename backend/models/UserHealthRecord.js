@@ -12,7 +12,7 @@ const userHealthRecordSchema = new Schema({
     existingMedicalCondition:{type:String},
     anySurgeries:{type:String},
     AnyAllergies:{type:String},
-    fitnessGoals:{type:String},
+    fitnessGoals:{type:Array},
     email:{type:String}
     
 })

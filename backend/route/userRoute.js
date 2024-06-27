@@ -1,6 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../models/User')
+const UserDiet = require('../models/UserDiet')
+const UserHealthRecord = require('../models/UserHealthRecord')
+const UserInstructor = require('../models/UserInstructor')
+const UserWorkout = require('../models/userWorkout')
+
 
 router.get('/', async(req,res)=>{
     const result=await User.find();
@@ -103,5 +108,35 @@ router.delete('/:id',async(req,res)=>{
         
     }
 })
+
+router.delete('/byEmail-allDetails/:email', async (req, res) => {
+    const email = req.params.email;
+    const user = await User.findOne({ email: email });
+
+    if (!user) {
+        return res.status(404).send("User not found");
+    }
+
+    try {
+        const deleteUser = await User.deleteOne({ email: email });
+        const deleteUserDiet = await UserDiet.deleteMany({ userEmail: email });
+        const deleteUserWorkout = await UserWorkout.deleteMany({ userEmail: email });
+        const deleteUserHealthRecord = await UserHealthRecord.deleteMany({ email: email });
+        const deleteUserInstructor = await UserInstructor.deleteMany({ userEmail: email });
+
+        const result = {
+            deleteUser,
+            deleteUserDiet,
+            deleteUserWorkout,
+            deleteUserHealthRecord,
+            deleteUserInstructor
+        };
+
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 
 module.exports=router

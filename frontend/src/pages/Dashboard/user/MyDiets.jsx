@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import useUser from '../../../hooks/useUser'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import moment from 'moment'
 import { MdDelete } from 'react-icons/md';
@@ -13,7 +13,11 @@ const MyDiets = () => {
   const [userDiets,setUserDiets] = useState([]);
   const axiosSecure = useAxiosSecure();
   const [searchTerm,setSearchTerm] = useState("")
+  const [diets,setDiets] = useState([])
   
+  const [hr,setHR] = useState([])
+  const role = currentUser?.role
+
   useEffect(()=>{
     axiosSecure.get(`http://localhost:5000/userDiet/${currentUser?.email}`)
     .then((res)=>{
@@ -26,6 +30,22 @@ const MyDiets = () => {
       setLoading(false)
     })
   },[])
+
+  useEffect(()=>{
+    axiosSecure
+      .get("http://localhost:5000/diet")
+      .then((res)=>setDiets(res.data))
+      .catch((err)=>console.log(err))
+  },[])
+
+  useEffect(()=>{
+    axiosSecure
+      .get(`http://localhost:5000/userHR/${currentUser?.email}`)
+      .then((res)=>setHR(res.data))
+      .catch((err)=>console.log(err))
+  },[])
+
+  console.log(hr)
 
   const handleDelete=(id)=>{
     Swal.fire({
@@ -76,7 +96,7 @@ const MyDiets = () => {
   };
 
   return (
-    <div className='w-[1050px]'>
+    <div className='w-[1070px] h-screen'>
       <div className='my-6 text-center'>
         <h1 className='text-4xl font-bold'>My <span className='text-secondary'>Diets</span></h1>
       </div>
@@ -145,6 +165,53 @@ const MyDiets = () => {
           </div>
         </div>
       </div>
+      <div className='my-6 text-center'>
+        <h1 className='text-4xl font-bold'>Diet <span className='text-secondary'>reccomondations </span>for you</h1>
+      </div>
+            {
+              <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4 '>
+                {
+                    diets
+                    .filter((diet)=>{
+                      console.log(diet.forGoal)
+                      console.log(hr.documents[0].fitnessGoals)
+                      if (diet.forGoal.some(goal => hr.documents[0].fitnessGoals.includes(goal))) {
+                        
+                        return diet;
+                      }                      
+                    })
+                    .map((diet)=>(        
+                      <div key={diet._id} className='shadow-lg rounded-lg p-3 flex flex-col justify-between border border-secondary overflow-hidden m-4'>
+                      <div className='p-4'>
+                          <h2 className='text-xl font-semibold mb-10 dark:text-white text-center'>{highlightText(diet.name, searchTerm)}</h2>
+                          <div className='flex justify-center'>
+                            <img className='shadow-lg rounded-lg'src={diet.dietImg} alt="Diet Image"/>
+                          </div><br/>    
+                          <div className='text-gray-600 mb-2 text-center'>
+                            For: {diet.forGoal.map((goal, index) => (
+                              <React.Fragment key={index}>
+                                {goal}
+                                {index !== diet.forGoal.length - 1 && <br />}
+                              </React.Fragment>
+                            ))}
+                          </div>
+                      </div>
+                    </div>
+                    ))
+                }
+              </div>
+              
+            }
+              <div className='text-center'>
+                <Link to='/diets'>
+                  <button
+                  className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
+                    Go to Diets
+                  </button>
+                </Link>
+              </div>
+              <br/><br/>
+              <br/>
     </div>
   )
 }
