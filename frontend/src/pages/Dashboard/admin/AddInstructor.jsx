@@ -46,7 +46,7 @@ const AddInstructor = () => {
                 <div className="flex items-center gap-5 md:grid-cols-2 lg:grid-cols-2">
                     <div>
                         <div className="w-[300px] mb-4">
-                            <label htmlFor="name" className='block text-gray-700 front-bold mb-2'>
+                            <label htmlFor="name" className='block text-gray-700 font-bold mb-2'>
                                 Name
                             </label>
                             <input 
@@ -58,7 +58,7 @@ const AddInstructor = () => {
                             focus:border-blue-300"/>
                         </div>
                         <div className="w-[300pxpx] mb-4">
-                            <label htmlFor="email" className='block text-gray-700 front-bold mb-2'>
+                            <label htmlFor="email" className='block text-gray-700 font-bold mb-2'>
                                 Email
                             </label>
                             <input 
@@ -70,7 +70,7 @@ const AddInstructor = () => {
                             focus:border-blue-300"/>
                         </div>
                         <div className="w-[300pxpx] mb-4">
-                            <label htmlFor="phoneNo" className='block text-gray-700 front-bold mb-2'>
+                            <label htmlFor="phoneNo" className='block text-gray-700 font-bold mb-2'>
                                 Phone Number
                             </label>
                             <input 
@@ -84,7 +84,7 @@ const AddInstructor = () => {
                     </div>
                     <div>
                         <div className="w-[500px] mb-4">
-                            <label htmlFor="qualification" className='block text-gray-700 front-bold mb-2'>
+                            <label htmlFor="qualification" className='block text-gray-700 font-bold mb-2'>
                                Qualifications
                             </label>
                             <textarea 
@@ -97,7 +97,7 @@ const AddInstructor = () => {
                             </textarea>
                         </div>
                         <div className="w-[500px] mb-4">
-                            <label htmlFor="experience" className='block text-gray-700 front-bold mb-2'>
+                            <label htmlFor="experience" className='block text-gray-700 font-bold mb-2'>
                                 Experiences
                             </label>
                             <textarea 
@@ -110,7 +110,7 @@ const AddInstructor = () => {
                             </textarea>
                         </div>
                         <div className="w-[500px] mb-4">
-                            <label htmlFor="specialities" className='block text-gray-700 front-bold mb-2'>
+                            <label htmlFor="specialities" className='block text-gray-700 font-bold mb-2'>
                                 Specialities
                             </label>
                             <textarea 

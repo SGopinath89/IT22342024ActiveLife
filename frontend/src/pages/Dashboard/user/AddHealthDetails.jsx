@@ -12,16 +12,34 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const AddHealthDetails = () => {
     const { currentUser} = useUser();
-    const [formData, setFormData] = useState({});
+    const [formData, setFormData] = useState({
+        fitnessGoals: []
+    });
     const axiosSecure = useAxiosSecure();
     const navigate = useNavigate();
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-          ...formData,
-          [name]: value,
-        });
+        const { name, value, type, checked } = e.target;
+        if (type === 'checkbox') {
+            setFormData(prevState => {
+                if (checked) {
+                    return {
+                        ...prevState,
+                        fitnessGoals: [...prevState.fitnessGoals, value]
+                    };
+                } else {
+                    return {
+                        ...prevState,
+                        fitnessGoals: prevState.fitnessGoals.filter(goal => goal !== value)
+                    };
+                }
+            });
+        } else {
+            setFormData({
+            ...formData,
+            [name]: value,
+            });
+        }
     };
 
     const handleSubmit = (e) => {
@@ -225,16 +243,14 @@ const AddHealthDetails = () => {
                     </div>
                     <div className="w-full mb-4">
                         <label htmlFor="fitnessGoals" className='block text-gray-700 front-bold mb-2'>
-                            <MdOutlineHealthAndSafety className="inline-block br-2 mb-1 text-lg"/>   Is there anything else you would like us to know about your health, fitness goals, or lifestyle?
+                            <MdOutlineHealthAndSafety className="inline-block br-2 mb-1 text-lg"/>   Is there any fitness goal that you would like to achieve?
                         </label>
-                        <textarea 
-                            onChange={handleChange}
-                            name="fitnessGoals"
-                            rows="2"
-                            className="w-full border-gray-300 
-                            border rounded-md py-2 px-4 focus:outline-none focus:ring focus:border-blue-300"
-                            placeholder="">
-                        </textarea>
+                        <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Weight Loss"/> Weight Loss<br/>
+                        <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Brain Health"/> Brain Health<br/>
+                        <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Overall Health"/> Overall Health<br/>
+                        <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Longevity"/> Longevity<br/>
+                        <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Diabetes Management"/> Diabetes Management<br/>
+                        <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Heart Health"/> Heart Health
                     </div>
                 </div>
                 <div className="text-center">

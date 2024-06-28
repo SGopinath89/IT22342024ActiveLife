@@ -123,7 +123,16 @@ const UserP = () => {
                                 <p className='text-black mb-2 text-center'><span className='font-bold'>Current Level of Physical Activity : </span>{record.currentLevelofPhysicalActivity}</p>
                                 <p className='text-black mb-2 text-center'><span className='font-bold'>Existing Medical Condition : </span>{record.existingMedicalCondition}</p>
                                 <p className='text-black mb-2 text-center'><span className='font-bold'>Any Surgeries : </span>{record.anySurgeries}</p>
-                                <p className='text-black mb-2 text-center'><span className='font-bold'>Fitness Goals : </span>{record.fitnessGoals}  </p>
+                                <p className='text-black mb-2 text-center'><span className='font-bold'>Fitness Goals : </span>                          
+                                  <div>
+                                    {record.fitnessGoals.map((goal, index) => (
+                                      <React.Fragment key={index}>
+                                        {goal}
+                                        {index !== record.fitnessGoals.length - 1 && <br />}
+                                      </React.Fragment>
+                                    ))}
+                                  </div>
+                                </p>
                                 <p className='text-black mb-2 text-center'><span className='font-bold'>Any Allergies : </span>{record.AnyAllergies}  </p>
 
 

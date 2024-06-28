@@ -5,6 +5,7 @@ import moment from 'moment'
 import { MdDelete, MdUpdate } from 'react-icons/md';
 import Swal from 'sweetalert2'
 import { IoMdSearch } from "react-icons/io";
+import { Link } from 'react-router-dom';
 
 const MyWorkouts = () => {
   const {currentUser} = useUser();
@@ -12,6 +13,8 @@ const MyWorkouts = () => {
   const [userWorkouts,setUserWorkouts] = useState([]);
   const axiosSecure = useAxiosSecure();
   const [searchTerm,setSearchTerm] = useState("")
+  const [workouts,setWorkouts] = useState([])
+  const [hr,setHR] = useState([])
 
   useEffect(()=>{
     axiosSecure.get(`http://localhost:5000/userWorkout/${currentUser?.email}`)
@@ -24,6 +27,20 @@ const MyWorkouts = () => {
       console.log(error);
       setLoading(false)
     })
+  },[])
+
+  useEffect(()=>{
+    axiosSecure
+      .get("http://localhost:5000/workout")
+      .then((res)=>setWorkouts(res.data))
+      .catch((err)=>console.log(err))
+  },[])
+
+  useEffect(()=>{
+    axiosSecure
+      .get(`http://localhost:5000/userHR/${currentUser?.email}`)
+      .then((res)=>setHR(res.data))
+      .catch((err)=>console.log(err))
   },[])
 
   const handleDelete=(id)=>{
@@ -111,7 +128,7 @@ const MyWorkouts = () => {
   }
 
   return (
-    <div className='w-[1050px]'>
+    <div className='w-[1050px] h-screen'>
       <div className='my-6 text-center'>
         <h1 className='text-4xl font-bold'>My <span className='text-secondary'>Workouts</span></h1>
       </div>
@@ -124,7 +141,7 @@ const MyWorkouts = () => {
         />
         <IoMdSearch className='w-[40px] h-[40px]'/>
       </div>
-      <div className='h-screen py-8'>
+      <div className='py-8'>
         <div className='container mx-auto px-4'>
           <div className='flex flex-col md:flex-row gap-4'>
             <div className='bg-white rounded-lg shadow-md p-6 mb-4 w-full'>
@@ -193,6 +210,55 @@ const MyWorkouts = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className='my-6 text-center'>
+        <h1 className='text-4xl font-bold'>Workout <span className='text-secondary'>reccomondations </span>for you</h1>
+      </div>
+      <div>
+            {
+              <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4 '>
+                {
+                    workouts
+                    .filter((workout)=>{
+                      console.log(workout.forGoal)
+                      console.log(hr.documents[0].fitnessGoals)
+                      if (workout.forGoal.some(goal => hr.documents[0].fitnessGoals.includes(goal))) {
+                        
+                        return workout;
+                      }                      
+                    })
+                    .map((workout)=>(        
+                      <div key={workout._id} className='shadow-lg rounded-lg p-3 flex flex-col justify-between border border-secondary overflow-hidden m-4'>
+                      <div className='p-4'>
+                          <h2 className='text-xl font-semibold mb-10 dark:text-white text-center'>{highlightText(workout.name, searchTerm)}</h2>
+                          <div className='flex justify-center'>
+                            <img className='shadow-lg rounded-lg'src={workout.workoutImg} alt="Workout Image"/>
+                          </div><br/>    
+                          <div className='text-gray-600 mb-2 text-center'>
+                            For: {workout.forGoal.map((goal, index) => (
+                              <React.Fragment key={index}>
+                                {goal}
+                                {index !== workout.forGoal.length - 1 && <br />}
+                              </React.Fragment>
+                            ))}
+                          </div>
+                      </div>
+                    </div>
+                    ))
+                }
+              </div>
+              
+            }
+              <div className='text-center'>
+                <Link to='/workouts'>
+                  <button
+                  className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
+                    For more information about all the Workouts
+                  </button>
+                </Link>
+              </div>
+              <br/><br/>
+              <br/>
       </div>
     </div>
   )

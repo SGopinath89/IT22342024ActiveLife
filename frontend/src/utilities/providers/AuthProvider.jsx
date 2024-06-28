@@ -97,12 +97,6 @@ const AuthProvider = ({ children }) => {
     try {
       const user = auth.currentUser;
       if (!user) throw new Error('No user is currently logged in');
-
-      // Re-authenticate user
-      const credential = EmailAuthProvider.credential(user.email, currentPassword);
-      await reauthenticateWithCredential(user, credential);
-
-      // Update password
       await firebaseUpdatePassword(user, newPassword);
     } catch (error) {
       setError(error.code);

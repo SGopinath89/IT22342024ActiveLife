@@ -152,7 +152,16 @@ export const Workouts = () => {
                     .map((workout)=>(
                       <div key={workout._id} className='shadow-lg rounded-lg p-3 flex flex-col justify-between border border-secondary overflow-hidden m-4'>
                         <div className='p-4'>
-                            <h2 className='text-xl font-semibold mb-20 dark:text-white text-center'>{highlightText(workout.name, searchTerm)}</h2>
+                            <h2 className='text-xl font-semibold mb-20 dark:text-white text-center'>{highlightText(workout.name, searchTerm)}
+                              <div className='text-gray-600 mb-2 text-center text-sm'>
+                                For: {workout.forGoal.map((goal, index) => (
+                                  <React.Fragment key={index}>
+                                    {highlightText(goal,searchTerm)}
+                                    {index !== workout.forGoal.length - 1 && <br />}
+                                  </React.Fragment>
+                                ))}
+                              </div>    
+                            </h2>
                             <div className='flex justify-center'>
                               <img className='shadow-lg rounded-lg'src={workout.workoutImg} alt="Workout Image"/>
                             </div>

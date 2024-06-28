@@ -67,8 +67,7 @@ const MyDiets = () => {
             });
             const newUserDiets = userDiets.filter((item)=>item._id!==id);
             setUserDiets(newUserDiets);
-          
-          
+
         })
         .catch((error)=>{
           console.log(error)
@@ -168,6 +167,7 @@ const MyDiets = () => {
       <div className='my-6 text-center'>
         <h1 className='text-4xl font-bold'>Diet <span className='text-secondary'>reccomondations </span>for you</h1>
       </div>
+      <div>
             {
               <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4 '>
                 {
@@ -206,12 +206,13 @@ const MyDiets = () => {
                 <Link to='/diets'>
                   <button
                   className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
-                    Go to Diets
+                    For more information about all the Diets
                   </button>
                 </Link>
               </div>
               <br/><br/>
               <br/>
+      </div>
     </div>
   )
 }

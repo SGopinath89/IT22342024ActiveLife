@@ -126,6 +126,14 @@ const AllDiets = () => {
                             return <tr key={item._id}>
                             <td className='py-4 text-center'>
                               {highlightText(item.name, searchTerm)}
+                              <div className='text-gray-600 mb-2 text-center'>
+                                For: {item.forGoal.map((goal, index) => (
+                                  <React.Fragment key={index}>
+                                    {goal}
+                                    {index !== item.forGoal.length - 1 && <br />}
+                                  </React.Fragment>
+                                ))}
+                              </div>
                             </td>
                             <td className='py-4 text-center'>
                               {highlightText(item.howItWorks, searchTerm)} 

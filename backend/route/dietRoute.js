@@ -14,12 +14,12 @@ router.get('/', async(req,res)=>{
 
 //add new diet
 router.post('/',async (req, res) => {
-    const{name,howItWorks,benefits,downsides,dietImg}=req.body
-    if(!name || !howItWorks || !benefits || !downsides || !dietImg){
+    const{name,howItWorks,benefits,downsides,dietImg,forGoal}=req.body
+    if(!name || !howItWorks || !benefits || !downsides || !dietImg || !forGoal){
         res.status(400).send("Please Provide required fields")
     }else{
         try{
-            const results = await Diet.create({name,howItWorks,benefits,downsides,dietImg})
+            const results = await Diet.create({name,howItWorks,benefits,downsides,dietImg,forGoal})
             res.send(results);
         }catch(error){
             res.status(500).json(results)

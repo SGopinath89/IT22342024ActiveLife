@@ -5,6 +5,8 @@ const UserDiet = require('../models/UserDiet')
 const UserHealthRecord = require('../models/UserHealthRecord')
 const UserInstructor = require('../models/UserInstructor')
 const UserWorkout = require('../models/userWorkout')
+const Feedback = require('../models/Feedback')
+
 
 
 router.get('/', async(req,res)=>{
@@ -19,14 +21,14 @@ router.get('/', async(req,res)=>{
 //add new User
 router.post('/',async (req, res) => {
     const{fullName,gender,email,phoneNo,age,address,userName,photoUrl,role,password,employmentStatus}=req.body
-    if(!fullName || !gender || !email || !phoneNo || !age || !address || !userName || !photoUrl || !role || !password || !employmentStatus){
+    if(!fullName || !gender || !email || !phoneNo || !address || !userName || !photoUrl || !role || !password || !employmentStatus){
         res.status(400).send("Please Provide required fields")
     }else{
         try{
             const results = await User.create({fullName,gender,email,phoneNo,age,address,userName,photoUrl,role,password,employmentStatus})
             res.send(results);
         }catch(error){
-            res.status(500).json(results)
+            res.status(500).json(error)
         }
     }
 });
@@ -123,13 +125,15 @@ router.delete('/byEmail-allDetails/:email', async (req, res) => {
         const deleteUserWorkout = await UserWorkout.deleteMany({ userEmail: email });
         const deleteUserHealthRecord = await UserHealthRecord.deleteMany({ email: email });
         const deleteUserInstructor = await UserInstructor.deleteMany({ userEmail: email });
+        const deleteFeedback = await Feedback.deleteMany({ userEmail: email });
 
         const result = {
             deleteUser,
             deleteUserDiet,
             deleteUserWorkout,
             deleteUserHealthRecord,
-            deleteUserInstructor
+            deleteUserInstructor,
+            deleteFeedback
         };
 
         res.status(200).json(result);

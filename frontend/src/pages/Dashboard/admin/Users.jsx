@@ -28,7 +28,7 @@ const Users = () => {
       })
     },[])
   
-    const handleDelete=(id)=>{
+    const handleDelete=(email)=>{
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -39,14 +39,14 @@ const Users = () => {
         confirmButtonText: "Yes, delete it!"
       }).then((result) => {
         if (result.isConfirmed) {
-          axiosSecure.delete(`http://localhost:5000/user/${id}`)
+          axiosSecure.delete(`http://localhost:5000/user/byEmail-allDetails/${email}`)
           .then((res)=>{
               Swal.fire({
                 title: "Deleted!",
                 text: "Diet has been deleted from your list.",
                 icon: "success"
               });
-              const newUsers = users.filter((item)=>item._id!==id);
+              const newUsers = users.filter((item)=>item.email!==email);
               setUsers(newUsers);
             
             
@@ -147,7 +147,7 @@ const Users = () => {
                               {highlightText(item.employmentStatus, searchTerm)} 
                             </td>
                             <td>
-                              <button onClick={()=>handleDelete(item._id)} 
+                              <button onClick={()=>handleDelete(item.email)} 
                               className='px-3 py-3 cursor-pointer bg-red-500 rounded-3xl text-white font-bold'>
                                 <MdDelete/>
                               </button>

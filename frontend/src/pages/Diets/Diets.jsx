@@ -139,14 +139,25 @@ const Diets = () => {
                         }else if(diet.name.toLowerCase().includes(searchTerm.toLowerCase()) 
                         || diet.howItWorks.toLowerCase().includes(searchTerm.toLowerCase())
                         || diet.benefits.toLowerCase().includes(searchTerm.toLowerCase())
-                        || diet.downsides.toLowerCase().includes(searchTerm.toLowerCase())){
+                        || diet.downsides.toLowerCase().includes(searchTerm.toLowerCase())
+                        || diet.forGoal.some(goal => goal.toLowerCase().includes(searchTerm.toLowerCase()))
+                      ){
                           return diet;
                         }
                       })
                       .map((diet)=>(
                         <div key={diet._id} className='shadow-lg rounded-lg p-3 flex flex-col justify-between border border-secondary overflow-hidden m-4'>
                         <div className='p-4'>
-                            <h2 className='text-xl font-semibold mb-10 dark:text-white text-center'>{highlightText(diet.name, searchTerm)}</h2>
+                            <h2 className='text-xl font-semibold mb-10 dark:text-white text-center'>{highlightText(diet.name, searchTerm)}
+                              <div className='text-gray-600 mb-2 text-center text-sm'>
+                                For: {diet.forGoal.map((goal, index) => (
+                                  <React.Fragment key={index}>
+                                    {highlightText(goal,searchTerm)}
+                                    {index !== diet.forGoal.length - 1 && <br />}
+                                  </React.Fragment>
+                                ))}
+                              </div>
+                            </h2>
                             <div className='flex justify-center'>
                               <img className='shadow-lg rounded-lg'src={diet.dietImg} alt="Diet Image"/>
                             </div>
