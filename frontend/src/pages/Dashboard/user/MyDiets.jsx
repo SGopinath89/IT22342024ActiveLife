@@ -14,6 +14,7 @@ const MyDiets = () => {
   const axiosSecure = useAxiosSecure();
   const [searchTerm,setSearchTerm] = useState("")
   const [diets,setDiets] = useState([])
+  const text="No reccomondations"
   
   const [hr,setHR] = useState([])
   const role = currentUser?.role
@@ -168,40 +169,56 @@ const MyDiets = () => {
         <h1 className='text-4xl font-bold'>Diet <span className='text-secondary'>reccomondations </span>for you</h1>
       </div>
       <div>
-            {
-              <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4 '>
+        {
+          <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4 '>
+        
                 {
+                  hr.documents ? (
                     diets
-                    .filter((diet)=>{
-                      console.log(diet.forGoal)
-                      console.log(hr.documents[0].fitnessGoals)
-                      if (diet.forGoal.some(goal => hr.documents[0].fitnessGoals.includes(goal))) {
+                      .filter((diet) => {
+                        if (hr.documents) {
+                          console.log(diet.forGoal);
+                          console.log(hr.documents[0].fitnessGoals);
+                          if (diet.forGoal.some(goal => hr.documents[0].fitnessGoals.includes(goal))) {
+                            return diet;
+                          }
+                        }
+                        return false;
+                      })
+                      .map((diet) => (
                         
-                        return diet;
-                      }                      
-                    })
-                    .map((diet)=>(        
-                      <div key={diet._id} className='shadow-lg rounded-lg p-3 flex flex-col justify-between border border-secondary overflow-hidden m-4'>
-                      <div className='p-4'>
-                          <h2 className='text-xl font-semibold mb-10 dark:text-white text-center'>{highlightText(diet.name, searchTerm)}</h2>
-                          <div className='flex justify-center'>
-                            <img className='shadow-lg rounded-lg'src={diet.dietImg} alt="Diet Image"/>
-                          </div><br/>    
-                          <div className='text-gray-600 mb-2 text-center'>
-                            For: {diet.forGoal.map((goal, index) => (
-                              <React.Fragment key={index}>
-                                {goal}
-                                {index !== diet.forGoal.length - 1 && <br />}
-                              </React.Fragment>
-                            ))}
+                          <div key={diet._id} className='shadow-lg rounded-lg p-3 flex flex-col justify-between border border-secondary overflow-hidden m-4'>
+                            <div className='p-4'>
+                              <h2 className='text-xl font-semibold mb-10 dark:text-white text-center'>{highlightText(diet.name, searchTerm)}</h2>
+                              <div className='flex justify-center'>
+                                <img className='shadow-lg rounded-lg' src={diet.dietImg} alt="Diet Image" />
+                              </div>
+                              <br />
+                              <div className='text-gray-600 mb-2 text-center'>
+                                For: {diet.forGoal.map((goal, index) => (
+                                  <React.Fragment key={index}>
+                                    {goal}
+                                    {index !== diet.forGoal.length - 1 && <br />}
+                                  </React.Fragment>
+                                ))}
+                              </div>
+                            </div>
                           </div>
-                      </div>
+                        
+                      ))
+                  ) : (
+                    <div className='text-center text-lg text-black'>
+                      To receive personalized recommendations, please provide your health details
+                      <br/>
+                      <Link to='/dashboard/addHealthDetails'>
+                        <p className='underline'>Click Hear to add Health Details</p>
+                      </Link>
+                      <br/>
                     </div>
-                    ))
+                  )
                 }
-              </div>
-              
-            }
+                </div>
+        }
               <div className='text-center'>
                 <Link to='/diets'>
                   <button

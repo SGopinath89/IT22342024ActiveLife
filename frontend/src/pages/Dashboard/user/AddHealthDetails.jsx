@@ -98,7 +98,7 @@ const AddHealthDetails = () => {
     };
 
   return (
-    <div className='w-[1100px] justify-center items-center bg-white dark:bg-black'>
+    <div className='w-[1100px] h-screen justify-top items-center bg-white dark:bg-black'>
         <div className="bg-white p-8 rounded-lg ">
             <form onSubmit={handleSubmit}>
                 <div className="flex items-center gap-5 md:grid-cols-4 lg:grid-cols-4">
@@ -228,7 +228,7 @@ const AddHealthDetails = () => {
                     </div>
                 </div>
                 <div className="flex items-center gap-5 md:grid-cols-4 lg:grid-cols-4">
-                    <div className="w-full mb-4">
+                    <div className="w-1/2 mb-4">
                         <label htmlFor="AnyAllergies" className='block text-gray-700 front-bold mb-2'>
                             <MdOutlineHealthAndSafety className="inline-block br-2 mb-1 text-lg"/>   Do you have any food allergies?
                         </label>
@@ -241,16 +241,41 @@ const AddHealthDetails = () => {
                             placeholder="">
                         </textarea>
                     </div>
+                </div>
+                <div className="flex items-center gap-5 md:grid-cols-4 lg:grid-cols-4">
                     <div className="w-full mb-4">
                         <label htmlFor="fitnessGoals" className='block text-gray-700 front-bold mb-2'>
                             <MdOutlineHealthAndSafety className="inline-block br-2 mb-1 text-lg"/>   Is there any fitness goal that you would like to achieve?
                         </label>
-                        <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Weight Loss"/> Weight Loss<br/>
-                        <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Brain Health"/> Brain Health<br/>
-                        <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Overall Health"/> Overall Health<br/>
-                        <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Longevity"/> Longevity<br/>
-                        <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Diabetes Management"/> Diabetes Management<br/>
-                        <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Heart Health"/> Heart Health
+                        <div className="flex items-center gap-2 md:grid-cols-4 lg:grid-cols-4">
+                                <div>
+                                    <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Brain Health"/> Brain Health<br/>
+                                    <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Longevity"/> Longevity<br/>
+                                    <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Diabetes Management"/> Diabetes Management<br/>
+                                    <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Heart Health"/> Heart Health
+                                </div>
+                                <div>
+                                    <input  type="checkbox" name="forGoal" onChange={handleChange} value="Weight Loss"/> Weight Loss<br/>
+                                    <input  type="checkbox" name="forGoal" onChange={handleChange} value="General fitness"/> General fitness<br/>
+                                    <input  type="checkbox" name="forGoal" onChange={handleChange} value="Overall Health"/> Overall Health<br/>
+                                    <input  type="checkbox" name="forGoal" onChange={handleChange} value="Muscle Toning"/> Muscle Toning<br/>
+                                    <input  type="checkbox" name="forGoal" onChange={handleChange} value="Cardiovascular Health"/> Cardiovascular Health<br/>
+                                </div>
+                                <div>
+                                    <input type="checkbox" name="forGoal" onChange={handleChange} value="Improve Endurance"/> Improve Endurance<br/>
+                                    <input type="checkbox" name="forGoal" onChange={handleChange} value="Muscle Building"/> Muscle Building<br/>
+                                    <input type="checkbox" name="forGoal" onChange={handleChange} value="Improve Strength"/> Improve Strength<br/>
+                                    <input type="checkbox" name="forGoal" onChange={handleChange} value="Flexibility"/> Flexibility<br/>
+                                    <input type="checkbox" name="forGoal" onChange={handleChange} value="Stress Reduction"/> Stress Reduction<br/>
+                                </div>
+                                <div>
+                                    <input type="checkbox" name="forGoal" onChange={handleChange} value="Injury Prevention"/> Injury Prevention<br/>
+                                    <input type="checkbox" name="forGoal" onChange={handleChange} value="Athletic performance"/> Athletic performance<br/>
+                                    <input type="checkbox" name="forGoal" onChange={handleChange} value="Improve Speed"/> Improve Speed<br/>
+                                    <input type="checkbox" name="forGoal" onChange={handleChange} value="Improve Speed"/> Improve Core strength<br/>
+                                    <input type="checkbox" name="forGoal" onChange={handleChange} value="Improve Speed"/> Improve Stability
+                                </div>
+                            </div>
                     </div>
                 </div>
                 <div className="text-center">

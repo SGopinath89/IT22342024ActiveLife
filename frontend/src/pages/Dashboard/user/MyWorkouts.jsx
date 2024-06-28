@@ -218,6 +218,7 @@ const MyWorkouts = () => {
             {
               <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4 '>
                 {
+                  hr.documents ? (
                     workouts
                     .filter((workout)=>{
                       console.log(workout.forGoal)
@@ -245,6 +246,16 @@ const MyWorkouts = () => {
                       </div>
                     </div>
                     ))
+                  ) : (
+                    <div className='text-center text-lg text-black'>
+                      To receive personalized recommendations, please provide your health details
+                      <br/>
+                      <Link to='/dashboard/addHealthDetails'>
+                        <p className='underline'>Click Hear to add Health Details</p>
+                      </Link>
+                      <br/>
+                    </div>
+                  )
                 }
               </div>
               
