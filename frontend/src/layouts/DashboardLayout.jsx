@@ -199,7 +199,7 @@ const DashboardLayout = () => {
                     <li>
                         <button
                             onClick={()=>handleLogOut()}
-                            className=" flex items-center gap-x-4 p-2 rounded-md text-[#413F44]
+                            className=" w-full flex items-center gap-x-4 p-2 rounded-md text-[#413F44]
                                 duration-150 cursor-pointer font-bold text-sm  hover:bg-secondary hover:text-black">
                             <IoMdLogOut className='text-2xl'/>
                             <span className={`${!open && "hidden"} origin-left duration-200`}>

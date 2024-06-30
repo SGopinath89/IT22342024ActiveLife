@@ -3,9 +3,8 @@ import { FaWeight } from "react-icons/fa";
 import { GiBodyHeight, GiHeartBeats, GiSleepingBag } from "react-icons/gi";
 import { MdBloodtype, MdOutlineHealthAndSafety } from "react-icons/md";
 import { CgSmileNone } from "react-icons/cg";
-import {Link, useNavigate} from "react-router-dom"
-import { useContext, useState } from "react";
-import axios from "axios";
+import { Link, useNavigate} from "react-router-dom"
+import { useState } from "react";
 import Swal from "sweetalert2";
 import useUser from "../../../hooks/useUser";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -98,7 +97,7 @@ const AddHealthDetails = () => {
     };
 
   return (
-    <div className='w-[1100px] h-screen justify-top items-center bg-white dark:bg-black'>
+    <div className='w-[1100px] h-screen justify-top items-center'>
         <div className="bg-white p-8 rounded-lg ">
             <form onSubmit={handleSubmit}>
                 <div className="flex items-center gap-5 md:grid-cols-4 lg:grid-cols-4">
@@ -249,31 +248,36 @@ const AddHealthDetails = () => {
                         </label>
                         <div className="flex items-center gap-2 md:grid-cols-4 lg:grid-cols-4">
                                 <div>
+                                    <span className=' text-sm text-gray-500'>**For Diets</span><br/>
                                     <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Brain Health"/> Brain Health<br/>
                                     <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Longevity"/> Longevity<br/>
                                     <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Diabetes Management"/> Diabetes Management<br/>
                                     <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Heart Health"/> Heart Health
+                                    <br/>
                                 </div>
                                 <div>
-                                    <input  type="checkbox" name="forGoal" onChange={handleChange} value="Weight Loss"/> Weight Loss<br/>
-                                    <input  type="checkbox" name="forGoal" onChange={handleChange} value="General fitness"/> General fitness<br/>
-                                    <input  type="checkbox" name="forGoal" onChange={handleChange} value="Overall Health"/> Overall Health<br/>
-                                    <input  type="checkbox" name="forGoal" onChange={handleChange} value="Muscle Toning"/> Muscle Toning<br/>
-                                    <input  type="checkbox" name="forGoal" onChange={handleChange} value="Cardiovascular Health"/> Cardiovascular Health<br/>
+                                    <span className=' text-sm text-gray-500'>**For Diets & Workouts</span><br/>
+                                    <input  type="checkbox" name="fitnessGoals" onChange={handleChange} value="Weight Loss"/> Weight Loss<br/>
+                                    <input  type="checkbox" name="fitnessGoals" onChange={handleChange} value="General fitness"/> General fitness<br/>
+                                    <input  type="checkbox" name="fitnessGoals" onChange={handleChange} value="Overall Health"/> Overall Health<br/>
+                                    <input  type="checkbox" name="fitnessGoals" onChange={handleChange} value="Muscle Toning"/> Muscle Toning<br/>
+                                    <input  type="checkbox" name="fitnessGoals" onChange={handleChange} value="Cardiovascular Health"/> Cardiovascular Health<br/>
                                 </div>
                                 <div>
-                                    <input type="checkbox" name="forGoal" onChange={handleChange} value="Improve Endurance"/> Improve Endurance<br/>
-                                    <input type="checkbox" name="forGoal" onChange={handleChange} value="Muscle Building"/> Muscle Building<br/>
-                                    <input type="checkbox" name="forGoal" onChange={handleChange} value="Improve Strength"/> Improve Strength<br/>
-                                    <input type="checkbox" name="forGoal" onChange={handleChange} value="Flexibility"/> Flexibility<br/>
-                                    <input type="checkbox" name="forGoal" onChange={handleChange} value="Stress Reduction"/> Stress Reduction<br/>
+                                    <span className=' text-sm text-gray-500'>**For Workouts</span><br/>
+                                    <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Improve Endurance"/> Improve Endurance<br/>
+                                    <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Muscle Building"/> Muscle Building<br/>
+                                    <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Improve Strength"/> Improve Strength<br/>
+                                    <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Flexibility"/> Flexibility<br/>
+                                    <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Stress Reduction"/> Stress Reduction<br/>
                                 </div>
                                 <div>
-                                    <input type="checkbox" name="forGoal" onChange={handleChange} value="Injury Prevention"/> Injury Prevention<br/>
-                                    <input type="checkbox" name="forGoal" onChange={handleChange} value="Athletic performance"/> Athletic performance<br/>
-                                    <input type="checkbox" name="forGoal" onChange={handleChange} value="Improve Speed"/> Improve Speed<br/>
-                                    <input type="checkbox" name="forGoal" onChange={handleChange} value="Improve Speed"/> Improve Core strength<br/>
-                                    <input type="checkbox" name="forGoal" onChange={handleChange} value="Improve Speed"/> Improve Stability
+                                    <br/>
+                                    <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Injury Prevention"/> Injury Prevention<br/>
+                                    <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Athletic performance"/> Athletic performance<br/>
+                                    <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Improve Speed"/> Improve Speed<br/>
+                                    <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Improve Core strength"/> Improve Core strength<br/>
+                                    <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Improve Stability"/> Improve Stability
                                 </div>
                             </div>
                     </div>

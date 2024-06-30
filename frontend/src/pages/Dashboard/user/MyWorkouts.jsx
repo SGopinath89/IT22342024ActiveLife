@@ -247,11 +247,11 @@ const MyWorkouts = () => {
                     </div>
                     ))
                   ) : (
-                    <div className='text-center text-lg text-black'>
+                    <div className='col-span-1 md:col-span-2 lg:col-span-3 text-center text-lg text-black'>
                       To receive personalized recommendations, please provide your health details
                       <br/>
                       <Link to='/dashboard/addHealthDetails'>
-                        <p className='underline'>Click Hear to add Health Details</p>
+                        <p className='underline'>Click Here to add Health Details</p>
                       </Link>
                       <br/>
                     </div>

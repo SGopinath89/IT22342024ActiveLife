@@ -53,6 +53,32 @@ const UserP = () => {
       });
     }
 
+    const handleDeleteHRec=(email)=>{
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axiosSecure.delete(`http://localhost:5000/userHR/${email}`)
+          .then((res)=>{
+            Swal.fire({
+              title: "Deleted!",
+              text: "Successfully Deleted your health Record.",
+              icon: "success"
+            }); 
+          })
+          .catch((error)=>{
+            console.log(error)
+          })
+        }
+      });
+    }
+
     if(loading){
       return <div>Loading...</div>
     }
@@ -137,12 +163,21 @@ const UserP = () => {
 
 
                               {
-                                dCount !=0 &&<Link to="/dashboard/updateHealthdetails">
+                                dCount !=0 &&<div>
+                                                <Link to="/dashboard/updateHealthdetails">
                                                   <button 
                                                   className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
                                                       Update your Health Details
                                                   </button>
                                                 </Link>
+                                                <span className='px-3'>
+                                                  <button onClick={()=>handleDeleteHRec(currentUser.email)} 
+                                                  className='px-3 py-3 cursor-pointer bg-red-500 rounded-3xl text-white font-bold'>
+                                                    <MdDelete/>
+                                                  </button>
+                                                </span>
+                                              </div>
+                                                
 
                               }
                               </div>

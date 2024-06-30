@@ -11,77 +11,91 @@ import { CgSmileNone } from "react-icons/cg";
 const UpdateHealthdata = () => {
     const { currentUser, refetch } = useUser();
     const [healthData, setHealthData] = useState({
-        weight: '',
-        height: '',
-        averageHeartRate: '',
-        bloodPressure: '',
-        existingMedicalCondition: '',
-        anySurgeries: '',
-        currentLevelofPhysicalActivity: '',
-        fitnessGoals: '',
-        AnyAllergies: '',
-        stressScale: '',
-        sleepHours: '',
+        fitnessGoals: []
     });
-    const [formData, setFormData] = useState({});
+    const [formData, setFormData] = useState({
+        weight: healthData.weight,
+        height: healthData.height,
+        averageHeartRate: healthData.averageHeartRate,
+        bloodPressure: healthData.bloodPressure,
+        existingMedicalCondition: healthData.existingMedicalCondition,
+        anySurgeries: healthData.anySurgeries,
+        currentLevelofPhysicalActivity: healthData.currentLevelofPhysicalActivity,
+        AnyAllergies: healthData.AnyAllergies,
+        stressScale: healthData.stressScale,
+        sleepHours: healthData.sleepHours,
+        fitnessGoals: healthData.fitnessGoals
+    });
     const axiosSecure = useAxiosSecure();
     const navigate = useNavigate();
-    
+
     useEffect(() => {
         if (currentUser?.email) {
             axiosSecure.get(`http://localhost:5000/userHR/${currentUser.email}`)
                 .then((res) => {
+                    const data = res.data.documents[0];
                     setHealthData({
-                        weight: res.data.weight,
-                        height: res.data.height,
-                        averageHeartRate: res.data.averageHeartRate,
-                        bloodPressure: res.data.bloodPressure,
-                        existingMedicalCondition: res.data.existingMedicalCondition,
-                        anySurgeries: res.data.anySurgeries,
-                        currentLevelofPhysicalActivity: res.data.currentLevelofPhysicalActivity,
-                        fitnessGoals: res.data.fitnessGoals,
-                        AnyAllergies: res.data.AnyAllergies,
-                        stressScale: res.data.stressScale,
-                        sleepHours: res.data.sleepHours,
+                        weight: data.weight,
+                        height: data.height,
+                        averageHeartRate: data.averageHeartRate,
+                        bloodPressure: data.bloodPressure,
+                        existingMedicalCondition: data.existingMedicalCondition,
+                        anySurgeries: data.anySurgeries,
+                        currentLevelofPhysicalActivity: data.currentLevelofPhysicalActivity,
+                        AnyAllergies: data.AnyAllergies,
+                        stressScale: data.stressScale,
+                        sleepHours: data.sleepHours,
+                        fitnessGoals: data.fitnessGoals || []
                     });
+                    const fitnessGoals = data.fitnessGoals
                 })
                 .catch((error) => {
                     console.log(error);
                 });
         }
     }, [axiosSecure, currentUser?.email]);
-    
+
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevFormData) => ({
-            ...prevFormData,
-            [name]: value,
-        }));
+        const { name, value, type, checked } = e.target;
+        if (type === 'checkbox') {
+            setFormData(prevState => {
+                if (checked) {
+                    return {
+                        ...prevState,
+                        fitnessGoals: [...prevState.fitnessGoals, value]
+                    };
+                } else {
+                    return {
+                        ...prevState,
+                        fitnessGoals: prevState.fitnessGoals.filter(goal => goal !== value)
+                    };
+                }
+            });
+        } else {
+            setFormData((prevFormData) => ({
+                ...prevFormData,
+                [name]: value,
+            }));
+        }
     };
 
     const handleSubmit = (e) => {
-        const updatedFormData = {
-            ...formData,
-            weight: parseInt(formData.weight, 10),
-            height: parseInt(formData.height, 10),
-            averageHeartRate: parseInt(formData.averageHeartRate, 10),
-            bloodPressure: parseInt(formData.bloodPressure, 10),
-            sleepHours: parseInt(formData.sleepHours, 10),
-            stressScale: parseInt(formData.stressScale, 10)
-          };
         e.preventDefault();
-        axiosSecure.patch(`http://localhost:5000/userHR/${currentUser.email}`, updatedFormData)
+
+        // Log the form data before sending the request
+        console.log('Form Data:', formData);
+
+        axiosSecure.patch(`http://localhost:5000/userHR/${currentUser.email}`, formData)
             .then((res) => {
                 Swal.fire({
                     title: 'Success!',
                     text: 'Your details have been updated.',
                     icon: 'success',
                 });
-                refetch();
                 navigate('/dashboard/userP');
             })
             .catch((error) => {
-                console.log(error);
+                console.error('Error:', error.response ? error.response.data : error.message);
                 Swal.fire({
                     title: 'Error!',
                     text: 'There was an error updating your details.',
@@ -90,8 +104,10 @@ const UpdateHealthdata = () => {
             });
     };
 
+    
+
     return (
-        <div className='w-[1100px] justify-center items-center bg-white dark:bg-black'>
+        <div className='h-screen w-screen justify-top items-center'>
             <div className="bg-white p-8 rounded-lg ">
                 <form onSubmit={handleSubmit}>
                     <div className="flex items-center gap-5 md:grid-cols-4 lg:grid-cols-4">
@@ -216,7 +232,7 @@ const UpdateHealthdata = () => {
                                 placeholder={healthData.anySurgeries}
                                 onChange={handleChange}
                                 rows="2"
-                                className="w-full border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring focus:border-blue-300"
+                                className="w-1/2 border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring focus:border-blue-300"
                             ></textarea>
                         </div>
                     </div>
@@ -230,20 +246,51 @@ const UpdateHealthdata = () => {
                                 placeholder={healthData.AnyAllergies}
                                 onChange={handleChange}
                                 rows="2"
-                                className="w-full border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring focus:border-blue-300"
+                                className="w-1/2 border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring focus:border-blue-300"
                             ></textarea>
                         </div>
+                    </div>
+                    <div className="flex items-center gap-5 md:grid-cols-4 lg:grid-cols-4">
                         <div className="w-full mb-4">
                             <label htmlFor="fitnessGoals" className='block text-gray-700 front-bold mb-2'>
-                                <MdOutlineHealthAndSafety className="inline-block br-2 mb-1 text-lg"/> Fitness Goals or Lifestyle
+                                <MdOutlineHealthAndSafety className="inline-block br-2 mb-1 text-lg"/>   
+                                Is there any fitness goal that you would like to achieve?<br/>
+                                <span className=' text-sm text-gray-500'>**Please select all the goals you need including the previosly selected</span>
                             </label>
-                            <textarea
-                                name="fitnessGoals"
-                                placeholder={healthData.fitnessGoals}
-                                onChange={handleChange}
-                                rows="2"
-                                className="w-full border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring focus:border-blue-300"
-                            ></textarea>
+                            <div className="flex items-center gap-2 md:grid-cols-4 lg:grid-cols-4">
+                                    <div>
+                                        <span className=' text-sm text-gray-500'>**For Diets</span><br/>
+                                        <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Brain Health"/> Brain Health<br/>
+                                        <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Longevity"/> Longevity<br/>
+                                        <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Diabetes Management"/> Diabetes Management<br/>
+                                        <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Heart Health"/> Heart Health
+                                        <br/> <br/>
+                                    </div>
+                                    <div>
+                                        <span className=' text-sm text-gray-500'>**For Diets & Workouts</span><br/>
+                                        <input  type="checkbox" name="fitnessGoals" onChange={handleChange} value="Weight Loss"/> Weight Loss<br/>
+                                        <input  type="checkbox" name="fitnessGoals" onChange={handleChange} value="General fitness"/> General fitness<br/>
+                                        <input  type="checkbox" name="fitnessGoals" onChange={handleChange} value="Overall Health"/> Overall Health<br/>
+                                        <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Stress Reduction"/> Stress Reduction<br/>
+                                        <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Improve Endurance"/> Improve Endurance<br/>
+                                    </div>
+                                    <div>
+                                        <span className=' text-sm text-gray-500'>**For Workouts</span><br/>
+                                        <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Muscle Building"/> Muscle Building<br/>
+                                        <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Improve Strength"/> Improve Strength<br/>
+                                        <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Flexibility"/> Flexibility<br/>
+                                        <input  type="checkbox" name="fitnessGoals" onChange={handleChange} value="Muscle Toning"/> Muscle Toning<br/>
+                                        <input  type="checkbox" name="fitnessGoals" onChange={handleChange} value="Cardiovascular Health"/> Cardiovascular Health<br/>
+                                    </div>
+                                    <div>
+                                        <br/>
+                                        <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Injury Prevention"/> Injury Prevention<br/>
+                                        <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Athletic performance"/> Athletic performance<br/>
+                                        <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Improve Speed"/> Improve Speed<br/>
+                                        <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Improve Core strength"/> Improve Core strength<br/>
+                                        <input type="checkbox" name="fitnessGoals" onChange={handleChange} value="Improve Stability"/> Improve Stability
+                                    </div>
+                            </div>
                         </div>
                     </div>
                     <div className="text-center">

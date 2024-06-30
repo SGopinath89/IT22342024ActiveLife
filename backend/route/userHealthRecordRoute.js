@@ -38,11 +38,11 @@ router.get('/:email', async (req, res) => {
 });
 
 //update UserHealthRecord details
-router.patch('/:id', async (req, res) => {
-    const id = req.params.id;
+router.patch('/:email', async (req, res) => {
+    const email = req.params.email;
     const updates = req.body;
     try {
-        const userHealthRecord = await UserHealthRecord.findById(id);
+        const userHealthRecord = await UserHealthRecord.findOne({ email: email });
         if (!userHealthRecord) {
             return res.status(404).send("UserHealthRecord not found");
         }
@@ -52,18 +52,20 @@ router.patch('/:id', async (req, res) => {
                 updatedFields[key] = updates[key];
             }
         }
-        await userHealthRecord.updateOne(updatedFields);
-        const updatedUserHealthRecord = await UserHealthRecord.findById(id);
+        await UserHealthRecord.updateOne({ email: email }, updatedFields);
+        const updatedUserHealthRecord = await UserHealthRecord.findOne({ email: email });
         res.status(200).json(updatedUserHealthRecord);
     } catch (error) {
+        console.error('Error updating user health record:', error);
         res.status(500).json({ error: error.message });
     }
 });
 
+
 //delete UserHealthRecord
-router.delete('/:id',async(req,res)=>{
-    const id=req.params.id;
-    const userHealthRecord = await UserHealthRecord.findById(id);
+router.delete('/:email',async(req,res)=>{
+    const email=req.params.email;
+    const userHealthRecord = await UserHealthRecord.findOne({email:email});
     if(!userHealthRecord){
         res.status(404).send("UserHealthRecord not found")
     }else{
