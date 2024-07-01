@@ -10,7 +10,6 @@
 3. ```bash
    npm run dev
 
-
 ## How to Set Up Backend
 
 - Step 1: Create a Mongodb database name “active-life” and
