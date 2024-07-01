@@ -1,32 +1,16 @@
 [{
   "_id": {
-    "$oid": "663ca48bb50f63f0fd4412dc"
-  },
-  "name": "The Mediterranean diet",
-  "howItWorks": "The Mediterranean diet is based on foods that people in countries like Italy and Greece have traditionally eaten.",
-  "benefits": "This diet’s emphasis on minimally processed foods and plants has been associated with a reduced risk of multiple chronic diseases and increased life expectancy. Studies also show that the Mediterranean diet has a preventive effect against certain cancers.",
-  "downsides": "Since the Mediterranean diet does not put a big emphasis on dairy products, it’s important to make sure you still get enough calcium and vitamin D in your diet",
-  "dietImg": "https://i.ibb.co/N6npYtd/mediterranean.jpg"
-},
-{
-  "_id": {
-    "$oid": "663ca7ab57188fe652ca6a4e"
-  },
-  "name": "The DASH diet",
-  "howItWorks": "The DASH diet recommends specific servings of different food groups. The number of servings you are encouraged to eat depends on your daily calorie intake.",
-  "benefits": "The DASH diet has been shown to reduce blood pressure levels and several heart disease risk factors. Also, it may help lower your risk of breast and colorectal cancers",
-  "downsides": "While the DASH diet may aid with weight loss and lower blood pressure in individuals with hypertension, there is mixed evidence on salt intake and blood pressure.",
-  "dietImg": "https://i.ibb.co/r60SZ2x/dash.jpg"
-},
-{
-  "_id": {
     "$oid": "663ca82857188fe652ca6a4f"
   },
   "name": "Plant-based and flexitarian diets",
   "howItWorks": "Typical vegetarian diets restrict meat of all kinds but allow dairy products. Typical vegan diets restrict all animal products, including dairy, butter, and sometimes other byproducts like honey.",
   "benefits": "Numerous studies have shown that plant-based diets can reduce your risk of developing chronic diseases, including improved markers of metabolic health, decreased blood pressure, and reduced risk of type 2 diabetes. They can also help you lose weight",
   "downsides": "Plant-based eating patterns like vegetarianism and veganism can sometimes be difficult to maintain and may feel restricting, especially if you’re switching from a more meat-based eating style.",
-  "dietImg": "https://i.ibb.co/DYJSJJy/flexitarian.jpg"
+  "dietImg": "https://i.ibb.co/DYJSJJy/flexitarian.jpg",
+  "forGoal": [
+    "Longevity",
+    "Diabetes Management"
+  ]
 },
 {
   "_id": {
@@ -36,7 +20,10 @@
   "howItWorks": "Like the flexitarian diet, the MIND diet does not have a strict meal plan, but instead encourages eating 10 specific foods with brain health benefits.",
   "benefits": "Research shows that the MIND diet may reduce a person’s risk of developing Alzheimer’s disease, and studies show that the MIND diet is superior to other plant-rich diets for improving cognition",
   "dietImg": "https://i.ibb.co/yNfNqKv/mind.jpg",
-  "downsides": "-"
+  "downsides": "-",
+  "forGoal": [
+    "Brain Health"
+  ]
 },
 {
   "_id": {
@@ -46,7 +33,10 @@
   "howItWorks": "WW is a points-based system that assigns different foods and beverages a value, depending on their calorie, fat, and fiber contents.As you work to reach your desired weight, you must stay within your daily point allowance.",
   "benefits": "Many studies show that the WW program can help you lose weight (25Trusted Source). For example, a review of 45 studies found that people who followed a WW diet lost 2.6% more weight than people who received standard counseling",
   "downsides": "While it allows for flexibility, WW can be costly depending on the subscription plan and the length of time you intend to follow it. Studies show that it may take up to 52 weeks to produce significant weight loss and clinical benefits",
-  "dietImg": "https://i.ibb.co/hDV0FHK/ww.jpg"
+  "dietImg": "https://i.ibb.co/hDV0FHK/ww.jpg",
+  "forGoal": [
+    "Weight Loss"
+  ]
 },
 {
   "_id": {
@@ -56,7 +46,10 @@
   "howItWorks": "Intermittent fasting restricts the time you’re allowed to eat, which is a simple way to reduce your calorie intake. This can lead to weight loss — unless you compensate by eating too much food during allowed eating periods.",
   "benefits": "Intermittent fasting has been linked to anti-aging effects, increased insulin sensitivity, improved brain health, reduced inflammation, and many other benefits",
   "downsides": "those sensitive to drops in their blood sugar levels should talk with a health professional before starting intermittent fasting. ",
-  "dietImg": "https://i.ibb.co/2jkNt29/fasting.jpg"
+  "dietImg": "https://i.ibb.co/2jkNt29/fasting.jpg",
+  "forGoal": [
+    "Weight Loss"
+  ]
 },
 {
   "_id": {
@@ -66,7 +59,10 @@
   "howItWorks": "The eating plan is designed to promote weight loss by having you fill up on nutrient-dense foods that are low in calories and high in water. Meanwhile, it limits calorie-dense foods like cookies, candies, nuts, seeds, and oils.",
   "benefits": "The Volumetrics diet encourages nutritious foods that are low in calories but high in fiber, vitamins, and minerals, which may help increase your intake of key nutrients and protect against nutritional deficiencies.",
   "downsides": "While the Volumetrics diet may be effective for health benefits and weight loss, it requires a good understanding of Volumetrics, which involves learning about the calorie levels of foods in relation to portion sizes and nutrient levels.",
-  "dietImg": "https://i.ibb.co/9qMmTxL/volumetrics.jpg"
+  "dietImg": "https://i.ibb.co/9qMmTxL/volumetrics.jpg",
+  "forGoal": [
+    "Weight Loss"
+  ]
 },
 {
   "_id": {
@@ -76,7 +72,10 @@
   "howItWorks": "Designed to be a lifestyle change over a quick fix, the Mayo Clinic Diet focuses on replacing less healthy behaviors with ones that are more likely to support longevity and weight loss.",
   "benefits": "the Mayo Clinic tells users to expect about 10 pounds of weight loss during the first 2 weeks, and up to 2 pounds during the second phase.",
   "downsides": "While the digital version of the program includes meal plans, recipes, a food tracker, virtual group sessions, at-home workouts, and more, it will cost you monthly to buy into the program.",
-  "dietImg": "https://i.ibb.co/S3msSMW/mayo.jpg"
+  "dietImg": "https://i.ibb.co/S3msSMW/mayo.jpg",
+  "forGoal": [
+    "Weight Loss"
+  ]
 },
 {
   "_id": {
@@ -86,5 +85,38 @@
   "howItWorks": "Low carb diets restrict your carb intake in favor of protein and fat. They’re typically higher in protein than low fat diets, which is important, as protein can help curb your appetite, raise your metabolism, and conserves muscle mass",
   "benefits": "Research suggests that low carb diets may reduce risk factors for heart disease, including high cholesterol and blood pressure levels. They may also improve blood sugar and insulin levels in people with type 2 diabetes ",
   "downsides": "In some cases, a low carb diet may raise LDL (bad) cholesterol levels. Very low carb diets can also be difficult to follow and cause digestive upset in some people (56Trusted Source). In very rare situations, following a very low carb diet may cause a condition known as ketoacidosis, a dangerous metabolic condition that can be fatal if left untreated",
-  "dietImg": "https://i.ibb.co/Vp7K46c/carb.jpg"
+  "dietImg": "https://i.ibb.co/Vp7K46c/carb.jpg",
+  "forGoal": [
+    "Diabets Management"
+  ]
+},
+{
+  "_id": {
+    "$oid": "66716418e5d2061a4e847f8c"
+  },
+  "name": "The Mediterranean diet",
+  "howItWorks": "The Mediterranean diet is based on foods that people in countries like Italy and Greece have traditionally eaten.",
+  "benefits": "This diet’s emphasis on minimally processed foods and plants has been associated with a reduced risk of multiple chronic diseases and increased life expectancy. Studies also show that the Mediterranean diet has a preventive effect against certain cancers.",
+  "downsides": "Since the Mediterranean diet does not put a big emphasis on dairy products, it’s important to make sure you still get enough calcium and vitamin D in your diet",
+  "dietImg": "https://i.ibb.co/N6npYtd/mediterranean.jpg",
+  "forGoal": [
+    "Overall Health",
+    "Longevity",
+    "Heart Health"
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "667e5a58e983230a41ca5aa8"
+  },
+  "name": "The DASH diet",
+  "howItWorks": "The Mediterranean diet is based on foods that people in countries like Italy and Greece have traditionally eaten.",
+  "benefits": "This diet’s emphasis on minimally processed foods and plants has been associated with a reduced risk of multiple chronic diseases and increased life expectancy. Studies also show that the Mediterranean diet has a preventive effect against certain cancers.",
+  "downsides": "Since the Mediterranean diet does not put a big emphasis on dairy products, it’s important to make sure you still get enough calcium and vitamin D in your diet",
+  "dietImg": "https://i.ibb.co/r60SZ2x/dash.jpg",
+  "forGoal": [
+    "Heart Health"
+  ],
+  "__v": 0
 }]
