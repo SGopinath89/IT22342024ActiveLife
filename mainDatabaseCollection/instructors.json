@@ -1,0 +1,33 @@
+[{
+  "_id": {
+    "$oid": "663f10619fa01b7f66c75754"
+  },
+  "name": "Mr.Saman Perera",
+  "email": "testemailabcdef22@gmail.com",
+  "phoneNo": "0777004451",
+  "qualification": "Certified Trainer",
+  "experience": "5 years",
+  "specialities": "Core Strength and Stability"
+},
+{
+  "_id": {
+    "$oid": "66423a789c466d81b4578843"
+  },
+  "name": "Ms.Sathmi Rajapaksha",
+  "email": "devsadini@gmail.com",
+  "phoneNo": "0127776789",
+  "qualification": "Certified Trainer",
+  "experience": "3 years",
+  "specialities": "Beginner's Full Body Workout"
+},
+{
+  "_id": {
+    "$oid": "66423b859c466d81b4578844"
+  },
+  "name": "Dr.A.D. Perera",
+  "email": "devsadini@gmail",
+  "phoneNo": "0127776789",
+  "qualification": "MBBS",
+  "experience": "3 years",
+  "specialities": "The DASH diet and Plant-based and flexitarian diets"
+}]

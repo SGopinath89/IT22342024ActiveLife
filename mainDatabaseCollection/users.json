@@ -1,0 +1,17 @@
+[{
+  "_id": {
+    "$oid": "6656e2ce58b8eeaac3e7f016"
+  },
+  "fullName": "admin",
+  "gender": "female",
+  "email": "activelifeadm1@gmail.com",
+  "phoneNo": "0777004451",
+  "age": "26",
+  "address": "Wattala",
+  "userName": "admin",
+  "photoUrl": "Is not specified",
+  "role": "admin",
+  "password": "Sathmi1203!",
+  "employmentStatus": "undergraduate"
+}
+]

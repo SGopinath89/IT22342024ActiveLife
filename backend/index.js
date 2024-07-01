@@ -29,11 +29,12 @@ app.use('/userHR',userHealthRecordRoute)
 app.use('/feedback',feedbackRoute)
 
 
-mongoose.connect('mongodb://localhost:27017/active-life').then(()=>{
+mongoose.connect('mongodb://127.0.0.1:27017/active-life').then(()=>{
     console.log("DB Connected")
 }).catch((error)=>{
     console.error(error)
 })
+
 
 app.post('/api/set-token',async(req,res)=>{
   const user=req.body;

@@ -1,0 +1,90 @@
+[{
+  "_id": {
+    "$oid": "663d1471d754297c31cbdfc1"
+  },
+  "name": "Beginner's Full Body Workout",
+  "numberOfDays": "30",
+  "howToDo": "Step 1: Warm-up for 5-10 minutes with light cardio (e.g., jogging, jumping jacks).  Step 2: Perform 3 sets of bodyweight squats (10-15 reps), push-ups (8-12 reps), lunges (10 reps per leg), plank (30 seconds to 1 minute), and dumbbell rows (10 reps per arm).   Step 3: Cool down with stretching exercises targeting major muscle groups.",
+  "workoutImg": "https://i.ibb.co/FJn5znD/beginner.jpg"
+},
+{
+  "_id": {
+    "$oid": "663d14b1d754297c31cbdfc2"
+  },
+  "name": "HIIT Cardio Blast",
+  "numberOfDays": "14",
+  "howToDo": "Step 1: Warm-up for 5 minutes with light jogging or cycling.   Step 2: Perform 30 seconds of high-intensity exercise (e.g., sprinting, burpees) followed by 30 seconds of rest. Repeat for 10-15 cycles.   Step 3: Cool down with 5 minutes of low-intensity cardio and stretching.",
+  "workoutImg": "https://i.ibb.co/f2Kn6mB/cardio.jpg"
+},
+{
+  "_id": {
+    "$oid": "663d14d4d754297c31cbdfc3"
+  },
+  "name": "Core Strength and Stability",
+  "numberOfDays": 21,
+  "howToDo": "Step 1: Warm-up with 5 minutes of light cardio and dynamic stretches.   Step 2: Perform 3 sets of planks (30-60 seconds), Russian twists (15 reps per side), bicycle crunches (15 reps per side), and leg raises (10-15 reps).   Step 3: Cool down with static stretching for the core muscles.",
+  "workoutImg": "https://i.ibb.co/NLrDL75/core.jpg"
+},
+{
+  "_id": {
+    "$oid": "663d14fad754297c31cbdfc4"
+  },
+  "name": "Muscle Building Split Routine",
+  "numberOfDays": 45,
+  "howToDo": "Step 1: Warm-up for 10 minutes with light cardio and dynamic stretches.   Step 2: Day 1: Focus on upper body (e.g., chest press, shoulder press, bicep curls).   Step 3: Day 2: Focus on lower body (e.g., squats, deadlifts, lunges).   Step 4: Repeat the cycle for 6 weeks, gradually increasing weights and reps.   Step 5: Cool down with stretching for all major muscle groups.",
+  "workoutImg": "https://i.ibb.co/bRLdSYz/muscle.jpg"
+},
+{
+  "_id": {
+    "$oid": "663d1527d754297c31cbdfc5"
+  },
+  "name": "Yoga and Mindfulness Journey",
+  "numberOfDays": 60,
+  "howToDo": "Step 1: Start with basic yoga poses (e.g., downward dog, child's pose) for 10 minutes.   Step 2: Practice breathing exercises (e.g., deep belly breathing, alternate nostril breathing) for 5 minutes.   Step 3: Progress to more challenging yoga poses and sequences, focusing on breath awareness and mindfulness.   Step 4: End each session with 5 minutes of meditation or relaxation techniques.",
+  "workoutImg": "https://i.ibb.co/N2KFhw1/yoga.jpg"
+},
+{
+  "_id": {
+    "$oid": "663d154dd754297c31cbdfc6"
+  },
+  "name": "Endurance Challenge",
+  "numberOfDays": 28,
+  "howToDo": "Step 1: Warm-up with 10 minutes of light cardio and dynamic stretches.   Step 2: Perform endurance-focused workouts (e.g., running, cycling, swimming) at moderate intensity for 30-60 minutes.   Step 3: Gradually increase workout duration and intensity over the 4-week period.   Step 4: Cool down with 5-10 minutes of light cardio and stretching.",
+  "workoutImg": "https://i.ibb.co/sm07GXb/endurance.jpg"
+},
+{
+  "_id": {
+    "$oid": "663d158ed754297c31cbdfc7"
+  },
+  "name": "Flexibility and Mobility Training",
+  "numberOfDays": 14,
+  "howToDo": "Step 1: Warm-up with 5 minutes of light cardio and dynamic stretches.   Step 2: Perform static stretches targeting major muscle groups (e.g., hamstring stretch, shoulder stretch) for 10-15 seconds each.   Step 3: Incorporate mobility exercises (e.g., hip circles, arm circles) to improve joint flexibility and range of motion.   Step 4: Cool down with additional stretching and deep breathing.",
+  "workoutImg": "https://i.ibb.co/FzyXCMZ/flexibility.jpg"
+},
+{
+  "_id": {
+    "$oid": "663d15b4d754297c31cbdfc8"
+  },
+  "name": "Weight Loss Transformation",
+  "numberOfDays": 90,
+  "howToDo": "Step 1: Follow a balanced diet plan with calorie deficit.   Step 2: Incorporate strength training exercises (3-4 times per week) to build muscle and boost metabolism.   Step 3: Include HIIT workouts or cardio sessions (3-4 times per week) for calorie burn and cardiovascular health.   Step 4: Monitor progress regularly and make adjustments to diet and exercise as needed.",
+  "workoutImg": "https://i.ibb.co/3s9DL1Z/weight.jpg"
+},
+{
+  "_id": {
+    "$oid": "663d15d7d754297c31cbdfc9"
+  },
+  "name": "Outdoor Fitness Adventure",
+  "numberOfDays": 21,
+  "howToDo": "Step 1: Plan outdoor activities such as hiking, biking, swimming, or kayaking.   Step 2: Include a mix of cardio, strength, and endurance activities during each outdoor session.   Step 3: Gradually increase the intensity and duration of outdoor workouts to challenge yourself.   Step 4: Enjoy nature and stay hydrated during outdoor adventures.",
+  "workoutImg": "https://i.ibb.co/XjPcwDG/outdoor.jpg"
+},
+{
+  "_id": {
+    "$oid": "665f35d8a8a2fa76e33de5bb"
+  },
+  "name": "Athlete's Performance Program",
+  "numberOfDays": 60,
+  "workoutImg": "https://i.ibb.co/LY03mdH/athlete.jpg",
+  "howToDo": "Step 1: Start with a thorough warm-up including dynamic stretches and mobility drills.    Step 2: Focus on strength training exercises specific to your sport (e.g., sprint drills for runners, agility ladder drills for soccer players).    Step 3: Incorporate speed and agility training (e.g., cone drills, plyometrics) to enhance athletic performance.    Step 4: Rest and recovery are crucial; include active recovery sessions and proper nutrition in your routine."
+}]

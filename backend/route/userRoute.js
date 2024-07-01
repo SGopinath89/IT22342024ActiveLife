@@ -7,8 +7,6 @@ const UserInstructor = require('../models/UserInstructor')
 const UserWorkout = require('../models/userWorkout')
 const Feedback = require('../models/Feedback')
 
-
-
 router.get('/', async(req,res)=>{
     const result=await User.find();
     if(result){
