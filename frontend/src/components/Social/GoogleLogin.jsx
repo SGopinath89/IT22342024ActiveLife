@@ -66,6 +66,7 @@ const GoogleLogin = () => {
         console.error("Server response:", error.response.data);
       }
       Swal.fire({
+        position: "top-end",
         title: 'Error!',
         text: 'There was an error with Google login.',
         icon: 'error',

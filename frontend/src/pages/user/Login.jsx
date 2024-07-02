@@ -21,25 +21,57 @@ const Login = () => {
     const data = new FormData(e.target);
     const formData = Object.fromEntries(data)
     try{
-      const user = await login(formData.email,formData.password);
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Login Successful!!",
-        showConfirmButton: false,
-        timer: 1500
-      });
-      navigate(location.state?.from || '/', {state:{user}})
+      const user = await login(formData.email,formData.password).then((res)=>{
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Login Successful!!",
+          showConfirmButton: false,
+          timer: 1500
+        });
+        navigate(location.state?.from || '/', {state:{user}})
+
+      }).catch((error)=>{
+        Swal.fire({
+          position: "top-end", 
+          icon: "warning",
+          title: "Give correct Email and password <br/> OR <br/> use Google Login",
+          showConfirmButton: false,
+          timer: 1500,
+          customClass: {
+            popup: 'swal2-custom-popup'
+          },
+          didOpen: () => {
+            const popup = document.querySelector('.swal2-custom-popup');
+            if (popup) {
+              popup.style.width = '400px'; 
+              popup.style.height = '300px';
+              popup.style.fontSize = '0.8em';
+            }
+          }
+        });
+        
+      })
+
     }catch(err){
       setError(err.code);
       if((!formData.email && formData.password) || (formData.email && !formData.password)){
         Swal.fire({
-          position: "center",
+          position: "top-end",
           icon: "warning",
-          title: "Give correct Email and password!!",
+          title: "Fill all the fields",
           showConfirmButton: false,
           timer: 1000
         });
+      }else{
+        Swal.fire({
+          position: "top-end",
+          icon: "warning",
+          title: "Error Login",
+          showConfirmButton: false,
+          timer: 1000
+        });
+
       }
       
     }finally{

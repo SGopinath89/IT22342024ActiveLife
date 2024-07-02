@@ -8,14 +8,14 @@ const AdminP = () => {
   //const axiosSecure = useAxiosSecure();
 
   return (
-    <div className='w-[1100px] h-screen justify-center flex items-center'>
+    <div className='w-full h-screen justify-center flex items-center'>
         <div>
           <div className=' flex items-center p-5'>
             <h1 className='text-4xl capitalize font-bold'>  Hi, <span>{currentUser?.fullName}!!  </span>Welcome to your dashboard</h1>
           </div><br/>
           <div className='p-2 grid md:grid-cols-2 lg:grid-cols-2 gap-4 '>
-            <div>
-            <h1 className='text-2xl capitalize font-bold text-center'>- Your Details -</h1><br/>
+            <div className='w-full'>
+              <h1 className='text-2xl capitalize font-bold text-center'>- Your Details -</h1><br/>
               <p className='text-black mb-2 text-center'><span className='font-bold'>Email : </span>{currentUser?.email}</p>
               <p className='text-black mb-2 text-center'><span className='font-bold'>Gender : </span>{currentUser?.gender}</p>
               <p className='text-black mb-2 text-center'><span className='font-bold'>Phone Number : </span>{currentUser?.phoneNo}  </p>
@@ -32,7 +32,7 @@ const AdminP = () => {
                       </Link> 
               </div>
             </div>
-            <div>
+            <div className='w-full'>
                 <br/>
                 <div className='text-center'>
                     <Link to='/dashboard/addDiet'>

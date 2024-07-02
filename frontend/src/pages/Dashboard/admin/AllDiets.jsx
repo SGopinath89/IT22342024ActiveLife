@@ -72,7 +72,7 @@ const AllDiets = () => {
     };
 
     return (
-      <div className='h-screen'>
+      <div className='w-full h-screen'>
         <div className='my-6 text-center w-[1000px]'>
           <h1 className='text-4xl font-bold text-secondary'>All Diets</h1>
         </div>

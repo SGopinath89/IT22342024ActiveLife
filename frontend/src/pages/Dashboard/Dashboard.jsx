@@ -7,7 +7,7 @@ const Dashboard = () => {
   const {currentUser, isLoading,} = useUser();
   const role = currentUser?.role;
   if(isLoading){
-    return <div className='flex justify-center items-center h-screen'>
+    return <div className='flex w-full justify-center items-center h-screen'>
       <RotateLoader color="#C1A917" />
     </div>
   }

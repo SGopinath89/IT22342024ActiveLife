@@ -62,7 +62,7 @@ const AddWorkout = () => {
     };
 
   return (
-    <div className='w-[1100px] h-screen justify-center items-top bg-white dark:bg-black flex'>
+    <div className='w-full h-screen justify-center items-top bg-white dark:bg-black flex'>
         <div className="bg-white p-3 rounded-lg text-center"><br/>
         <h2 className="text-3xl font-bold text-center mb-6 text-secondary">Add Workout</h2>
             <form onSubmit={handleSubmit} className="text-center">

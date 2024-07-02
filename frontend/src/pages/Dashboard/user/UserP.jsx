@@ -83,7 +83,7 @@ const UserP = () => {
       return <div>Loading...</div>
     }
   return (
-    <div className='w-[1070px] h-screen px-10'>
+    <div className='w-full h-screen px-10'>
         <div>
           <div>
                 <div className=' flex items-center p-5'>

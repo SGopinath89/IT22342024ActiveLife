@@ -68,7 +68,7 @@ const UpdateUserDetails = () => {
   };
 
   return (
-    <div className='w-[1100px] h-screen justify-center flex items-center'>
+    <div className='w-full h-screen justify-center flex items-center'>
       <br/>
       <form className='w-full max-w-lg' onSubmit={handleSubmit}>
         <div className='shadow-lg rounded-lg p-6'>

@@ -64,7 +64,7 @@ const ViewAllFeedback = () => {
       };
 
   return (
-    <div className='m-6 h-screen'><br/>
+    <div className='w-full m-6 h-screen'><br/>
         <div>
             <h1 className='text-5xl font-bold text-center text-secondary dark:text-white'>Customer Feedbacks</h1>
         </div>
