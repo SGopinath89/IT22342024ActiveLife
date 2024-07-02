@@ -87,7 +87,7 @@ const UpdateD = () => {
     };
 
   return (
-    <div className='w-full justify-center items-center bg-white dark:bg-black flex'>
+    <div className='w-[1000px] justify-center items-center bg-white dark:bg-black flex'>
         <div className="bg-white p-8 rounded-lg text-center">
         <h2 className="text-3xl font-bold text-center mb-6 text-secondary">Edit Diet</h2>
             <form onSubmit={handleSubmit} className="text-center">

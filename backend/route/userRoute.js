@@ -17,20 +17,28 @@ router.get('/', async(req,res)=>{
 })
 
 //add new User
-router.post('/',async (req, res) => {
-    const{fullName,gender,email,phoneNo,age,address,userName,photoUrl,role,password,employmentStatus}=req.body
-    if(!fullName || !gender || !email || !phoneNo || !address || !userName || !photoUrl || !role || !password || !employmentStatus){
-        res.status(400).send("Please Provide required fields")
-    }else{
-        try{
-            const results = await User.create({fullName,gender,email,phoneNo,age,address,userName,photoUrl,role,password,employmentStatus})
-            res.send(results);
-        }catch(error){
-            res.status(500).json(error)
-        }
+router.post('/', async (req, res) => {
+    const {
+      fullName, gender, email, phoneNo, age, address, userName, photoUrl, role, password, employmentStatus
+    } = req.body;
+    if (!fullName || !gender || !email || !phoneNo || !userName || !role || !password || !employmentStatus) {
+      return res.status(400).send("Please provide all required fields");
+    }
+    try {
+      const userData = { fullName, gender, email, phoneNo, age, userName, role, password, employmentStatus };
+      if(address){
+        userData.address = address;
+      }
+      if(photoUrl){
+        userData.photoUrl = photoUrl;
+      }
+      const results = await User.create(userData);
+      res.send(results);
+    } catch (error) {
+      res.status(500).json(error);
     }
 });
-
+  
 //get single User
 router.get('/:id',async(req,res)=>{
     const id=req.params.id;

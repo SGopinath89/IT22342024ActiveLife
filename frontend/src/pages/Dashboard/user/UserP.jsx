@@ -83,7 +83,7 @@ const UserP = () => {
       return <div>Loading...</div>
     }
   return (
-    <div className='w-full h-screen px-10'>
+    <div className='w-[1000px] h-screen px-10'>
         <div>
           <div>
                 <div className=' flex items-center p-5'>
@@ -94,10 +94,20 @@ const UserP = () => {
                     <div className='p-2 grid md:grid-cols-2 lg:grid-cols-2 gap-4 '>
                         <div >
                         <h1 className='justify-left font-bold text-2xl text-center'>- Personal Details -</h1>
-                        <div className='justify-center'
-                              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                          <img className='shadow-lg rounded-lg h-[75px] w-[75px]'src={currentUser?.photoUrl} alt="Profile photo"/>
-                        </div>
+                        {
+                          currentUser?.photoUrl && (
+                            <div 
+                              className="justify-center"
+                              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                            >
+                              <img 
+                                className="shadow-lg rounded-lg h-[75px] w-[75px]" 
+                                src={currentUser.photoUrl} 
+                                alt="Profile photo" 
+                              />
+                            </div>
+                          )
+                        }
                         <p className='text-black mb-2 text-center'><span className='font-bold'>Full Name : </span>{currentUser?.fullName}</p>
                           <p className='text-black mb-2 text-center'><span className='font-bold'>Email : </span>{currentUser?.email}</p>
                           <p className='text-black mb-2 text-center'><span className='font-bold'>Gender : </span>{currentUser?.gender}</p>

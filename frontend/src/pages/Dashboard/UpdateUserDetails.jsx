@@ -68,7 +68,7 @@ const UpdateUserDetails = () => {
   };
 
   return (
-    <div className='w-full h-screen justify-center flex items-center'>
+    <div className='w-[1000px] h-screen justify-center flex items-center'>
       <br/>
       <form className='w-full max-w-lg' onSubmit={handleSubmit}>
         <div className='shadow-lg rounded-lg p-6'>
@@ -173,7 +173,7 @@ const UpdateUserDetails = () => {
                         value={formData.address || ''}
                         onChange={handleChange}
                         className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                        required
+                        
                         />
                     </div>
                     <div className="mb-4">
@@ -204,7 +204,7 @@ const UpdateUserDetails = () => {
                         value={formData.photoUrl || ''}
                         onChange={handleChange}
                         className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                        required
+                        
                         />
                     </div><br/>
                     <div className='mb-3'>

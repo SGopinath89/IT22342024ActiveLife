@@ -28,14 +28,18 @@ const AuthProvider = ({ children }) => {
   const signUp = async (email, password) => {
     try {
       setLoader(true);
-      return await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      return { success: true, user: userCredential.user };
     } catch (error) {
       setError(error.code);
-      throw error;
+      console.log(error);
+      return { success: false, error: error.code };
     } finally {
       setLoader(false);
     }
   };
+  
+  
 
   // Login user
   const login = async (email, password) => {

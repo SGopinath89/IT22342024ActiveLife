@@ -97,7 +97,7 @@ const AddHealthDetails = () => {
     };
 
   return (
-    <div className='w-full h-screen justify-top items-center'>
+    <div className='w-[1000px] h-screen justify-top items-center'>
         <div className="bg-white p-8 rounded-lg ">
             <form onSubmit={handleSubmit}>
                 <div className="flex items-center gap-5 md:grid-cols-4 lg:grid-cols-4">

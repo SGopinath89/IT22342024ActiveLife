@@ -75,7 +75,7 @@ const MyInstructors = () => {
   };
 
   return (
-    <div className='w-full h-screen px-10'>
+    <div className='w-[1000px] h-screen px-10'>
       <div className='my-6 text-center'>
         <h1 className='text-4xl font-bold'>My <span className='text-secondary'>Instructors</span></h1>
       </div>

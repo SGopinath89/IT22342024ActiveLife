@@ -7,9 +7,9 @@ const userSchema = new Schema({
     email:{type:String, required:true},
     phoneNo:{type:String, required:true},
     age:{type:Number, required:true},
-    address:{type:String, required:true},
+    address:{type:String},
     userName:{type:String, required:true},
-    photoUrl:{type:String, required:true},
+    photoUrl:{type:String},
     role:{type:String, required:true},
     password:{type:String, required:true},
     employmentStatus:{type:String, required:true}

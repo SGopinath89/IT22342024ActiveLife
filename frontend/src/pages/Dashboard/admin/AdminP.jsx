@@ -8,7 +8,7 @@ const AdminP = () => {
   //const axiosSecure = useAxiosSecure();
 
   return (
-    <div className='w-full h-screen justify-center flex items-center'>
+    <div className='w-[1000px] h-screen justify-center flex items-center'>
         <div>
           <div className=' flex items-center p-5'>
             <h1 className='text-4xl capitalize font-bold'>  Hi, <span>{currentUser?.fullName}!!  </span>Welcome to your dashboard</h1>
