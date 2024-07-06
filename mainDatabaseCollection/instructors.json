@@ -2,12 +2,14 @@
   "_id": {
     "$oid": "663f10619fa01b7f66c75754"
   },
-  "name": "Mr.Saman Perera",
-  "email": "testemailabcdef22@gmail.com",
-  "phoneNo": "0777004451",
-  "qualification": "Certified Trainer",
-  "experience": "5 years",
-  "specialities": "Core Strength and Stability"
+  "name": "Ms.Amali Perera",
+  "email": "devsadini@gmail.com",
+  "phoneNo": "0718223159",
+  "qualification": "Qualified Trainer",
+  "experience": "3 years",
+  "specialities": [
+    "Core Strength and Stability"
+  ]
 },
 {
   "_id": {
@@ -18,7 +20,9 @@
   "phoneNo": "0127776789",
   "qualification": "Certified Trainer",
   "experience": "3 years",
-  "specialities": "Beginner's Full Body Workout"
+  "specialities": [
+    "Beginner's Full Body Workout"
+  ]
 },
 {
   "_id": {
@@ -29,5 +33,24 @@
   "phoneNo": "0127776789",
   "qualification": "MBBS",
   "experience": "3 years",
-  "specialities": "The DASH diet and Plant-based and flexitarian diets"
+  "specialities": [
+    "The DASH diet",
+    "Plant-based and flexitarian diets"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6689190b94de21ce9c9b38b9"
+  },
+  "name": "Mrs.Chandima Liyanage",
+  "email": "chandimal@brandix.com",
+  "phoneNo": "0777004451",
+  "qualification": "Qualified Instructor",
+  "experience": "3 years",
+  "specialities": [
+    "Plant-based and flexitarian diets",
+    "Surgery",
+    "Endurance Challenge"
+  ],
+  "__v": 0
 }]
