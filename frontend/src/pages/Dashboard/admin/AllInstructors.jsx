@@ -111,7 +111,6 @@ const AllInstructors = () => {
           user_name:item.userName,
           user_email: item.userEmail,
           instructor_name: item.instructorName,
-          speciality: item.speciality,
           date: moment(item.data).format("MMMM Do YYYY")
       }, userID)
           .then((response) => {
@@ -192,12 +191,11 @@ const AllInstructors = () => {
                         || item.email.toLowerCase().includes(searchTerm.toLowerCase())
                         || item.phoneNo.toLowerCase().includes(searchTerm.toLowerCase())
                         || item.qualification.toLowerCase().includes(searchTerm.toLowerCase())
-                        || item.experience.toLowerCase().includes(searchTerm.toLowerCase())
-                        || item.specialities.toLowerCase().includes(searchTerm.toLowerCase())){
+                        || item.experience.toLowerCase().includes(searchTerm.toLowerCase())){
                           return item;
                         }
                       })
-                      .map((item,index)=>{
+                      .map((item)=>{
                             return <tr key={item._id}>
                             <td className='py-4 text-center'>
                               {highlightText(item.name, searchTerm)}
@@ -214,8 +212,15 @@ const AllInstructors = () => {
                             <td className='py-4 text-center'>
                               {highlightText(item.experience, searchTerm)} 
                             </td>
-                            <td className='py-4 text-center'>
-                              {highlightText(item.specialities, searchTerm)} 
+                            <td className='text-center'>
+                              <div className='text-black mb-2 text-center'>
+                                {item.specialities.map((speciality, index) => (
+                                  <React.Fragment key={index}>
+                                    {highlightText(speciality, searchTerm)}
+                                    {index !== item.specialities.length - 1 && <br />}
+                                  </React.Fragment>
+                                ))}
+                              </div>
                             </td>
                             <td className='text-center'>
                                 <Link to={`/dashboard/updateI/${item._id}`}>
@@ -267,7 +272,6 @@ const AllInstructors = () => {
                         <th className='text-left font-semibold'>Instructor Name</th>
                         <th className='text-left font-semibold'>Instructor Email</th>
                         <th className='text-left font-semibold'>Customer Name</th>
-                        <th className='text-center font-semibold'>Specialities</th>
                         <th className='text-center font-semibold'>Date</th>
                         <th className='text-center font-semibold'>Status</th>
                         <th className='text-center font-semibold'>Send Email</th>
@@ -286,7 +290,6 @@ const AllInstructors = () => {
                           }else if(item.instructorName.toLowerCase().includes(searchTerm.toLowerCase()) 
                           || item.instructorEmail.toLowerCase().includes(searchTerm.toLowerCase())
                           || item.userName.toLowerCase().includes(searchTerm.toLowerCase())
-                          || item.speciality.toLowerCase().includes(searchTerm.toLowerCase())
                           || formattedDate.toLowerCase().includes(searchTerm.toLowerCase())){
                             return item;
                           }
@@ -301,9 +304,6 @@ const AllInstructors = () => {
                               </td>
                               <td className='py-4 text-center'>
                                   {highlightText(item.userName, searchTerm)}
-                              </td>
-                              <td className='py-4 text-center'>
-                                {highlightText(item.speciality, searchTerm)} 
                               </td>
                               <td className='py-4 text-center'>
                               <p className='text-gray-500 text-sm'>

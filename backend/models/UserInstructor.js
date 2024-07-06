@@ -5,7 +5,7 @@ const userInstructorSchema = new Schema({
     instructorName:{type:String, required:true},
     instructorId:{type:String, required:true},
     userEmail:{type:String, required:true},
-    speciality:{type:String, required:true},
+    speciality:{type:Array, required:true},
     instructorEmail:{type:String, required:true},
     data:{type:String, required:true},
     status:{type:String, required:true},

@@ -7,7 +7,7 @@ const instructorSchema = new Schema({
     phoneNo:{type:String, required:true},
     qualification:{type:String, required:true},
     experience:{type:String, required:true},
-    specialities:{type:String, required:true}
+    specialities:{type:Array, required:true}
 })
 
 const Instructor =mongoose.model('instructors',instructorSchema)

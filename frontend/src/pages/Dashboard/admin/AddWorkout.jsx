@@ -126,34 +126,79 @@ const AddWorkout = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="mb-4">
-                            <label htmlFor="forGoal" className='block text-gray-700 font-bold mb-2'>
-                                Goals that can achieve from Workout <br/>
+                </div>
+                <div className="mb-4">
+                        <label htmlFor="forGoal" className='block text-gray-700 font-bold mb-2'>
+                            Goals that can be achieved from Workout <br/>
+                        </label>
+                        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
+                            <div>
+                            <label className='flex items-center gap-2'>
+                                <input type="checkbox" name="forGoal" onChange={handleChange} value="Weight Loss" />
+                                Weight Loss
                             </label>
-                            <div className="flex items-center gap-2 md:grid-cols-3 lg:grid-cols-3">
-                                <div>
-                                    <input className='w-full' type="checkbox" name="forGoal" onChange={handleChange} value="Weight Loss"/> Weight Loss<br/>
-                                    <input className='w-full' type="checkbox" name="forGoal" onChange={handleChange} value="General fitness"/> General fitness<br/>
-                                    <input className='w-full' type="checkbox" name="forGoal" onChange={handleChange} value="Overall Health"/> Overall Health<br/>
-                                    <input className='w-full' type="checkbox" name="forGoal" onChange={handleChange} value="Muscle Toning"/> Muscle Toning<br/>
-                                    <input className='w-full' type="checkbox" name="forGoal" onChange={handleChange} value="Cardiovascular Health"/> Cardiovascular Health<br/>
-                                </div>
-                                <div>
-                                    <input className='w-full' type="checkbox" name="forGoal" onChange={handleChange} value="Improve Endurance"/> Improve Endurance<br/>
-                                    <input className='w-full' type="checkbox" name="forGoal" onChange={handleChange} value="Muscle Building"/> Muscle Building<br/>
-                                    <input className='w-full' type="checkbox" name="forGoal" onChange={handleChange} value="Improve Strength"/> Improve Strength<br/>
-                                    <input className='w-full' type="checkbox" name="forGoal" onChange={handleChange} value="Flexibility"/> Flexibility<br/>
-                                    <input className='w-full' type="checkbox" name="forGoal" onChange={handleChange} value="Stress Reduction"/> Stress Reduction<br/>
-                                </div>
-                                <div>
-                                    <input className='w-full' type="checkbox" name="forGoal" onChange={handleChange} value="Injury Prevention"/> Injury Prevention<br/>
-                                    <input className='w-full' type="checkbox" name="forGoal" onChange={handleChange} value="Athletic performance"/> Athletic performance<br/>
-                                    <input className='w-full' type="checkbox" name="forGoal" onChange={handleChange} value="Improve Speed"/> Improve Speed<br/>
-                                    <input className='w-full' type="checkbox" name="forGoal" onChange={handleChange} value="Improve Speed"/> Improve Core strength<br/>
-                                    <input className='w-full' type="checkbox" name="forGoal" onChange={handleChange} value="Improve Speed"/> Improve Stability
-                                </div>
+                            <label className='flex items-center gap-2'>
+                                <input type="checkbox" name="forGoal" onChange={handleChange} value="General fitness" />
+                                General fitness
+                            </label>
+                            <label className='flex items-center gap-2'>
+                                <input type="checkbox" name="forGoal" onChange={handleChange} value="Overall Health" />
+                                Overall Health
+                            </label>
+                            <label className='flex items-center gap-2'>
+                                <input type="checkbox" name="forGoal" onChange={handleChange} value="Muscle Toning" />
+                                Muscle Toning
+                            </label>
+                            <label className='flex items-center gap-2'>
+                                <input type="checkbox" name="forGoal" onChange={handleChange} value="Cardiovascular Health" />
+                                Cardiovascular Health
+                            </label>
                             </div>
-                    </div>
+                            <div>
+                            <label className='flex items-center gap-2'>
+                                <input type="checkbox" name="forGoal" onChange={handleChange} value="Improve Endurance" />
+                                Improve Endurance
+                            </label>
+                            <label className='flex items-center gap-2'>
+                                <input type="checkbox" name="forGoal" onChange={handleChange} value="Muscle Building" />
+                                Muscle Building
+                            </label>
+                            <label className='flex items-center gap-2'>
+                                <input type="checkbox" name="forGoal" onChange={handleChange} value="Improve Strength" />
+                                Improve Strength
+                            </label>
+                            <label className='flex items-center gap-2'>
+                                <input type="checkbox" name="forGoal" onChange={handleChange} value="Flexibility" />
+                                Flexibility
+                            </label>
+                            <label className='flex items-center gap-2'>
+                                <input type="checkbox" name="forGoal" onChange={handleChange} value="Stress Reduction" />
+                                Stress Reduction
+                            </label>
+                            </div>
+                            <div>
+                            <label className='flex items-center gap-2'>
+                                <input type="checkbox" name="forGoal" onChange={handleChange} value="Injury Prevention" />
+                                Injury Prevention
+                            </label>
+                            <label className='flex items-center gap-2'>
+                                <input type="checkbox" name="forGoal" onChange={handleChange} value="Athletic performance" />
+                                Athletic performance
+                            </label>
+                            <label className='flex items-center gap-2'>
+                                <input type="checkbox" name="forGoal" onChange={handleChange} value="Improve Speed" />
+                                Improve Speed
+                            </label>
+                            <label className='flex items-center gap-2'>
+                                <input type="checkbox" name="forGoal" onChange={handleChange} value="Improve Core strength" />
+                                Improve Core strength
+                            </label>
+                            <label className='flex items-center gap-2'>
+                                <input type="checkbox" name="forGoal" onChange={handleChange} value="Improve Stability" />
+                                Improve Stability
+                            </label>
+                            </div>
+                        </div>
                 </div>
                 <div className="text-center">
                     <button type="submit" className="bg-[#f2e48d] justify-center hover:bg-secondary text-black font-bold py-2 px-4 
@@ -171,7 +216,7 @@ const AddWorkout = () => {
                     </button>
                 </Link>
             </div>
-
+            <br/><br/>
         </div>
     </div>
   )

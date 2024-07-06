@@ -96,139 +96,141 @@ const MyDiets = () => {
   };
 
   return (
-    <div className='w-[1000px] h-screen px-10'>
-      <div className='my-6 text-center'>
-        <h1 className='text-4xl font-bold'>My <span className='text-secondary'>Diets</span></h1>
-      </div>
-      <div className='flex'  style={{ display: 'flex', justifyContent: 'right', alignItems: 'right'}}>
-        <input id='searchInput' type='text' placeholder='Search' 
-        className='border-gray-300 border rounded-md py-2 px-4'
-        onChange={(event)=>{
-          setSearchTerm(event.target.value)
-        }}
-        />
-        <IoMdSearch className='w-[40px] h-[40px]'/>
-      </div>
-      <div className='py-8'>
-        <div className='container mx-auto px-4'>
-          <div className='flex flex-col md:flex-row gap-4'>
-            <div className='bg-white rounded-lg shadow-md p-6 mb-4 w-full'>
-              <table className='w-full'>
-                <thead>
-                  <tr>
-                    <th className='text-left font-semibold'>#</th>
-                    <th className='text-left font-semibold'>Diet</th>
-                    <th className='text-left font-semibold'>Date</th>
-                    <th className='text-left font-semibold'>Delete</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {
-                    userDiets.length === 0 ? <tr><td colSpan='4' className='text-center text-2xl'>No Diets Found</td></tr>
-                    :userDiets
-                    .filter((item)=>{
-                      const formattedDate = moment(item.data).format("MMMM Do YYYY").toLowerCase();
-                      if(searchTerm ==""){
-                        return item;
-                      }else if(item.dietName?.toLowerCase().includes(searchTerm.toLowerCase()) 
-                      || formattedDate.includes(searchTerm.toLowerCase())){
-                        return item;
-                      }
-                    })
-                    .map((item,index)=>{
-                      return <tr key={item._id}>
-                          <td className='py-4'>{index+1}</td>
-                          <td className='py-4'>
-                            <div className='flex items-center'>
-                              <img src={item.dietImg} className='h-16 w-16 mr-4 rounded-lg'/>
-                              <span>{highlightText(item.dietName, searchTerm)}</span>
-                            </div></td>
-                          <td className='py-4'>
-                            <p className='text-gray-500 text-sm'>
-                              {highlightText(moment(item.data).format("MMMM Do YYYY"), searchTerm)}
-                            </p>  
-                          </td>
-                          <td>
-                            <button onClick={()=>handleDelete(item._id)} 
-                            className='px-3 py-3 cursor-pointer bg-red-500 rounded-3xl text-white font-bold'>
-                              <MdDelete/>
-                            </button>
-                            
-                          </td>
-                      </tr>
-                      
-                    })
-                  }
-                </tbody>
-              </table>
+    <div className='w-screen h-screen'>
+      <div className="bg-white p-8 w-[950px] rounded-lg ">
+        <div className='my-6 text-center'>
+          <h1 className='text-4xl font-bold'>My <span className='text-secondary'>Diets</span></h1>
+        </div>
+        <div className='flex'  style={{ display: 'flex', justifyContent: 'right', alignItems: 'right'}}>
+          <input id='searchInput' type='text' placeholder='Search' 
+          className='border-gray-300 border rounded-md py-2 px-4'
+          onChange={(event)=>{
+            setSearchTerm(event.target.value)
+          }}
+          />
+          <IoMdSearch className='w-[40px] h-[40px]'/>
+        </div>
+        <div className='py-8'>
+          <div className='container mx-auto px-4'>
+            <div className='flex flex-col md:flex-row gap-4'>
+              <div className='bg-white rounded-lg shadow-md p-6 mb-4 w-full'>
+                <table className='w-full'>
+                  <thead>
+                    <tr>
+                      <th className='text-left font-semibold'>#</th>
+                      <th className='text-left font-semibold'>Diet</th>
+                      <th className='text-left font-semibold'>Date</th>
+                      <th className='text-left font-semibold'>Delete</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {
+                      userDiets.length === 0 ? <tr><td colSpan='4' className='text-center text-2xl'>No Diets Found</td></tr>
+                      :userDiets
+                      .filter((item)=>{
+                        const formattedDate = moment(item.data).format("MMMM Do YYYY").toLowerCase();
+                        if(searchTerm ==""){
+                          return item;
+                        }else if(item.dietName?.toLowerCase().includes(searchTerm.toLowerCase()) 
+                        || formattedDate.includes(searchTerm.toLowerCase())){
+                          return item;
+                        }
+                      })
+                      .map((item,index)=>{
+                        return <tr key={item._id}>
+                            <td className='py-4'>{index+1}</td>
+                            <td className='py-4'>
+                              <div className='flex items-center'>
+                                <img src={item.dietImg} className='h-16 w-16 mr-4 rounded-lg'/>
+                                <span>{highlightText(item.dietName, searchTerm)}</span>
+                              </div></td>
+                            <td className='py-4'>
+                              <p className='text-gray-500 text-sm'>
+                                {highlightText(moment(item.data).format("MMMM Do YYYY"), searchTerm)}
+                              </p>  
+                            </td>
+                            <td>
+                              <button onClick={()=>handleDelete(item._id)} 
+                              className='px-3 py-3 cursor-pointer bg-red-500 rounded-3xl text-white font-bold'>
+                                <MdDelete/>
+                              </button>
+                              
+                            </td>
+                        </tr>
+                        
+                      })
+                    }
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className='my-6 text-center'>
-        <h1 className='text-4xl font-bold'>Diet <span className='text-secondary'>reccomondations </span>for you</h1>
-      </div>
-      <div>
-        {
-          <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4 '>
-        
-                {
-                  hr.documents ? (
-                    diets
-                      .filter((diet) => {
-                        if (hr.documents) {
-                          console.log(diet.forGoal);
-                          console.log(hr.documents[0].fitnessGoals);
-                          if (diet.forGoal.some(goal => hr.documents[0].fitnessGoals.includes(goal))) {
-                            return diet;
+        <div className='my-6 text-center'>
+          <h1 className='text-4xl font-bold'>Diet <span className='text-secondary'>reccomondations </span>for you</h1>
+        </div>
+        <div>
+          {
+            <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4 '>
+          
+                  {
+                    hr.documents ? (
+                      diets
+                        .filter((diet) => {
+                          if (hr.documents) {
+                            console.log(diet.forGoal);
+                            console.log(hr.documents[0].fitnessGoals);
+                            if (diet.forGoal.some(goal => hr.documents[0].fitnessGoals.includes(goal))) {
+                              return diet;
+                            }
                           }
-                        }
-                        return false;
-                      })
-                      .map((diet) => (
-                        
-                          <div key={diet._id} className='shadow-lg rounded-lg p-3 flex flex-col justify-between border border-secondary overflow-hidden m-4'>
-                            <div className='p-4'>
-                              <h2 className='text-xl font-semibold mb-10 dark:text-white text-center'>{highlightText(diet.name, searchTerm)}</h2>
-                              <div className='flex justify-center'>
-                                <img className='shadow-lg rounded-lg' src={diet.dietImg} alt="Diet Image" />
-                              </div>
-                              <br />
-                              <div className='text-gray-600 mb-2 text-center'>
-                                For: {diet.forGoal.map((goal, index) => (
-                                  <React.Fragment key={index}>
-                                    {goal}
-                                    {index !== diet.forGoal.length - 1 && <br />}
-                                  </React.Fragment>
-                                ))}
+                          return false;
+                        })
+                        .map((diet) => (
+                          
+                            <div key={diet._id} className='shadow-lg rounded-lg p-3 flex flex-col justify-between border border-secondary overflow-hidden m-4'>
+                              <div className='p-4'>
+                                <h2 className='text-xl font-semibold mb-10 dark:text-white text-center'>{highlightText(diet.name, searchTerm)}</h2>
+                                <div className='flex justify-center'>
+                                  <img className='shadow-lg rounded-lg' src={diet.dietImg} alt="Diet Image" />
+                                </div>
+                                <br />
+                                <div className='text-gray-600 mb-2 text-center'>
+                                  For: {diet.forGoal.map((goal, index) => (
+                                    <React.Fragment key={index}>
+                                      {goal}
+                                      {index !== diet.forGoal.length - 1 && <br />}
+                                    </React.Fragment>
+                                  ))}
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        
-                      ))
-                  ) : (
-                    <div className='col-span-1 md:col-span-2 lg:col-span-3 text-center text-lg text-black'>
-                      To receive personalized recommendations, please provide your health details
-                      <br/>
-                      <Link to='/dashboard/addHealthDetails'>
-                        <p className='underline'>Click Here to add Health Details</p>
-                      </Link>
-                      <br/>
-                    </div>
-                  )
-                }
+                          
+                        ))
+                    ) : (
+                      <div className='col-span-1 md:col-span-2 lg:col-span-3 text-center text-lg text-black'>
+                        To receive personalized recommendations, please provide your health details
+                        <br/>
+                        <Link to='/dashboard/addHealthDetails'>
+                          <p className='underline'>Click Here to add Health Details</p>
+                        </Link>
+                        <br/>
+                      </div>
+                    )
+                  }
+                  </div>
+          }
+                <div className='text-center'>
+                  <Link to='/diets'>
+                    <button
+                    className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
+                      For more information about all the Diets
+                    </button>
+                  </Link>
                 </div>
-        }
-              <div className='text-center'>
-                <Link to='/diets'>
-                  <button
-                  className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
-                    For more information about all the Diets
-                  </button>
-                </Link>
-              </div>
-              <br/><br/>
-              <br/>
+                <br/><br/>
+                <br/>
+        </div>
       </div>
     </div>
   )

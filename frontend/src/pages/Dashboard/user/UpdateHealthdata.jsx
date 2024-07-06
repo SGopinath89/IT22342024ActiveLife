@@ -107,8 +107,8 @@ const UpdateHealthdata = () => {
     
 
     return (
-        <div className='h-screen w-[1000px] justify-top items-center'>
-            <div className="bg-white p-8 rounded-lg ">
+        <div className='h-screen w-screen justify-top items-center'>
+            <div className="bg-white p-8 w-[900px] rounded-lg ">
                 <form onSubmit={handleSubmit}>
                     <div className="flex items-center gap-5 md:grid-cols-4 lg:grid-cols-4">
                         <div className="mb-4">
@@ -214,26 +214,26 @@ const UpdateHealthdata = () => {
                         <div className="w-full mb-4">
                             <label htmlFor="existingMedicalCondition" className='block text-gray-700 front-bold mb-2'>
                                 <MdOutlineHealthAndSafety className="inline-block br-2 mb-1 text-lg"/> Existing Medical Conditions
-                            </label>
-                            <textarea
+                            </label>                       
+                            <input 
+                                type='text' 
                                 name="existingMedicalCondition"
                                 placeholder={healthData.existingMedicalCondition}
                                 onChange={handleChange}
-                                rows="2"
-                                className="w-full border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring focus:border-blue-300"
-                            ></textarea>
+                                className="w-full border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring
+                                focus:border-blue-300"/>
                         </div>
                         <div className="w-full mb-4">
                             <label htmlFor="anySurgeries" className='block text-gray-700 front-bold mb-2'>
                                 <MdOutlineHealthAndSafety className="inline-block br-2 mb-1 text-lg"/> Surgeries or Medical Procedures in the Past Year
                             </label>
-                            <textarea
+                            <input 
+                                type='text' 
                                 name="anySurgeries"
                                 placeholder={healthData.anySurgeries}
                                 onChange={handleChange}
-                                rows="2"
-                                className="w-1/2 border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring focus:border-blue-300"
-                            ></textarea>
+                                className="w-full border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring
+                                focus:border-blue-300"/>
                         </div>
                     </div>
                     <div className="flex items-center gap-5 md:grid-cols-4 lg:grid-cols-4">
@@ -241,13 +241,13 @@ const UpdateHealthdata = () => {
                             <label htmlFor="AnyAllergies" className='block text-gray-700 front-bold mb-2'>
                                 <MdOutlineHealthAndSafety className="inline-block br-2 mb-1 text-lg"/> Food Allergies
                             </label>
-                            <textarea
+                            <input 
+                                type='text' 
                                 name="AnyAllergies"
                                 placeholder={healthData.AnyAllergies}
                                 onChange={handleChange}
-                                rows="2"
-                                className="w-1/2 border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring focus:border-blue-300"
-                            ></textarea>
+                                className="w-full border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring
+                                focus:border-blue-300"/>
                         </div>
                     </div>
                     <div className="flex items-center gap-5 md:grid-cols-4 lg:grid-cols-4">

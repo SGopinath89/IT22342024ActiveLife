@@ -4,11 +4,16 @@ import Swal from 'sweetalert2';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import useUser from '../../hooks/useUser';
 import { Link, useNavigate } from 'react-router-dom';
+import { IoEyeOutline } from "react-icons/io5";
 
 const UpdatePassword = () => {
   const { updatePassword } = useContext(AuthContext);
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+
   const [loading, setLoading] = useState(false);
   const { currentUser } = useUser();
   const axiosSecure = useAxiosSecure();
@@ -63,33 +68,46 @@ const UpdatePassword = () => {
     <div className="w-[1000px] h-screen justify-center flex items-center">
       <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <h2 className='text-2xl font-bold mb-6'>Update Your Password</h2>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="currentPassword">
-            Current Password
-          </label>
-          <input
-            id="currentPassword"
-            name="currentPassword"
-            type="password"
-            value={currentPassword}
-            onChange={(e) => setCurrentPassword(e.target.value)}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            required
-          />
+        <div className="mb-4 relative">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="currentPassword">
+                Current Password
+            </label>
+            <input
+                id="currentPassword"
+                name="currentPassword"
+                type={showPassword ? 'text' : 'password'}
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                required
+            />
+            <span 
+                onClick={() => setShowPassword(!showPassword)} 
+                className='absolute right-0 top-7 bottom-0 flex items-center pr-3 cursor-pointer'
+            >
+                <IoEyeOutline className='h-4 w-4 text-gray-400' />
+            </span>
         </div>
-        <div className="mb-6">
+
+        <div className="mb-6 relative">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="newPassword">
             New Password
           </label>
           <input
             id="newPassword"
             name="newPassword"
-            type="password"
+            type={showNewPassword ? 'text' : 'password'}
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             required
           />
+          <span 
+            onClick={() => setShowNewPassword(!showNewPassword)} 
+            className='absolute right-0 top-7 bottom-0 flex items-center pr-3 cursor-pointer'
+          >
+            <IoEyeOutline className='h-4 w-4 text-gray-400' />
+          </span>
         </div>
         <div className="flex items-center justify-between">
           <button

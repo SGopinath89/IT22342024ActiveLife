@@ -130,7 +130,7 @@ const AllWorkouts = () => {
                               <div className='text-gray-600 mb-2 text-center'>
                                 For: {item.forGoal.map((goal, index) => (
                                   <React.Fragment key={index}>
-                                    {goal}
+                                    {highlightText(goal,searchTerm)}
                                     {index !== item.forGoal.length - 1 && <br />}
                                   </React.Fragment>
                                 ))}

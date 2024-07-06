@@ -44,8 +44,7 @@ export const NavBar = () => {
     
     const navigate = useNavigate();
     
-    //const user=location.state?.user;
-    //console.log(user)
+
     const role=currentUser?.role;;
     const [isScrolled, setIsScrolled] = useState(false);
 
@@ -57,13 +56,12 @@ export const NavBar = () => {
     }
   };
 
-  // Add event listener for scroll
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+        window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
 
     useEffect(()=>{
@@ -114,16 +112,17 @@ export const NavBar = () => {
             confirmButtonText: "Yes, Log Out Me!"
           }).then((result) => {
             if (result.isConfirmed) {
-                logout(currentUser.email, currentUser.password).then(Swal.fire({                
-                title: "Loged Out!",
-                text: "You have logged out from your acoount.",
-                icon: "success"
-              }) 
-            ).catch((err)=>
+                logout(currentUser.email, currentUser.password).then(
+                    Swal.fire({                
+                        title: "Loged Out!",
+                        text: "You have logged out from your acoount.",
+                        icon: "success",
+                        timer: 1500
+                        })
+                ).catch((err)=>
                     console.log(err)
-            );
-            navigate("/");
-              
+                )
+                navigate("/");
             }
           });
     }

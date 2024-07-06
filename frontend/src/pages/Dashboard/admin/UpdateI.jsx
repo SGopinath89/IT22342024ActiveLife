@@ -138,19 +138,6 @@ const UpdateI = () => {
                                     placeholder={instructorData.experience}>
                                 </textarea>
                             </div>
-                            <div className="w-[500px] mb-4">
-                                <label htmlFor="specialities" className='block text-gray-700 front-bold mb-2'>
-                                    Specialities
-                                </label>
-                                <textarea 
-                                    onChange={handleChange}
-                                    name="specialities"
-                                    rows="2"
-                                    className="w-full border-gray-300 
-                                    border rounded-md py-2 px-4 focus:outline-none focus:ring focus:border-blue-300"
-                                    placeholder={instructorData.specialities}>
-                                </textarea>
-                            </div>
                         </div>
                     </div>
                     <div className="text-center">

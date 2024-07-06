@@ -154,7 +154,16 @@ export const Instructors = () => {
                               <p className='text-black mb-2 text-center dark:text-white' ><span className='font-bold'>Contact Number: </span>{highlightText(instructor.phoneNo, searchTerm)}</p>
                               <p className='text-black mb-2 text-center dark:text-white'><span className='font-bold'>Qualifications: </span>{highlightText(instructor.qualification, searchTerm)}</p>
                               <p className='text-black mb-2 text-center dark:text-white'><span className='font-bold'>Experiences: </span>{highlightText(instructor.experience, searchTerm)}</p>
-                              <p className='text-black mb-2 text-center dark:text-white'><span className='font-bold'>Specialities: </span>{highlightText(instructor.specialities, searchTerm)}</p>
+                              <p className='text-black mb-2 text-center dark:text-white'><span className='font-bold'>Specialities: </span>
+                              <div className='text-black mb-2 text-center'>
+                                {instructor.specialities.map((speciality, index) => (
+                                  <React.Fragment key={index}>
+                                    {highlightText(speciality, searchTerm)}
+                                    {index !== instructor.specialities.length - 1 && <br />}
+                                  </React.Fragment>
+                                ))}
+                              </div>
+                              </p>
                               <div className='text-center'>
                               <button onClick={()=>handleRequest(instructor._id,instructor.name,instructor.specialities,instructor.email)} title={role == 'admin' ? 'Admin cannot be available to add' : 'You can Add Diets'} 
                                 disabled={role=='admin'}

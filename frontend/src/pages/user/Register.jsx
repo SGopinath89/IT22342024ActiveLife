@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -6,9 +7,11 @@ import { FiMapPin } from "react-icons/fi";
 import {Link, useNavigate} from "react-router-dom"
 import GoogleLogin from "../../components/Social/GoogleLogin"
 import { useContext } from "react";
+import { IoEyeOutline } from "react-icons/io5";
 import axios from "axios";
 import { AuthContext } from "../../utilities/providers/AuthProvider";
 import Swal from 'sweetalert2';
+
 const schema = yup.object().shape({
     fullName: yup.string().required('Full Name is required'),
     email: yup.string().email('Invalid email format').required('Email is required'),
@@ -30,6 +33,8 @@ const schema = yup.object().shape({
 const Register = () => {
     const navigate = useNavigate();
     const {signUp,updateUser,setError} = useContext(AuthContext);
+    const [showPassword, setShowPassword] = useState(false)
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
     const {
         register, 
         handleSubmit,
@@ -157,23 +162,46 @@ const Register = () => {
                     {/*password*/}
                     <div className="mb-4">
                         <label htmlFor="password" className='block text-gray-700 front-bold mb-2'>
-                            <AiOutlineLock className="inline-block br-2 mb-1 text-lg"/>   Password<span className=" text-red-600">*</span>
+                            <AiOutlineLock className="inline-block br-2 mb-1 text-lg"/> Password<span className="text-red-600">*</span>
                         </label>
-                        <input type='password' placeholder="Enter a Password" {...register("password")} 
-                        className="w-full border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring
-                        focus:border-blue-300"/>
+                        <div className="relative">
+                            <input 
+                                type={showPassword ? 'text' : 'password'} 
+                                placeholder="Enter a Password" 
+                                {...register("password")} 
+                                className="w-full border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring focus:border-blue-300"
+                            />
+                            <span 
+                                onClick={() => setShowPassword(!showPassword)} 
+                                className='absolute right-0 top-0 bottom-0 flex items-center pr-3 cursor-pointer'
+                            >
+                                <IoEyeOutline className='h-4 w-4 text-gray-400' />
+                            </span>
+                        </div>
                         {errors.password && <p className="text-red-600">{errors.password.message}</p>}
                     </div>
                     {/*confirm password*/}
                     <div className="mb-4">
                         <label htmlFor="confirmPassword" className='block text-gray-700 front-bold mb-2'>
-                            <AiOutlineLock className="inline-block br-2 mb-1 text-lg"/>   Confirm Password<span className=" text-red-600">*</span>
+                            <AiOutlineLock className="inline-block br-2 mb-1 text-lg"/> Confirm Password<span className="text-red-600">*</span>
                         </label>
-                        <input type='password' placeholder="Enter the Password Again" {...register("confirmPassword")} 
-                        className="w-full border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring
-                        focus:border-blue-300"/>
+                        <div className="relative">
+                            <input 
+                                type={showConfirmPassword ? 'text' : 'password'} 
+                                placeholder="Re-enter the Password" 
+                                {...register("confirmPassword")} 
+                                className="w-full border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring focus:border-blue-300"
+                            />
+                            <span 
+                                onClick={() => setShowConfirmPassword(!showConfirmPassword)} 
+                                className='absolute right-0 top-0 bottom-0 flex items-center pr-3 cursor-pointer'
+                            >
+                                <IoEyeOutline className='h-4 w-4 text-gray-400' />
+                            </span>
+                        </div>
                         {errors.confirmPassword && <p className="text-red-600">{errors.confirmPassword.message}</p>}
                     </div>
+
                 </div>
 
                 {/**username and age */}

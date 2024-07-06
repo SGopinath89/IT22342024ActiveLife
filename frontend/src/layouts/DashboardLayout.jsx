@@ -104,7 +104,8 @@ const DashboardLayout = () => {
                 logout(currentUser.email, currentUser.password).then(Swal.fire({                
                 title: "Loged Out!",
                 text: "You have logged out from your acoount.",
-                icon: "success"
+                icon: "success",
+                timer: 1500
               }) 
             ).catch((err)=>
                     console.log(err)
@@ -137,7 +138,7 @@ const DashboardLayout = () => {
                             <li className='mb-2' key={index}>
                                 <NavLink to={menuItem.to}
                                     className={({ isActive }) =>
-                                        `flex ${isActive ? "bg-[#f2e48d] text-black" : "text-[#413F44]"} "items-center gap-x-4 p-2 rounded-md 
+                                        `flex ${isActive ? "bg-[#f2e48d] text-black" : "text-[#413F44]"} "p-1 items-center gap-x-4 rounded-md 
                                         duration-150 cursor-pointer font-bold text-sm  hover:bg-secondary hover:text-black"`
                                     }>
                                     {menuItem.icon}
@@ -161,7 +162,7 @@ const DashboardLayout = () => {
                             <li className='mb-2' key={index}>
                                 <NavLink to={menuItem.to}
                                     className={({ isActive }) =>
-                                        `flex ${isActive ? "bg-[#f2e48d] text-black" : "text-[#413F44]"} "items-center gap-x-4 p-2 rounded-md 
+                                        `flex ${isActive ? "bg-[#f2e48d] text-black" : "text-[#413F44]"} "p-1 items-center gap-x-4 rounded-md 
                                         duration-150 cursor-pointer font-bold text-sm  hover:bg-secondary hover:text-black"`
                                     }>
                                     {menuItem.icon}
@@ -179,13 +180,13 @@ const DashboardLayout = () => {
             {
                 <ul className='pt-6'>
                     <p className={`ml-3 text-gray-700 ${!open && "hidden"}`}><small>USEFUL LINKS</small></p>
-                
+                    <br/>
                     {
                         lastMenuItems.map((menuItem, index) => (
                             <li className='mb-2' key={index}>
                                 <NavLink to={menuItem.to}
                                     className={({ isActive }) =>
-                                        `flex ${isActive ? "bg-[#f2e48d] text-black" : "text-[#413F44]"} "items-center gap-x-4 p-2 rounded-md 
+                                        `flex ${isActive ? "bg-[#f2e48d] text-black" : "text-[#413F44]"} "p-1 items-center gap-x-4 rounded-md 
                                         duration-150 cursor-pointer font-bold text-sm  hover:bg-secondary hover:text-black"`
                                     }>
                                     {menuItem.icon}
@@ -199,7 +200,7 @@ const DashboardLayout = () => {
                     <li>
                         <button
                             onClick={()=>handleLogOut()}
-                            className=" w-full flex items-center gap-x-4 p-2 rounded-md text-[#413F44]
+                            className="p-1 flex items-center gap-x-4 rounded-md text-[#413F44]
                                 duration-150 cursor-pointer font-bold text-sm  hover:bg-secondary hover:text-black">
                             <IoMdLogOut className='text-2xl'/>
                             <span className={`${!open && "hidden"} origin-left duration-200`}>

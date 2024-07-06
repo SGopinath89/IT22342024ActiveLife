@@ -52,8 +52,9 @@ const AddHealthDetails = () => {
             bloodPressure: parseInt(formData.bloodPressure, 10),
             sleepHours: parseInt(formData.sleepHours, 10),
             stressScale: parseInt(formData.stressScale, 10)
-          };
-    axiosSecure
+        };
+        
+        axiosSecure
         .get(`http://localhost:5000/userHR/${currentUser.email}`)
         .then((res) => {
             console.log(res.data)
@@ -97,8 +98,8 @@ const AddHealthDetails = () => {
     };
 
   return (
-    <div className='w-[1000px] h-screen justify-top items-center'>
-        <div className="bg-white p-8 rounded-lg ">
+    <div className='w-screen h-screen justify-top items-center'>
+        <div className="bg-white p-8 w-[900px] rounded-lg ">
             <form onSubmit={handleSubmit}>
                 <div className="flex items-center gap-5 md:grid-cols-4 lg:grid-cols-4">
                     <div className="mb-4">
@@ -203,27 +204,25 @@ const AddHealthDetails = () => {
                         <label htmlFor="existingMedicalCondition" className='block text-gray-700 front-bold mb-2'>
                             <MdOutlineHealthAndSafety className="inline-block br-2 mb-1 text-lg"/>   Do you have any existing medical conditions?
                         </label>
-                        <textarea 
-                            onChange={handleChange}
-                            rows="2"
-                            name="existingMedicalCondition"
-                            className="w-full border-gray-300 
-                            border rounded-md py-2 px-4 focus:outline-none focus:ring focus:border-blue-300"
-                            placeholder="">
-                        </textarea>
+                        <input 
+                          type='text' 
+                          name="existingMedicalCondition"
+                          placeholder="Yes or No" 
+                          onChange={handleChange}
+                          className="w-full border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring
+                          focus:border-blue-300"/>
                     </div>
                     <div className="w-full mb-4">
                         <label htmlFor="anySurgeries" className='block text-gray-700 front-bold mb-2'>
                             <MdOutlineHealthAndSafety className="inline-block br-2 mb-1 text-lg"/>   Have you had any surgeries or medical procedures in the past year?
                         </label>
-                        <textarea 
-                            onChange={handleChange}
-                            name="anySurgeries"
-                            rows="2"
-                            className="w-full border-gray-300 
-                            border rounded-md py-2 px-4 focus:outline-none focus:ring focus:border-blue-300"
-                            placeholder="">
-                        </textarea>
+                        <input 
+                          type='text' 
+                          name="anySurgeries"
+                          placeholder="Yes or No" 
+                          onChange={handleChange}
+                          className="w-full border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring
+                          focus:border-blue-300"/>
                     </div>
                 </div>
                 <div className="flex items-center gap-5 md:grid-cols-4 lg:grid-cols-4">
@@ -231,14 +230,13 @@ const AddHealthDetails = () => {
                         <label htmlFor="AnyAllergies" className='block text-gray-700 front-bold mb-2'>
                             <MdOutlineHealthAndSafety className="inline-block br-2 mb-1 text-lg"/>   Do you have any food allergies?
                         </label>
-                        <textarea 
-                            onChange={handleChange}
-                            name="AnyAllergies"
-                            rows="2"
-                            className="w-full border-gray-300 
-                            border rounded-md py-2 px-4 focus:outline-none focus:ring focus:border-blue-300"
-                            placeholder="">
-                        </textarea>
+                        <input 
+                          type='text' 
+                          name="AnyAllergies"
+                          placeholder="Yes or No" 
+                          onChange={handleChange}
+                          className="w-full border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring
+                          focus:border-blue-300"/>
                     </div>
                 </div>
                 <div className="flex items-center gap-5 md:grid-cols-4 lg:grid-cols-4">
