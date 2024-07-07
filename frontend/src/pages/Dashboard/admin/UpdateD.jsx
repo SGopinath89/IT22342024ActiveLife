@@ -12,12 +12,9 @@ const UpdateD = () => {
         howItWorks: "",
         benefits: "",
         downsides: "",
-        dietImg: "",
-        forGoal: []
+        dietImg: ""
     });
-    const [formData, setFormData] = useState({
-        forGoal: []
-    });
+    const [formData, setFormData] = useState({});
     const axiosSecure = useAxiosSecure();
     const navigate = useNavigate();
     
@@ -41,27 +38,13 @@ const UpdateD = () => {
     }, [axiosSecure, currentUser?.email]);
 
     const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        if (type === 'checkbox') {
-            setFormData(prevState => {
-                if (checked) {
-                    return {
-                        ...prevState,
-                        forGoal: [...prevState.forGoal, value]
-                    };
-                } else {
-                    return {
-                        ...prevState,
-                        forGoal: prevState.forGoal.filter(goal => goal !== value)
-                    };
-                }
-            });
-        } else {
+        const { name, value} = e.target;
+
             setFormData((prevFormData) => ({
                 ...prevFormData,
                 [name]: value,
             }));
-        }
+        
     };
 
     const handleSubmit = (e) => {  
@@ -118,17 +101,6 @@ const UpdateD = () => {
                             onChange={handleChange}
                             className="w-full border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring
                             focus:border-blue-300"/>
-                        </div>
-                        <div className="w-[300px] mb-4">
-                            <label htmlFor="forGoal" className='block text-gray-700 font-bold mb-2'>
-                                Goals that can achieve from diet <br/>
-                            </label>
-                            <input type="checkbox" name="forGoal" onChange={handleChange} value="Weight Loss"/> Weight Loss<br/>
-                            <input type="checkbox" name="forGoal" onChange={handleChange} value="Brain Health"/> Brain Health<br/>
-                            <input type="checkbox" name="forGoal" onChange={handleChange} value="Overall Health"/> Overall Health<br/>
-                            <input type="checkbox" name="forGoal" onChange={handleChange} value="Longevity"/> Longevity<br/>
-                            <input type="checkbox" name="forGoal" onChange={handleChange} value="Diabetes Management"/> Diabetes Management<br/>
-                            <input type="checkbox" name="forGoal" onChange={handleChange} value="Heart Health"/> Heart Health
                         </div>
                     </div>
                     <div>
