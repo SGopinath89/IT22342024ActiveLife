@@ -233,7 +233,6 @@ const MyDiets = () => {
                       </div>
                   )
                 ) : (
-                  <div>
                     <div className='col-span-1 md:col-span-2 lg:col-span-3 text-center text-lg text-black'>
                       To receive personalized recommendations, please provide your Fitness Goals
                       <br/>
@@ -241,16 +240,14 @@ const MyDiets = () => {
                         <p className='underline'>Click Here to add Health Details</p>
                       </Link>
                       <br/>
-                    </div>
-                    <div className='mt-auto text-center'>
+                      <div className='mt-auto text-center'>
                       <Link to='/diets'>
                         <button className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase'>
-                          View Diets
+                          View All Diets
                         </button>
                       </Link>
                     </div>
-                  </div>
-
+                    </div>
                 )
               }
             </div>

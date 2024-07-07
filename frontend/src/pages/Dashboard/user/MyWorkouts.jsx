@@ -275,21 +275,28 @@ const MyWorkouts = () => {
                             <div className='mt-auto text-center'>
                               <Link to='/workouts'>
                                 <button className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase'>
-                                  View Workouts
+                                  View All Workouts
                                 </button>
                               </Link>
                             </div>
                         </div>
                       )
                     ) : (
-                      <div className='col-span-1 md:col-span-2 lg:col-span-3 text-center text-lg text-black'>
-                        To receive personalized recommendations, please provide your Fitness Goals
-                        <br/>
-                        <Link to='/dashboard/addHealthDetails'>
-                          <p className='underline'>Click Here to add Health Details</p>
-                        </Link>
-                        <br/>
-                      </div>
+                        <div className='col-span-1 md:col-span-2 lg:col-span-3 text-center text-lg text-black'>
+                          To receive personalized recommendations, please provide your Fitness Goals
+                          <br/>
+                          <Link to='/dashboard/addHealthDetails'>
+                            <p className='underline'>Click Here to add Health Details</p>
+                          </Link>
+                          <br/>
+                          <div className='mt-auto text-center'>
+                          <Link to='/workouts'>
+                            <button className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase'>
+                              View All Workouts
+                            </button>
+                          </Link>
+                        </div>
+                        </div>
                     )
                   }
                 </div>

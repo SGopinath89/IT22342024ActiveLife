@@ -273,7 +273,7 @@ const MyInstructors = () => {
                   <Link to='/dashboard/addHealthDetails' className='underline'>
                     Click Here to add Health Details
                   </Link>
-                </div>
+                </div><br/>
                 <div className='mt-auto text-center'>
                   <Link to='/instructors'>
                     <button className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase'>
