@@ -260,7 +260,7 @@ const MyInstructors = () => {
                 <div className='text-center text-lg text-black'>
                   To receive more personalized recommendations, please provide your health details.
                   <br />
-                  <Link to='/dashboard/addHealthDetails' className='underline'>
+                  <Link to='/dashboard/updateHealthdetails' className='underline'>
                     Click Here to update Health Details
                   </Link>
                 </div>
