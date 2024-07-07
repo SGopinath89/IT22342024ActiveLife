@@ -40,32 +40,35 @@ const AddInstructor = () => {
             axiosSecure.post('http://localhost:5000/instructor', formData)
                 .then((res) => {
                     Swal.fire({
-                    title: 'Success!',
-                    text: 'Successfully Added a Diet.',
-                    icon: 'success',
+                        title: 'Success!',
+                        text: 'Successfully Added a Instructor.',
+                        icon: 'success',
+                        timer: 1500
                     });
                     navigate('/dashboard/manageInstructors');
                 })
                 .catch((error) => {
                     console.log(error);
                     Swal.fire({
-                    title: 'Error!',
-                    text: 'There was an error adding a diet.',
-                    icon: 'error',
+                        title: 'Error!',
+                        text: 'There was an error adding a Instructor.',
+                        icon: 'error',
+                        timer: 1500
                     });
                 });
     };
 
-  return (
-    <div className='w-screen h-screen justify-top items-center'>
-        <div className="bg-white p-8 w-[900px] rounded-lg text-center">
-        <h2 className="text-3xl font-bold text-center mb-6 text-secondary">Add Doctor/Instructor</h2>
+  return (   
+     <div className='w-screen h-screen justify-top items-center'>
+        <div className="bg-white p-8 w-[1000px] rounded-lg ">
+        <h2 className="text-3xl font-bold text-center mb-6 text-secondary">Add Doctor/Instructor<br/><span className=" text-red-600 text-sm">* Required</span></h2>
             <form onSubmit={handleSubmit} className="text-center">
                 <div className="flex items-center gap-5 md:grid-cols-2 lg:grid-cols-2">
                     <div>
                         <div className="w-[300px] mb-4">
                             <label htmlFor="name" className='block text-gray-700 font-bold mb-2'>
                                 Name
+                                <span className=" text-red-600">*</span>
                             </label>
                             <input 
                             type='text' 
@@ -78,6 +81,7 @@ const AddInstructor = () => {
                         <div className="w-[300pxpx] mb-4">
                             <label htmlFor="email" className='block text-gray-700 font-bold mb-2'>
                                 Email
+                                <span className=" text-red-600">*</span>
                             </label>
                             <input 
                             type='text' 
@@ -90,6 +94,7 @@ const AddInstructor = () => {
                         <div className="w-[300pxpx] mb-4">
                             <label htmlFor="phoneNo" className='block text-gray-700 font-bold mb-2'>
                                 Phone Number
+                                <span className=" text-red-600">*</span>
                             </label>
                             <input 
                             type='text' 
@@ -104,6 +109,7 @@ const AddInstructor = () => {
                         <div className="w-[500px] mb-4">
                             <label htmlFor="qualification" className='block text-gray-700 font-bold mb-2'>
                                Qualifications
+                               <span className=" text-red-600">*</span>
                             </label>
                             <textarea 
                                 onChange={handleChange}
@@ -117,6 +123,7 @@ const AddInstructor = () => {
                         <div className="w-[500px] mb-4">
                             <label htmlFor="experience" className='block text-gray-700 font-bold mb-2'>
                                 Experiences
+                                <span className=" text-red-600">*</span>
                             </label>
                             <textarea 
                                 onChange={handleChange}
@@ -133,6 +140,7 @@ const AddInstructor = () => {
                     <br/>
                     <label htmlFor="specialities" className='block text-center text-gray-700 font-bold mb-2'>
                         Specialities
+                        <span className=" text-red-600">*</span>
                     </label>
                     <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
                         <div>

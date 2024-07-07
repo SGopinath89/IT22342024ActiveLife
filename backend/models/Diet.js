@@ -5,8 +5,8 @@ const dietSchema = new Schema({
     name:{type:String, required:true},
     howItWorks:{type:String, required:true},
     benefits:{type:String, required:true},
-    downsides:{type:String, required:true},
-    dietImg:{type:String, required:true},
+    downsides:{type:String},
+    dietImg:{type:String},
     forGoal:{type:Array, required:true}
 })
 

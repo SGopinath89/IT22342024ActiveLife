@@ -21,7 +21,8 @@
   "qualification": "Certified Trainer",
   "experience": "3 years",
   "specialities": [
-    "Beginner's Full Body Workout"
+    "Beginner's Full Body Workout",
+    "The MIND diet"
   ]
 },
 {
@@ -35,22 +36,37 @@
   "experience": "3 years",
   "specialities": [
     "The DASH diet",
-    "Plant-based and flexitarian diets"
+    "Medical Conditions"
   ]
 },
 {
   "_id": {
     "$oid": "6689190b94de21ce9c9b38b9"
   },
-  "name": "Mrs.Chandima Liyanage",
+  "name": "Dr. Chandima Liyanage",
   "email": "chandimal@brandix.com",
   "phoneNo": "0777004451",
-  "qualification": "Qualified Instructor",
+  "qualification": "MBBS",
   "experience": "3 years",
   "specialities": [
     "Plant-based and flexitarian diets",
     "Surgery",
     "Endurance Challenge"
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668a2773b9fd102da96721b4"
+  },
+  "name": "Dr.M.D.Ranasinghe",
+  "email": "devsadini@gmail.com",
+  "phoneNo": "0718223159",
+  "qualification": "MBBS",
+  "experience": "1 year",
+  "specialities": [
+    "Allergy",
+    "Core Strength and Stability"
   ],
   "__v": 0
 }]

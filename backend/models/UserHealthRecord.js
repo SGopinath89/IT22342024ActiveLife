@@ -2,8 +2,8 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const userHealthRecordSchema = new Schema({
-    weight:{type:Number},
-    height:{type:Number},
+    weight:{type:Number,require:true},
+    height:{type:Number,require:true},
     averageHeartRate:{type:Number},
     bloodPressure:{type:Number},
     sleepHours:{type:Number},

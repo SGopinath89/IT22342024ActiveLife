@@ -11,13 +11,14 @@ router.get('/', async(req,res)=>{
     }
 })
 router.get('/byId/:id', async (req, res) => {
-    const id=req.params.id;
-    const email =req.query.email;
-    const query={dietId:id, userEmail:email};
-    const projection = {dietId:1};
-    const result = await UserInstructor.findOne(query,{projection:projection})
+    const id = req.params.id;
+    const email = req.query.email;
+    const query = { instructorId: id, userEmail: email };
+    const projection = { instructorId: 1 };
+    const result = await UserInstructor.findOne(query, projection);
     res.send(result);
 });
+
 
 //add new UserInstructor
 router.post('/',async (req, res) => {

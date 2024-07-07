@@ -70,6 +70,7 @@ const GoogleLogin = () => {
         title: 'Error!',
         text: 'There was an error with Google login.',
         icon: 'error',
+        timer: 1500
       });
     }
   };

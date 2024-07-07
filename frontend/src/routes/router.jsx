@@ -28,6 +28,7 @@ import UpdateI from "../pages/Dashboard/admin/UpdateI";
 import UpdatePassword from "../pages/Dashboard/UpdatePassword";
 import ViewAllFeedback from "../pages/Dashboard/admin/ViewAllFeedback";
 import AdminP from "../pages/Dashboard/admin/AdminP";
+import UserRequest from "../pages/Dashboard/admin/UserRequest";
 
 export const router = createBrowserRouter([
     {
@@ -129,6 +130,10 @@ export const router = createBrowserRouter([
         {
           path:"addInstructor",
           element:<AddInstructor/>
+        },
+        {
+          path:"userRequests",
+          element:<UserRequest/>
         },
         {
           path:"updateD/:dietId",

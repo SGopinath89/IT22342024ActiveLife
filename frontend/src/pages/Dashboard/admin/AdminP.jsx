@@ -8,8 +8,8 @@ const AdminP = () => {
   //const axiosSecure = useAxiosSecure();
 
   return (
-    <div className='w-[1000px] h-screen justify-center flex items-center'>
-        <div>
+    <div className='w-screen h-screen justify-top items-center'>
+        <div className="bg-white p-8 w-[1000px] rounded-lg ">
           <div className=' flex items-center p-5'>
             <h1 className='text-4xl capitalize font-bold'>  Hi, <span>{currentUser?.fullName}!!  </span>Welcome to your dashboard</h1>
           </div><br/>
@@ -55,14 +55,6 @@ const AdminP = () => {
                         <button
                         className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
                           Add Instructor                                    
-                        </button>
-                      </Link> 
-                </div> <br/>
-                <div className='text-center'>
-                    <Link to='/dashboard/allFeedback'>
-                        <button
-                        className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
-                          View Feedback                                    
                         </button>
                       </Link> 
                 </div> <br/>

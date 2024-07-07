@@ -15,7 +15,7 @@ router.get('/', async(req,res)=>{
 router.post('/',async (req, res) => {
     const{dietName,dietId,userEmail,dietImg,date}=req.body
     if(!dietName || !dietId || !userEmail || !dietImg || !date){
-        res.status(400).send("Please Provide required fields")
+        res.status(400).send(result)
     }else{
         try{
             const results = await UserDiet.create({dietName,dietId,userEmail,dietImg,date})

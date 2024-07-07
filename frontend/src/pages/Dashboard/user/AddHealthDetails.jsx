@@ -57,14 +57,15 @@ const AddHealthDetails = () => {
         axiosSecure
         .get(`http://localhost:5000/userHR/${currentUser.email}`)
         .then((res) => {
-            console.log(res.data)
+            console.log(updatedFormData)
             if(res.data.count===0){
                 axiosSecure.post('http://localhost:5000/userHR', updatedFormData)
                 .then((res) => {
                     Swal.fire({
                     title: 'Success!',
-                    text: 'Your details have been updated.',
+                    text: 'Your Health details have been Added.',
                     icon: 'success',
+                    timer: 1500
                     });
                     navigate('/dashboard/userP');
                 })
@@ -74,15 +75,17 @@ const AddHealthDetails = () => {
                     title: 'Error!',
                     text: 'There was an error Adding health details.',
                     icon: 'error',
+                    timer: 1500
                     });
                 });
             }else{
-                Swal.fire({
-                    title: '',
-                    text: 'Already Submitted!!',
-                    icon: 'warning',
-                });
-            } 
+                    Swal.fire({
+                        title: '',
+                        text: 'Already Submitted!!',
+                        icon: 'warning',
+                        timer: 1500
+                    });
+            }
         })
         .catch((err) => {
             console.log(err);
@@ -99,12 +102,15 @@ const AddHealthDetails = () => {
 
   return (
     <div className='w-screen h-screen justify-top items-center'>
-        <div className="bg-white p-8 w-[900px] rounded-lg ">
+        <div className="bg-white p-8 w-[1000px] rounded-lg ">
+        <h2 className="text-3xl font-bold text-center mb-6 text-secondary">Add Health Details<br/><span className=" text-red-600 text-sm">* Required</span></h2>
             <form onSubmit={handleSubmit}>
                 <div className="flex items-center gap-5 md:grid-cols-4 lg:grid-cols-4">
                     <div className="mb-4">
                         <label htmlFor="weight" className='block text-gray-700 front-bold mb-2'>
-                            <FaWeight className="inline-block br-2 mb-1 text-lg"/>   Weight
+                            <FaWeight className="inline-block br-2 mb-1 text-lg"/>   
+                            Weight
+                            <span className=" text-red-600">*</span>
                         </label>
                         <input 
                         type='number' 
@@ -112,11 +118,14 @@ const AddHealthDetails = () => {
                         placeholder="Enter your Weight" 
                         onChange={handleChange}
                         className="w-full border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring
-                        focus:border-blue-300"/>
+                        focus:border-blue-300"
+                        required/>
                     </div>
                     <div className="mb-4">
                         <label htmlFor="height" className='block text-gray-700 front-bold mb-2'>
-                            <GiBodyHeight className="inline-block br-2 mb-1 text-lg"/>   Height
+                            <GiBodyHeight className="inline-block br-2 mb-1 text-lg"/>   
+                            Height
+                            <span className=" text-red-600">*</span>
                         </label>
                         <input 
                         type='number' 
@@ -124,7 +133,8 @@ const AddHealthDetails = () => {
                         placeholder="Enter your Height" 
                         onChange={handleChange}
                         className="w-full border-gray-300 border rounded-md py-2 px-4 focus:outline-none focus:ring
-                        focus:border-blue-300"/>
+                        focus:border-blue-300"
+                        required/>
                     </div>
                     <div className="mb-4">
                         <label htmlFor="averageHeartRate" className='block text-gray-700 front-bold mb-2'>
@@ -242,7 +252,8 @@ const AddHealthDetails = () => {
                 <div className="flex items-center gap-5 md:grid-cols-4 lg:grid-cols-4">
                     <div className="w-full mb-4">
                         <label htmlFor="fitnessGoals" className='block text-gray-700 front-bold mb-2'>
-                            <MdOutlineHealthAndSafety className="inline-block br-2 mb-1 text-lg"/>   Is there any fitness goal that you would like to achieve?
+                            <MdOutlineHealthAndSafety className="inline-block br-2 mb-1 text-lg"/>   
+                            Is there any fitness goal that you would like to achieve?
                         </label>
                         <div className="flex items-center gap-2 md:grid-cols-4 lg:grid-cols-4">
                                 <div>

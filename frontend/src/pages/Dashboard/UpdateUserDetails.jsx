@@ -47,6 +47,7 @@ const UpdateUserDetails = () => {
           title: 'Success!',
           text: 'Your details have been updated.',
           icon: 'success',
+          timer: 1500
         });
         refetch();
         if(currentUser.role=="user"){
@@ -63,6 +64,7 @@ const UpdateUserDetails = () => {
           title: 'Error!',
           text: 'There was an error updating your details.',
           icon: 'error',
+          timer: 1500
         });
       });
   };

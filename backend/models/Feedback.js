@@ -6,7 +6,8 @@ const feedbackSchema = new Schema({
     service:{type:String, required:true},
     suggesions:{type:String, required:true},
     userEmail:{type:String, required:true},
-    userName:{type:String, required:true}
+    userName:{type:String, required:true},
+    status:{type:String, required:true}
 })
 
 const Feedback =mongoose.model('feedbacks',feedbackSchema)

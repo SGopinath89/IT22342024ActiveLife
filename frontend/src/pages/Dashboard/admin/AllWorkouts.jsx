@@ -39,7 +39,8 @@ const AllWorkouts = () => {
               Swal.fire({
                 title: "Deleted!",
                 text: "Workout has been deleted.",
-                icon: "success"
+                icon: "success",
+                timer: 1500
               });
               const newWorkouts = workouts.filter((item)=>item._id!==id);
               setWorkouts(newWorkouts);
@@ -73,109 +74,111 @@ const AllWorkouts = () => {
 
     
     return (
-      <div className='w-[955px] h-screen'>
-        <div className='my-6 text-center w-[1000px]'>
-          <h1 className='text-4xl font-bold text-secondary'>All Workouts</h1>
-        </div>
-        <div className='flex'  style={{ display: 'flex', justifyContent: 'right', alignItems: 'right'}}>
-          <input id='searchInput' type='text' placeholder='Search' 
-          className='border-gray-300 border rounded-md py-2 px-4'
-          onChange={(event)=>{
-            setSearchTerm(event.target.value)
-          }}
-          />
-          <IoMdSearch className='w-[40px] h-[40px]'/>
-        </div>
-        <div className='h-screen py-8'>
-          <div className='text-right'>
-            <Link to="/dashboard/addWorkout">
-              <button 
-              className='px-12 py-3 cursor-pointer bg-red-500 rounded-3xl text-white font-bold text-center'>
-              Add Workout
-              </button>
-            </Link>
+      <div className='w-screen h-screen justify-top items-center'>
+        <div className="bg-white p-8 w-[1000px] rounded-lg ">
+          <div className='my-6 text-center w-[1000px]'>
+            <h1 className='text-4xl font-bold text-secondary'>All Workouts</h1>
           </div>
-          <div className='container mx-auto px-4'>
-            <div className='flex flex-col md:flex-row gap-4'>
-              <div className='bg-white rounded-lg shadow-md p-6 mb-4 w-full'>
-                <table className='w-full '>
-                  <thead>
-                    <tr >
-                      <th className='text-left font-semibold'>Name</th>
-                      <th className='text-left font-semibold'>Number of Days</th>
-                      <th className='text-left font-semibold'>How to do</th>
-                      <th className='text-left font-semibold'>Edit</th>
-                      <th className='text-left font-semibold'>Delete</th>
-                    </tr>
-                  </thead>
-  
-                  <tbody>
-                    { 
+          <div className='flex'  style={{ display: 'flex', justifyContent: 'right', alignItems: 'right'}}>
+            <input id='searchInput' type='text' placeholder='Search' 
+            className='border-gray-300 border rounded-md py-2 px-4'
+            onChange={(event)=>{
+              setSearchTerm(event.target.value)
+            }}
+            />
+            <IoMdSearch className='w-[40px] h-[40px]'/>
+          </div>
+          <div className='h-screen py-8'>
+            <div className='text-right'>
+              <Link to="/dashboard/addWorkout">
+                <button 
+                className='px-12 py-3 cursor-pointer bg-red-500 rounded-3xl text-white font-bold text-center'>
+                Add Workout
+                </button>
+              </Link>
+            </div>
+            <div className='container mx-auto px-4'>
+              <div className='flex flex-col md:flex-row gap-4'>
+                <div className='bg-white rounded-lg shadow-md p-6 mb-4 w-full'>
+                  <table className='w-full '>
+                    <thead>
+                      <tr >
+                        <th className='text-left font-semibold'>Name</th>
+                        <th className='text-left font-semibold'>Number of Days</th>
+                        <th className='text-left font-semibold'>How to do</th>
+                        <th className='text-left font-semibold'>Edit</th>
+                        <th className='text-left font-semibold'>Delete</th>
+                      </tr>
+                    </thead>
+    
+                    <tbody>
+                      { 
 
-                    workouts.length === 0 ? <tr><td colSpan='4' className='text-center text-2xl'>No Workouts Found</td></tr>
-                      :workouts
-                      .filter((item)=>{if(searchTerm ==""){
-                          return item;
-                        }else if(item.dietName?.toLowerCase().includes(searchTerm.toLowerCase()) 
-                          || item.numberOfDays.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                          || item.howToDo.toLowerCase().includes(searchTerm.toLowerCase())
-                        ){
-                          return item;
-                        }
-                      })
-                      .map((item,index)=>{
-                            return <tr key={item._id}>
-                            <td className='py-4'>
-                              {highlightText(item.name, searchTerm)}
-                              <div className='text-gray-600 mb-2 text-center'>
-                                For: {item.forGoal.map((goal, index) => (
+                      workouts.length === 0 ? <tr><td colSpan='4' className='text-center text-2xl'>No Workouts Found</td></tr>
+                        :workouts
+                        .filter((item)=>{if(searchTerm ==""){
+                            return item;
+                          }else if(item.dietName?.toLowerCase().includes(searchTerm.toLowerCase()) 
+                            || item.numberOfDays.toString().toLowerCase().includes(searchTerm.toLowerCase())
+                            || item.howToDo.toLowerCase().includes(searchTerm.toLowerCase())
+                          ){
+                            return item;
+                          }
+                        })
+                        .map((item,index)=>{
+                              return <tr key={item._id}>
+                              <td className='py-4'>
+                                {highlightText(item.name, searchTerm)}
+                                <div className='text-gray-600 mb-2 text-center'>
+                                  For: {item.forGoal.map((goal, index) => (
+                                    <React.Fragment key={index}>
+                                      {highlightText(goal,searchTerm)}
+                                      {index !== item.forGoal.length - 1 && <br />}
+                                    </React.Fragment>
+                                  ))}
+                                </div>
+                              </td>
+                              <td className='py-4'>
+                                {highlightText(item.numberOfDays.toString(), searchTerm)} 
+                              </td>
+                              <td className='py-4'>
+                                  {item.howToDo.split(' ').map((word, index) => {
+                                const highlightedWord = highlightText(word, searchTerm);
+                                return word === "Step" ? (
                                   <React.Fragment key={index}>
-                                    {highlightText(goal,searchTerm)}
-                                    {index !== item.forGoal.length - 1 && <br />}
+                                    <br /> <span className="font-bold">{highlightedWord} </span>
                                   </React.Fragment>
-                                ))}
-                              </div>
-                            </td>
-                            <td className='py-4'>
-                              {highlightText(item.numberOfDays.toString(), searchTerm)} 
-                            </td>
-                            <td className='py-4'>
-                                {item.howToDo.split(' ').map((word, index) => {
-                              const highlightedWord = highlightText(word, searchTerm);
-                              return word === "Step" ? (
-                                <React.Fragment key={index}>
-                                  <br /> <span className="font-bold">{highlightedWord} </span>
-                                </React.Fragment>
-                              ) : (
-                                <React.Fragment key={index}>
-                                  {highlightedWord}{" "}
-                                </React.Fragment>
-                              );
-                            })}
-                            </td>
-                            <td className='text-center'>
-                                <Link to={`/dashboard/updateW/${item._id}`}>
-                                    <button 
-                                    className='text-center px-12 py-3 cursor-pointer bg-green-500 rounded-3xl text-white font-bold'>
-                                    <MdUpdate/>
-                                    </button>
-                                </Link>
-                            </td>
-                            <td>
-                              <button onClick={()=>handleDelete(item._id)} 
-                              className='px-3 py-3 cursor-pointer bg-red-500 rounded-3xl text-white font-bold'>
-                                <MdDelete/>
-                              </button>
-                            </td>
-                            
-                        </tr>
-                        
-                        
-                        
-                      })
-                    }
-                  </tbody>
-                </table>
+                                ) : (
+                                  <React.Fragment key={index}>
+                                    {highlightedWord}{" "}
+                                  </React.Fragment>
+                                );
+                              })}
+                              </td>
+                              <td className='text-center'>
+                                  <Link to={`/dashboard/updateW/${item._id}`}>
+                                      <button 
+                                      className='text-center px-12 py-3 cursor-pointer bg-green-500 rounded-3xl text-white font-bold'>
+                                      <MdUpdate/>
+                                      </button>
+                                  </Link>
+                              </td>
+                              <td>
+                                <button onClick={()=>handleDelete(item._id)} 
+                                className='px-3 py-3 cursor-pointer bg-red-500 rounded-3xl text-white font-bold'>
+                                  <MdDelete/>
+                                </button>
+                              </td>
+                              
+                          </tr>
+                          
+                          
+                          
+                        })
+                      }
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>

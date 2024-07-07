@@ -50,6 +50,7 @@ const UpdateW = () => {
                     title: 'Success!',
                     text: 'Workout details have been updated.',
                     icon: 'success',
+                    timer: 1500
                 });
                 refetch();
                 navigate('/dashboard/manageWorkouts');
@@ -60,12 +61,13 @@ const UpdateW = () => {
                     title: 'Error!',
                     text: 'There was an error updating Workout.',
                     icon: 'error',
+                    timer: 1500
                 });
             });
     };
   return (
-    <div className='w-[1000px] justify-center items-center bg-white dark:bg-black flex'>
-        <div className="bg-white p-8 rounded-lg text-center">
+    <div className='w-screen h-screen justify-top items-center'>
+        <div className="bg-white p-8 w-[1000px] rounded-lg ">
         <h2 className="text-3xl font-bold text-center mb-6 text-secondary">Edit Workout</h2>
             <form onSubmit={handleSubmit} className="text-center">
                 <div className="flex items-center gap-5 md:grid-cols-2 lg:grid-cols-2">

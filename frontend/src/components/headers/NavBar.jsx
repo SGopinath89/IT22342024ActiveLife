@@ -114,11 +114,11 @@ export const NavBar = () => {
             if (result.isConfirmed) {
                 logout(currentUser.email, currentUser.password).then(
                     Swal.fire({                
-                        title: "Loged Out!",
+                        title: "Logged Out!",
                         text: "You have logged out from your acoount.",
                         icon: "success",
                         timer: 1500
-                        })
+                    })
                 ).catch((err)=>
                     console.log(err)
                 )

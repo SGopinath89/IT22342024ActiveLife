@@ -24,7 +24,7 @@ const Diets = () => {
   },[axiosFetch])
   
   //handle add button
-  const handleAdd = (id, name,img) => {
+  const handleAdd = (id, name, img) => {
     if (!currentUser || !currentUser.email) {
       Swal.fire({
         position: "top-end",
@@ -40,16 +40,7 @@ const Diets = () => {
     axiosSecure
       .get(`http://localhost:5000/userDiet/byId/${id}?email=${currentUser.email}`)
       .then((res) => {
-        console.log(res.data.dietId);
-        if (res.data.dietId === id) {
-          Swal.fire({
-            position: "top-end",
-            icon: "warning",
-            title: "Already Added!!",
-            showConfirmButton: false,
-            timer: 1500
-          });
-        } else if (userDiets.find((item) => item.diets._id === id)) {
+        if (res.data) {
           Swal.fire({
             position: "top-end",
             icon: "warning",
@@ -62,11 +53,10 @@ const Diets = () => {
             dietName: name,
             dietId: id,
             userEmail: currentUser.email,
-            dietImg:img,
+            dietImg: img,
             date: new Date(),
           };
           axiosSecure.post('http://localhost:5000/userDiet', data).then((res) => {
-            console.log(res.data);
             Swal.fire({
               position: "top-end",
               icon: "success",
@@ -88,6 +78,7 @@ const Diets = () => {
         });
       });
   };
+  
 
   const highlightText = (text, highlight) => {
     if (!highlight.trim()) {
@@ -147,7 +138,7 @@ const Diets = () => {
                       })
                       .map((diet)=>(
                         <div key={diet._id} className='shadow-lg rounded-lg p-3 flex flex-col justify-between border border-secondary overflow-hidden m-4'>
-                        <div className='p-4'>
+                        <div className='p-4 flex flex-col h-full'>
                             <h2 className='text-xl font-semibold mb-10 dark:text-white text-center'>{highlightText(diet.name, searchTerm)}
                               <div className='text-gray-600 mb-2 text-center text-sm'>
                                 For: {diet.forGoal.map((goal, index) => (
@@ -159,14 +150,27 @@ const Diets = () => {
                               </div>
                             </h2>
                             <div className='flex justify-center'>
-                              <img className='shadow-lg rounded-lg'src={diet.dietImg} alt="Diet Image"/>
+                              {
+                                diet?.dietImg && (
+                                  <div 
+                                    className="justify-center"
+                                    style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                                  >
+                                    <img 
+                                      className="shadow-lg rounded-lg " 
+                                      src={diet.dietImg} 
+                                      alt="Profile photo" 
+                                    />
+                                  </div>
+                                )
+                              }
                             </div>
                             <br/>
                             <p className='text-black mb-2 text-center dark:text-white'><span className='font-bold'>How it Works : </span>{highlightText(diet.howItWorks, searchTerm)}</p>
                             <p className='text-black mb-2 text-center dark:text-white'><span className='font-bold'>Benefits : </span>{highlightText(diet.benefits, searchTerm)}  </p>
                             <p className='text-gray-600 mb-2 text-center'><span className='font-bold'>Downsides : </span>{highlightText(diet.downsides, searchTerm)}  </p>
                             <br/>
-                            <div className='text-center'>
+                            <div className='mt-auto text-center'>
                                 <button onClick={()=>handleAdd(diet._id,diet.name,diet.dietImg)} title={role == 'admin' ? 'Admin cannot be available to add' : 'You can Add Diets'} 
                                 disabled={role=='admin'}
                                 className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>

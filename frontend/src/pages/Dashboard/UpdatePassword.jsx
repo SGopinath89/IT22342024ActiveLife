@@ -30,6 +30,7 @@ const UpdatePassword = () => {
         title: 'Success!',
         text: 'Your password has been updated.',
         icon: 'success',
+        timer: 1500
       });
       setCurrentPassword('');
       setNewPassword('');
@@ -40,6 +41,7 @@ const UpdatePassword = () => {
         title: 'Error!',
         text: error.message,
         icon: 'error',
+        timer: 1500
       });
     } finally {
       setLoading(false);
@@ -51,15 +53,17 @@ const UpdatePassword = () => {
       await axiosSecure.patch(`http://localhost:5000/user/${currentUser._id}`, { password: newPassword });
       Swal.fire({
         title: 'Success!',
-        text: 'Your details have been updated.',
+        text: 'Your password has been updated.',
         icon: 'success',
+        timer: 1500
       });
     } catch (error) {
       console.error('Error updating password in the database:', error);
       Swal.fire({
         title: 'Error!',
-        text: 'There was an error updating your details.',
+        text: 'There was an error updating your password.',
         icon: 'error',
+        timer: 1500
       });
     }
   };

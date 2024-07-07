@@ -54,6 +54,7 @@ const UpdateI = () => {
                     title: 'Success!',
                     text: 'Instructor/Doctor details have been updated.',
                     icon: 'success',
+                    timer: 1500
                 });
                 refetch();
                 navigate('/dashboard/manageInstructors');
@@ -64,12 +65,13 @@ const UpdateI = () => {
                     title: 'Error!',
                     text: 'There was an error updating Instructor/Doctor.',
                     icon: 'error',
+                    timer: 1500
                 });
             });
     };
   return (
-    <div className='w-[1000px] justify-center items-center bg-white dark:bg-black flex'>
-        <div className="bg-white p-8 rounded-lg text-center">
+    <div className='w-screen h-screen justify-top items-center'>
+        <div className="bg-white p-8 w-[1000px] rounded-lg ">
             <h2 className="text-3xl font-bold text-center mb-6 text-secondary">Edit Doctor/Instructor</h2>
                 <form onSubmit={handleSubmit} className="text-center">
                     <div className="flex items-center gap-5 md:grid-cols-2 lg:grid-cols-2">

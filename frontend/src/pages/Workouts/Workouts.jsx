@@ -24,7 +24,7 @@ export const Workouts = () => {
         .catch((err)=>console.log(err))
     },[axiosFetch])
 
-    const handleAdd = (id,name,img,days) => {
+    const handleAdd = (id, name, img, days) => {
       if (!currentUser || !currentUser.email) {
         Swal.fire({
           position: "top-end",
@@ -35,12 +35,13 @@ export const Workouts = () => {
         });
         navigate('/login');
         return;
-      }  
+      }
+      //console.log(days)
       axiosSecure
         .get(`http://localhost:5000/userWorkout/byId/${id}?email=${currentUser.email}`)
         .then((res) => {
-          console.log(res.data.workoutId)
-          if (res.data.workoutId === id) {
+          console.log(res)
+          if (res.data) {
             Swal.fire({
               position: "top-end",
               icon: "warning",
@@ -48,25 +49,19 @@ export const Workouts = () => {
               showConfirmButton: false,
               timer: 1500
             });
-          } else if (userWoukouts.find((item) => item.workouts._id === id)) {
-            Swal.fire({
-              position: "top-end",
-              icon: "warning",
-              title: "Already Added!!",
-              showConfirmButton: false,
-              timer: 1500
-            });
-          } else if(currentUser.email){
-            const data = {
-              workoutName:name,
+          } else {
+            const Wdata = {
+              workoutName: name,
               workoutId: id,
-              workoutImg:img,
-              totaldays:days,
+              workoutImg: img,
+              totaldays: days,
               userEmail: currentUser.email,
               data: new Date(),
             };
-            axiosSecure.post('http://localhost:5000/userWorkout', data).then((res)=>{
-              console.log(res.data)
+            console.log(Wdata.data)
+            console.log(Wdata.totaldays)
+            axiosSecure.post('http://localhost:5000/userWorkout', Wdata).then((res) => {
+              console.log(res.data);
               Swal.fire({
                 position: "top-end",
                 icon: "success",
@@ -74,22 +69,21 @@ export const Workouts = () => {
                 showConfirmButton: false,
                 timer: 1500
               });
-            })
-            
+            });
           }
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err)
           Swal.fire({
             position: "top-end",
             icon: "warning",
-            title: "An error occurred. Please try again.",
+            title: "Failed!!",
             showConfirmButton: false,
             timer: 1500
           });
         });
-        
     };
+    
 
     const highlightText = (text, highlight) => {
       if (!highlight.trim()) {
@@ -151,7 +145,7 @@ export const Workouts = () => {
                       })
                     .map((workout)=>(
                       <div key={workout._id} className='shadow-lg rounded-lg p-3 flex flex-col justify-between border border-secondary overflow-hidden m-4'>
-                        <div className='p-4'>
+                        <div className='p-4 flex flex-col h-full'>
                             <h2 className='text-xl font-semibold mb-20 dark:text-white text-center'>{highlightText(workout.name, searchTerm)}
                               <div className='text-gray-600 mb-2 text-center text-sm'>
                                 For: {workout.forGoal.map((goal, index) => (
@@ -163,7 +157,20 @@ export const Workouts = () => {
                               </div>    
                             </h2>
                             <div className='flex justify-center'>
-                              <img className='shadow-lg rounded-lg'src={workout.workoutImg} alt="Workout Image"/>
+                              {
+                                workout?.workoutImg && (
+                                  <div 
+                                    className="justify-center"
+                                    style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                                  >
+                                    <img 
+                                      className="shadow-lg rounded-lg" 
+                                      src={workout.workoutImg} 
+                                      alt="Profile photo" 
+                                    />
+                                  </div>
+                                )
+                              }
                             </div>
                             <br/>
                             <p className='text-black mb-2 text-center dark:text-white'><span className='font-bold'>Total Number of Days: </span>{highlightText(workout.numberOfDays.toString(), searchTerm)}</p>
@@ -182,7 +189,7 @@ export const Workouts = () => {
                               );
                             })}
                             </p><br/>
-                            <div className='text-center'>
+                            <div className='mt-auto text-center'>
                             <button onClick={()=>handleAdd(workout._id,workout.name,workout.workoutImg,workout.numberOfDays)} title={role == 'admin' ? 'Admin cannot be available to add' : 'You can Add Workouts'} 
                                 disabled={role=='admin'}
                                 className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>

@@ -39,7 +39,8 @@ const AllDiets = () => {
               Swal.fire({
                 title: "Deleted!",
                 text: "Diet has been deleted.",
-                icon: "success"
+                icon: "success",
+                timer: 1500
               });
               const newDiets = diets.filter((item)=>item._id!==id);
               setDiets(newDiets);
@@ -72,101 +73,103 @@ const AllDiets = () => {
     };
 
     return (
-      <div className='w-[955px] h-screen'>
-        <div className='my-6 text-center w-[1000px]'>
-          <h1 className='text-4xl font-bold text-secondary'>All Diets</h1>
-        </div>
-        <div className='flex text-right' style={{ display: 'flex', justifyContent: 'right', alignItems: 'right'}}>
-          <input id='searchInput' type='text' placeholder='Search' 
-            className='border-gray-300 border rounded-md py-2 px-4'
-            onChange={(event)=>{
-            setSearchTerm(event.target.value)
-            }}
-          />
-          <IoMdSearch className='w-[40px] h-[40px]'/>
-        </div>
-        <div className='h-screen py-8'>
-          <div className='text-right'>
-            <Link to="/dashboard/addDiet">
-              <button 
-              className='px-12 py-3 cursor-pointer bg-red-500 rounded-3xl text-white font-bold text-center'>
-              Add Diet
-              </button>
-            </Link>
+      <div className='w-screen h-screen justify-top items-center'>
+        <div className="bg-white p-8 w-[1000px] rounded-lg ">
+          <div className='my-6 text-center w-[1000px]'>
+            <h1 className='text-4xl font-bold text-secondary'>All Diets</h1>
           </div>
-          <div className='container mx-auto px-4'>
-            <div className='flex flex-col md:flex-row gap-4'>
-              <div className='bg-white rounded-lg shadow-md p-6 mb-4 w-full'>
-                <table className='w-full '>
-                  <thead>
-                    <tr >
-                      <th className='text-left font-semibold'>Name</th>
-                      <th className='text-left font-semibold'>How It Works</th>
-                      <th className='text-left font-semibold'>Benefitd</th>
-                      <th className='text-left font-semibold'>Downsides</th>
-                      <th className='text-left font-semibold'>Edit</th>
-                      <th className='text-left font-semibold'>Delete</th>
-                    </tr>
-                  </thead>
-  
-                  <tbody>
-                    { diets.length === 0 ? <tr><td colSpan='4' className='text-center text-2xl'>No Diets Found</td></tr>
-                      :diets
-                      .filter((item)=>{
-                        if(searchTerm ==""){
-                          return item;
-                        }else if(item.name.toLowerCase().includes(searchTerm.toLowerCase()) 
-                        || item.howItWorks.toLowerCase().includes(searchTerm.toLowerCase())
-                        || item.benefits.toLowerCase().includes(searchTerm.toLowerCase())
-                        || item.downsides.toLowerCase().includes(searchTerm.toLowerCase())){
-                          return item;
-                        }
-                      })
-                      .map((item,index)=>{
-                            return <tr key={item._id}>
-                            <td className='py-4 text-center'>
-                              {highlightText(item.name, searchTerm)}
-                              <div className='text-gray-600 mb-2 text-center'>
-                                For: {item.forGoal.map((goal, index) => (
-                                  <React.Fragment key={index}>
-                                    {highlightText(goal,searchTerm)}
-                                    {index !== item.forGoal.length - 1 && <br />}
-                                  </React.Fragment>
-                                ))}
-                              </div>
-                            </td>
-                            <td className='py-4 text-center'>
-                              {highlightText(item.howItWorks, searchTerm)} 
-                            </td>
-                            <td className='py-4 text-center'>
-                              {highlightText(item.benefits, searchTerm)} 
-                            </td>
-                            <td className='py-4 text-center'>
-                              {highlightText(item.downsides, searchTerm)} 
-                            </td>
-                            <td className='text-center'>
-                                <Link to={`/dashboard/updateD/${item._id}`}>
-                                    <button 
-                                    className='text-center px-12 py-3 cursor-pointer bg-green-500 rounded-3xl text-white font-bold'>
-                                    <MdUpdate/>
-                                    </button>
-                                </Link>
-                            </td>
-                            <td>
-                              <button onClick={()=>handleDelete(item._id)} 
-                              className='px-3 py-3 cursor-pointer bg-red-500 rounded-3xl text-white font-bold'>
-                                <MdDelete/>
-                              </button>
-                            </td>
-                            
-                        </tr>
-                        
-                        
-                        
-                      })
-                    }
-                  </tbody>
-                </table>
+          <div className='flex text-right' style={{ display: 'flex', justifyContent: 'right', alignItems: 'right'}}>
+            <input id='searchInput' type='text' placeholder='Search' 
+              className='border-gray-300 border rounded-md py-2 px-4'
+              onChange={(event)=>{
+              setSearchTerm(event.target.value)
+              }}
+            />
+            <IoMdSearch className='w-[40px] h-[40px]'/>
+          </div>
+          <div className='h-screen py-8'>
+            <div className='text-right'>
+              <Link to="/dashboard/addDiet">
+                <button 
+                className='px-12 py-3 cursor-pointer bg-red-500 rounded-3xl text-white font-bold text-center'>
+                Add Diet
+                </button>
+              </Link>
+            </div>
+            <div className='container mx-auto px-4'>
+              <div className='flex flex-col md:flex-row gap-4'>
+                <div className='bg-white rounded-lg shadow-md p-6 mb-4 w-full'>
+                  <table className='w-full '>
+                    <thead>
+                      <tr >
+                        <th className='text-left font-semibold'>Name</th>
+                        <th className='text-left font-semibold'>How It Works</th>
+                        <th className='text-left font-semibold'>Benefitd</th>
+                        <th className='text-left font-semibold'>Downsides</th>
+                        <th className='text-left font-semibold'>Edit</th>
+                        <th className='text-left font-semibold'>Delete</th>
+                      </tr>
+                    </thead>
+    
+                    <tbody>
+                      { diets.length === 0 ? <tr><td colSpan='4' className='text-center text-2xl'>No Diets Found</td></tr>
+                        :diets
+                        .filter((item)=>{
+                          if(searchTerm ==""){
+                            return item;
+                          }else if(item.name.toLowerCase().includes(searchTerm.toLowerCase()) 
+                          || item.howItWorks.toLowerCase().includes(searchTerm.toLowerCase())
+                          || item.benefits.toLowerCase().includes(searchTerm.toLowerCase())
+                          || item.downsides.toLowerCase().includes(searchTerm.toLowerCase())){
+                            return item;
+                          }
+                        })
+                        .map((item,index)=>{
+                              return <tr key={item._id}>
+                              <td className='py-4 text-center'>
+                                {highlightText(item.name, searchTerm)}
+                                <div className='text-gray-600 mb-2 text-center'>
+                                  For: {item.forGoal.map((goal, index) => (
+                                    <React.Fragment key={index}>
+                                      {highlightText(goal,searchTerm)}
+                                      {index !== item.forGoal.length - 1 && <br />}
+                                    </React.Fragment>
+                                  ))}
+                                </div>
+                              </td>
+                              <td className='py-4 text-center'>
+                                {highlightText(item.howItWorks, searchTerm)} 
+                              </td>
+                              <td className='py-4 text-center'>
+                                {highlightText(item.benefits, searchTerm)} 
+                              </td>
+                              <td className='py-4 text-center'>
+                                {highlightText(item.downsides, searchTerm)} 
+                              </td>
+                              <td className='text-center'>
+                                  <Link to={`/dashboard/updateD/${item._id}`}>
+                                      <button 
+                                      className='text-center px-12 py-3 cursor-pointer bg-green-500 rounded-3xl text-white font-bold'>
+                                      <MdUpdate/>
+                                      </button>
+                                  </Link>
+                              </td>
+                              <td>
+                                <button onClick={()=>handleDelete(item._id)} 
+                                className='px-3 py-3 cursor-pointer bg-red-500 rounded-3xl text-white font-bold'>
+                                  <MdDelete/>
+                                </button>
+                              </td>
+                              
+                          </tr>
+                          
+                          
+                          
+                        })
+                      }
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>

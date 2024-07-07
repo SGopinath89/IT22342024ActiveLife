@@ -89,8 +89,9 @@ const UpdateHealthdata = () => {
             .then((res) => {
                 Swal.fire({
                     title: 'Success!',
-                    text: 'Your details have been updated.',
+                    text: 'Your Health details have been updated.',
                     icon: 'success',
+                    timer: 1500
                 });
                 navigate('/dashboard/userP');
             })
@@ -100,6 +101,7 @@ const UpdateHealthdata = () => {
                     title: 'Error!',
                     text: 'There was an error updating your details.',
                     icon: 'error',
+                    timer: 1500
                 });
             });
     };
@@ -107,8 +109,8 @@ const UpdateHealthdata = () => {
     
 
     return (
-        <div className='h-screen w-screen justify-top items-center'>
-            <div className="bg-white p-8 w-[900px] rounded-lg ">
+        <div className='w-screen h-screen justify-top items-center'>
+            <div className="bg-white p-8 w-[1000px] rounded-lg ">
                 <form onSubmit={handleSubmit}>
                     <div className="flex items-center gap-5 md:grid-cols-4 lg:grid-cols-4">
                         <div className="mb-4">

@@ -5,7 +5,7 @@ const workoutSchema = new Schema({
     name:{type:String, required:true},
     numberOfDays:{type:Number, required:true},
     howToDo:{type:String, required:true},
-    workoutImg:{type:String, required:true},
+    workoutImg:{type:String},
     forGoal:{type:Array, required:true}
 })
 

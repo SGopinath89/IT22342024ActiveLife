@@ -54,16 +54,16 @@ const Login = () => {
           icon: "warning",
           title: "Give correct Email and password <br/> OR <br/> use Google",
           showConfirmButton: false,
-          timer: 1000,
+          timer: 1500,
           customClass: {
             popup: 'swal2-custom-popup'
           },
           didOpen: () => {
             const popup = document.querySelector('.swal2-custom-popup');
             if (popup) {
-              popup.style.width = '400px'; // Adjust the width
-              popup.style.height = '300px'; // Adjust the height
-              popup.style.fontSize = '0.8em'; // Adjust the font size
+              popup.style.width = '350px'; 
+              popup.style.height = '300px'; 
+              popup.style.fontSize = '0.8em'; 
             }
           }
         });

@@ -16,7 +16,7 @@ router.get('/', async(req,res)=>{
 router.post('/',async (req, res) => {
     const{name,email,phoneNo,qualification,experience,specialities}=req.body
     if(!name || !email || !phoneNo || !qualification || !experience || !specialities){
-        res.status(400).send("Please Provide required fields")
+        res.status(400).send(result)
     }else{
         try{
             const results = await Instructor.create({name,email,phoneNo,qualification,experience,specialities})

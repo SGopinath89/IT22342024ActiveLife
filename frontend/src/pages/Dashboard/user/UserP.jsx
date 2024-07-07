@@ -42,7 +42,8 @@ const UserP = () => {
             Swal.fire({
               title: "Deleted!",
               text: "Successfully Deleted your Your Account and All your details.",
-              icon: "success"
+              icon: "success",
+              timer: 1500
             });
             navigate('/') 
           })
@@ -69,7 +70,8 @@ const UserP = () => {
             Swal.fire({
               title: "Deleted!",
               text: "Successfully Deleted your health Record.",
-              icon: "success"
+              icon: "success",
+              timer: 1500
             }); 
           })
           .catch((error)=>{
@@ -83,9 +85,8 @@ const UserP = () => {
       return <div>Loading...</div>
     }
   return (
-    <div className='w-[1000px] h-screen px-10'>
-        <div>
-          <div>
+    <div className='w-screen h-screen justify-top items-center'>
+        <div className="bg-white p-8 w-[1000px] rounded-lg ">
                 <div className=' flex items-center p-5'>
                   <h1 className='text-4xl capitalize font-bold'>  Hi, <span>{currentUser?.fullName}!!  </span>**Welcome to your dashboard**</h1>
                   <span></span>
@@ -219,7 +220,6 @@ const UserP = () => {
                         </div>
                     </div>
                 </div>
-          </div>
           <br/>
         </div>
     </div>

@@ -13,8 +13,8 @@ router.get('/', async(req,res)=>{
 router.get('/byId/:id', async (req, res) => {
     const id=req.params.id;
     const email =req.query.email;
-    const query={dietId:id, userEmail:email};
-    const projection = {dietId:1};
+    const query={workoutId:id, userEmail:email};
+    const projection = {workoutId:1};
     const result = await userWorkout.findOne(query,{projection:projection})
     res.send(result);
 });
@@ -23,7 +23,7 @@ router.post('/',async (req, res) => {
     const{workoutName,workoutId,workoutImg,totaldays,userEmail,data}=req.body
     const finishedDays = 0;
     if(!workoutName || !workoutId || !workoutImg || !totaldays || !userEmail || !data ){
-        res.status(400).send("Please Provide required fields")
+        res.status(400).send("Please Provide required fields"+data+totaldays)
     }else{
         try{
             const results = await userWorkout.create({workoutName,workoutId,workoutImg,totaldays,userEmail,data,finishedDays})

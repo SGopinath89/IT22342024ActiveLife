@@ -64,7 +64,8 @@ const MyDiets = () => {
             Swal.fire({
               title: "Deleted!",
               text: "Diet has been deleted from your list.",
-              icon: "success"
+              icon: "success",
+              timer: 1500
             });
             const newUserDiets = userDiets.filter((item)=>item._id!==id);
             setUserDiets(newUserDiets);
@@ -96,8 +97,8 @@ const MyDiets = () => {
   };
 
   return (
-    <div className='w-screen h-screen'>
-      <div className="bg-white p-8 w-[950px] rounded-lg ">
+    <div className='w-screen h-screen justify-top items-center'>
+        <div className="bg-white p-8 w-[1000px] rounded-lg ">
         <div className='my-6 text-center'>
           <h1 className='text-4xl font-bold'>My <span className='text-secondary'>Diets</span></h1>
         </div>
@@ -137,6 +138,7 @@ const MyDiets = () => {
                         }
                       })
                       .map((item,index)=>{
+                        const date = item.date ? moment(item.date).format("MMMM Do YYYY") : 'N/A';
                         return <tr key={item._id}>
                             <td className='py-4'>{index+1}</td>
                             <td className='py-4'>
@@ -146,7 +148,7 @@ const MyDiets = () => {
                               </div></td>
                             <td className='py-4'>
                               <p className='text-gray-500 text-sm'>
-                                {highlightText(moment(item.data).format("MMMM Do YYYY"), searchTerm)}
+                                {highlightText(date, searchTerm)}
                               </p>  
                             </td>
                             <td>
@@ -172,64 +174,88 @@ const MyDiets = () => {
         <div>
           {
             <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4 '>
-          
-                  {
-                    hr.documents ? (
-                      diets
-                        .filter((diet) => {
-                          if (hr.documents) {
-                            console.log(diet.forGoal);
-                            console.log(hr.documents[0].fitnessGoals);
-                            if (diet.forGoal.some(goal => hr.documents[0].fitnessGoals.includes(goal))) {
-                              return diet;
+              {
+                hr.documents ? (
+                  hr.documents[0].fitnessGoals && hr.documents[0].fitnessGoals.length > 0 ? (
+                          diets
+                          .filter((diet) => {
+                            if (hr.documents) {
+                              console.log(diet.forGoal);
+                              console.log(hr.documents[0].fitnessGoals);
+                              if (diet.forGoal.some(goal => hr.documents[0].fitnessGoals.includes(goal))) {
+                                return diet;
+                              }
                             }
-                          }
-                          return false;
-                        })
-                        .map((diet) => (
-                          
-                            <div key={diet._id} className='shadow-lg rounded-lg p-3 flex flex-col justify-between border border-secondary overflow-hidden m-4'>
-                              <div className='p-4'>
-                                <h2 className='text-xl font-semibold mb-10 dark:text-white text-center'>{highlightText(diet.name, searchTerm)}</h2>
-                                <div className='flex justify-center'>
-                                  <img className='shadow-lg rounded-lg' src={diet.dietImg} alt="Diet Image" />
-                                </div>
-                                <br />
-                                <div className='text-gray-600 mb-2 text-center'>
-                                  For: {diet.forGoal.map((goal, index) => (
-                                    <React.Fragment key={index}>
-                                      {goal}
-                                      {index !== diet.forGoal.length - 1 && <br />}
-                                    </React.Fragment>
-                                  ))}
+                            return false;
+                          })
+                          .map((diet) => (
+                              <div key={diet._id} className='shadow-lg rounded-lg p-3 flex flex-col justify-between border border-secondary overflow-hidden m-4'>
+                                <div className='p-4 flex flex-col h-full'>
+                                  <h2 className='text-xl font-semibold mb-10 dark:text-white text-center'>{highlightText(diet.name, searchTerm)}</h2>
+                                  <div className='flex justify-center  mb-4'>
+                                    <img className='shadow-lg rounded-lg' src={diet.dietImg} alt="Diet Image" />
+                                  </div>
+                                  <br />
+                                  <div className='text-gray-600 mb-2 text-center'>
+                                    For: {diet.forGoal.map((goal, index) => (
+                                      <React.Fragment key={index}>
+                                        {goal}
+                                        {index !== diet.forGoal.length - 1 && <br />}
+                                      </React.Fragment>
+                                    ))}
+                                  </div>
+                                  <div className='mt-auto text-center'>
+                                    <Link to='/diets'>
+                                      <button className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase'>
+                                        View Diets
+                                      </button>
+                                    </Link>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          
-                        ))
-                    ) : (
+                            
+                          ))
+                  ) : (
                       <div className='col-span-1 md:col-span-2 lg:col-span-3 text-center text-lg text-black'>
-                        To receive personalized recommendations, please provide your health details
+                        To receive personalized recommendations, please provide your Fitness Goals
                         <br/>
-                        <Link to='/dashboard/addHealthDetails'>
-                          <p className='underline'>Click Here to add Health Details</p>
+                        <Link to='/dashboard/updateHealthdetails'>
+                          <p className='underline'>Click Here to update Health Details</p>
                         </Link>
                         <br/>
+                        <div className='mt-auto text-center'>
+                          <Link to='/diets'>
+                            <button className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase'>
+                              View All Diets
+                            </button>
+                          </Link>
+                        </div>
                       </div>
-                    )
-                  }
+                  )
+                ) : (
+                  <div>
+                    <div className='col-span-1 md:col-span-2 lg:col-span-3 text-center text-lg text-black'>
+                      To receive personalized recommendations, please provide your Fitness Goals
+                      <br/>
+                      <Link to='/dashboard/addHealthDetails'>
+                        <p className='underline'>Click Here to add Health Details</p>
+                      </Link>
+                      <br/>
+                    </div>
+                    <div className='mt-auto text-center'>
+                      <Link to='/diets'>
+                        <button className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase'>
+                          View Diets
+                        </button>
+                      </Link>
+                    </div>
                   </div>
+
+                )
+              }
+            </div>
           }
-                <div className='text-center'>
-                  <Link to='/diets'>
-                    <button
-                    className='shadow-lg px-7 py-3 rounded-lg bg-secondary font-bold uppercase text-center'>
-                      For more information about all the Diets
-                    </button>
-                  </Link>
-                </div>
-                <br/><br/>
-                <br/>
+          <br/><br/><br/>
         </div>
       </div>
     </div>

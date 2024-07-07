@@ -43,8 +43,9 @@ const Users = () => {
           .then((res)=>{
               Swal.fire({
                 title: "Deleted!",
-                text: "Diet has been deleted from your list.",
-                icon: "success"
+                text: "User has been deleted completely.",
+                icon: "success",
+                timer: 1500
               });
               const newUsers = users.filter((item)=>item.email!==email);
               setUsers(newUsers);
@@ -77,90 +78,105 @@ const Users = () => {
     };
     
     return (
-      <div className='w-[1000px] h-screen px-10'>
-        <div className='my-6 text-center'>
-          <h1 className='text-4xl font-bold text-secondary'>Users</h1>
-        </div>
-        <div className='flex text-right' style={{ display: 'flex', justifyContent: 'right', alignItems: 'right'}}>
-          <input id='searchInput' type='text' placeholder='Search' 
-            className='border-gray-300 border rounded-md py-2 px-4'
-            onChange={(event)=>{
-            setSearchTerm(event.target.value)
-            }}
-          />
-          <IoMdSearch className='w-[40px] h-[40px]'/>
-        </div>
-        <div className='h-screen py-8'>
-          <div className='container mx-auto px-4'>
-            <div className='flex flex-col md:flex-row gap-4'>
-              <div className='bg-white rounded-lg shadow-md p-6 mb-4 w-full'>
-                <table className='w-full '>
-                  <thead>
-                    <tr>
-                      <th className='text-left font-semibold'>Full Name</th>
-                      <th className='text-left font-semibold'>Email</th>
-                      <th className='text-left font-semibold'>Phone no</th>
-                      <th className='text-left font-semibold'>Address</th>
-                      <th className='text-left font-semibold'>Age</th>
-                      <th className='text-left font-semibold'>Employment Status</th>
-                      <th className='text-left font-semibold'>Delete</th>
-                    </tr>
-                  </thead>
-  
-                  <tbody>
-                    { 
-                      users.length === 0 ? <tr><td colSpan='4' className='text-center text-2xl'>No Diets Found</td></tr>
-                      :users
-                      .filter((item)=>{
-                        if(searchTerm ==""){
-                          return item;
-                        }else if(item.fullName.toLowerCase().includes(searchTerm.toLowerCase()) 
-                        || item.email.toLowerCase().includes(searchTerm.toLowerCase())
-                        || item.phoneNo.toLowerCase().includes(searchTerm.toLowerCase())
-                        || item.address.toLowerCase().includes(searchTerm.toLowerCase())
-                        || item.age.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                        || item.employmentStatus.toLowerCase().includes(searchTerm.toLowerCase())){
-                          return item;
-                        }
-                      })
-                      .map((item,index)=>{
-                        if(item.role=='user'){
-                            return <tr key={item._id}>
-                            <td className='py-4'>
-                              <div className='flex items-center'>
-                                <img src={item.photoUrl} className='h-16 w-16 mr-4 rounded-lg'/>
-                                <span>{highlightText(item.fullName, searchTerm)}</span>
-                              </div></td>
-                            <td className='py-4'>
-                              {highlightText(item.email, searchTerm)} 
-                            </td>
-                            <td className='py-4'>
-                              {highlightText(item.phoneNo, searchTerm)} 
-                            </td>
-                            <td className='py-4'>
-                              {highlightText(item.address, searchTerm)} 
-                            </td>
-                            <td className='py-4'>
-                              {highlightText(item.age.toString(), searchTerm)} 
-                            </td>
-                            <td className='py-4'>
-                              {highlightText(item.employmentStatus, searchTerm)} 
-                            </td>
-                            <td>
-                              <button onClick={()=>handleDelete(item.email)} 
-                              className='px-3 py-3 cursor-pointer bg-red-500 rounded-3xl text-white font-bold'>
-                                <MdDelete/>
-                              </button>
-                              
-                            </td>
-                        </tr>
-                        }
-                        
-                        
-                      })
-                    }
-                  </tbody>
-                </table>
+      <div className='w-screen h-screen justify-top items-center'>
+        <div className="bg-white p-8 w-[1000px] rounded-lg ">
+          <div className='my-6 text-center'>
+            <h1 className='text-4xl font-bold text-secondary'>Users</h1>
+          </div>
+          <div className='flex text-right' style={{ display: 'flex', justifyContent: 'right', alignItems: 'right'}}>
+            <input id='searchInput' type='text' placeholder='Search' 
+              className='border-gray-300 border rounded-md py-2 px-4'
+              onChange={(event)=>{
+              setSearchTerm(event.target.value)
+              }}
+            />
+            <IoMdSearch className='w-[40px] h-[40px]'/>
+          </div>
+          <div className='h-screen py-8'>
+            <div className='container mx-auto px-4'>
+              <div className='flex flex-col md:flex-row gap-4'>
+                <div className='bg-white rounded-lg shadow-md p-6 mb-4 w-full'>
+                  <table className='w-full '>
+                    <thead>
+                      <tr>
+                        <th className='text-left font-semibold'>Full Name</th>
+                        <th className='text-left font-semibold'>Email</th>
+                        <th className='text-left font-semibold'>Phone no</th>
+                        <th className='text-left font-semibold'>Address</th>
+                        <th className='text-left font-semibold'>Age</th>
+                        <th className='text-left font-semibold'>Employment Status</th>
+                        <th className='text-left font-semibold'>Delete</th>
+                      </tr>
+                    </thead>
+    
+                    <tbody>
+                      { 
+                        users.length === 0 ? <tr><td colSpan='4' className='text-center text-2xl'>No Diets Found</td></tr>
+                        :users
+                        .filter((item)=>{
+                          if(searchTerm ==""){
+                            return item;
+                          }else if(item.fullName.toLowerCase().includes(searchTerm.toLowerCase()) 
+                          || item.email.toLowerCase().includes(searchTerm.toLowerCase())
+                          || item.phoneNo.toLowerCase().includes(searchTerm.toLowerCase())
+                          || item.address.toLowerCase().includes(searchTerm.toLowerCase())
+                          || item.age.toString().toLowerCase().includes(searchTerm.toLowerCase())
+                          || item.employmentStatus.toLowerCase().includes(searchTerm.toLowerCase())){
+                            return item;
+                          }
+                        })
+                        .map((item,index)=>{
+                          if(item.role=='user'){
+                              return <tr key={item._id}>
+                              <td className='py-4'>
+                                <div className='flex items-center'>
+                                  {
+                                    item?.photoUrl && (
+                                      <div 
+                                        className="justify-center"
+                                        style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                                      >
+                                        <img 
+                                          className="shadow-lg rounded-lg h-[75px] w-[75px]" 
+                                          src={item.photoUrl} 
+                                          alt="Profile photo" 
+                                        />
+                                      </div>
+                                    )
+                                  }
+                                  <span>{highlightText(item.fullName, searchTerm)}</span>
+                                </div></td>
+                              <td className='py-4'>
+                                {highlightText(item.email, searchTerm)} 
+                              </td>
+                              <td className='py-4'>
+                                {highlightText(item.phoneNo, searchTerm)} 
+                              </td>
+                              <td className='py-4'>
+                                {highlightText(item.address, searchTerm)} 
+                              </td>
+                              <td className='py-4'>
+                                {highlightText(item.age.toString(), searchTerm)} 
+                              </td>
+                              <td className='py-4'>
+                                {highlightText(item.employmentStatus, searchTerm)} 
+                              </td>
+                              <td>
+                                <button onClick={()=>handleDelete(item.email)} 
+                                className='px-3 py-3 cursor-pointer bg-red-500 rounded-3xl text-white font-bold'>
+                                  <MdDelete/>
+                                </button>
+                                
+                              </td>
+                          </tr>
+                          }
+                          
+                          
+                        })
+                      }
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>

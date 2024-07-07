@@ -14,12 +14,16 @@ router.get('/', async(req,res)=>{
 
 //add new Workout
 router.post('/',async (req, res) => {
-    const{name,numberOfDays,howToDo,workoutImg}=req.body
-    if(!name || !numberOfDays || !howToDo || !workoutImg){
-        res.status(400).send("Please Provide required fields")
+    const{name,numberOfDays,howToDo,workoutImg,forGoal}=req.body
+    if(!name || !numberOfDays || !howToDo || !forGoal){
+        res.status(400).send(result)
     }else{
         try{
-            const results = await Workout.create({name,numberOfDays,howToDo,workoutImg})
+            const wData = {name,numberOfDays,howToDo,forGoal};
+            if(workoutImg){
+                wData.workoutImg = workoutImg;
+            }
+            const results = await Workout.create(wData)
             res.send(results);
         }catch(error){
             res.status(500).json(results)

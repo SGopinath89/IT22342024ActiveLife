@@ -42,6 +42,7 @@ const AddDiet = () => {
                     title: 'Success!',
                     text: 'Successfully Added a Diet.',
                     icon: 'success',
+                    timer: 1500
                 });
                 navigate('/dashboard/manageDiets');
             })
@@ -51,20 +52,22 @@ const AddDiet = () => {
                     title: 'Error!',
                     text: 'There was an error adding a diet.',
                     icon: 'error',
+                    timer: 1500
                 });
             });
     };
 
     return (
-        <div className='w-[1000px] justify-center items-center bg-white dark:bg-black flex'>
-            <div className="bg-white p-8 rounded-lg text-center">
-                <h2 className="text-3xl font-bold text-center mb-6 text-secondary">Add Diet</h2>
+        <div className='w-screen h-screen justify-top items-center'>
+            <div className="bg-white p-8 w-[1000px] rounded-lg ">
+                <h2 className="text-3xl font-bold text-center mb-6 text-secondary">Add Diet<br/><span className=" text-red-600 text-sm">* Required</span></h2>
                 <form onSubmit={handleSubmit} className="text-center">
                     <div className="flex items-center gap-5 md:grid-cols-2 lg:grid-cols-2">
                         <div>
                             <div className="w-[300px] mb-4">
                                 <label htmlFor="name" className='block text-gray-700 font-bold mb-2'>
                                     Name of the Diet
+                                    <span className=" text-red-600">*</span>
                                 </label>
                                 <input 
                                     type='text' 
@@ -86,7 +89,8 @@ const AddDiet = () => {
                             </div>
                             <div className="w-[300px] mb-4">
                                 <label htmlFor="forGoal" className='block text-gray-700 font-bold mb-2'>
-                                    Goals that can achieve from Diet <br/>
+                                    Goals that can achieve from Diet 
+                                    <span className=" text-red-600">*</span><br/>
                                 </label>
                                 <input type="checkbox" name="forGoal" onChange={handleChange} value="Weight Loss"/> Weight Loss<br/>
                                 <input type="checkbox" name="forGoal" onChange={handleChange} value="Brain Health"/> Brain Health<br/>
@@ -101,6 +105,7 @@ const AddDiet = () => {
                             <div className="w-[500px] mb-4">
                                 <label htmlFor="howItWorks" className='block text-gray-700 font-bold mb-2'>
                                    How It Works
+                                   <span className=" text-red-600">*</span>
                                 </label>
                                 <textarea 
                                     onChange={handleChange}
@@ -113,6 +118,7 @@ const AddDiet = () => {
                             <div className="w-[500px] mb-4">
                                 <label htmlFor="benefits" className='block text-gray-700 font-bold mb-2'>
                                     Benefits
+                                    <span className=" text-red-600">*</span>
                                 </label>
                                 <textarea 
                                     onChange={handleChange}

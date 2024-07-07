@@ -15,11 +15,18 @@ router.get('/', async(req,res)=>{
 //add new diet
 router.post('/',async (req, res) => {
     const{name,howItWorks,benefits,downsides,dietImg,forGoal}=req.body
-    if(!name || !howItWorks || !benefits || !downsides || !dietImg || !forGoal){
-        res.status(400).send("Please Provide required fields")
+    if(!name || !howItWorks || !benefits || !forGoal){
+        res.status(400).send(result)
     }else{
         try{
-            const results = await Diet.create({name,howItWorks,benefits,downsides,dietImg,forGoal})
+            const dData = {name,howItWorks,benefits,forGoal}
+            if(dietImg){
+                dData.dietImg = dietImg;
+            }
+            if(downsides){
+                dData.downsides = downsides;
+            }
+            const results = await Diet.create(dData)
             res.send(results);
         }catch(error){
             res.status(500).json(results)

@@ -14,8 +14,9 @@ router.get('/', async(req,res)=>{
 //add new Feedback
 router.post('/',async (req, res) => {
     const{rating,service,suggesions,userEmail,userName}=req.body
+    const status = "Pending"
         try{
-            const results = await Feedback.create({rating,service,suggesions,userEmail,userName})
+            const results = await Feedback.create({rating,service,suggesions,userEmail,userName,status})
             res.send(results);
         }catch(error){
             res.status(500).json(error)
