@@ -257,7 +257,7 @@ const UpdateHealthdata = () => {
                             <label htmlFor="fitnessGoals" className='block text-gray-700 front-bold mb-2'>
                                 <MdOutlineHealthAndSafety className="inline-block br-2 mb-1 text-lg"/>   
                                 Is there any fitness goal that you would like to achieve?<br/>
-                                <span className=' text-sm text-gray-500'>**Please select all the goals you need including the previosly selected</span>
+                                <span className=' text-sm text-gray-500'>*Please select all the goals you need including the previosly selected</span>
                             </label>
                             <div className="flex items-center gap-2 md:grid-cols-4 lg:grid-cols-4">
                                     <div>
@@ -296,6 +296,7 @@ const UpdateHealthdata = () => {
                         </div>
                     </div>
                     <div className="text-center">
+                    <span className=' text-sm text-red-400'>**Please remember to select all the your previous goals before submitting**</span><br/>
                         <button type="submit" className="bg-[#f2e48d] justify-center hover:bg-secondary text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                             Submit Details
                         </button>
